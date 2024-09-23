@@ -2,6 +2,7 @@ import { useState } from "react";
 import { SocialIcon } from "react-social-icons";
 import { CustomInput } from "../../components";
 import infoImage from "../../assets/info-image.png";
+import { Link } from "react-router-dom";
 
 export const Login = () => {
   const [userInput, setUserInput] = useState({ email: "", password: "" });
@@ -52,12 +53,12 @@ export const Login = () => {
               type="submit"
               className=" p-4 text-sm mt-4 w-full border-0 bg-red-600  rounded-[20px]"
             >
-              <span className="font-bold text-white text-base">Sign Up</span>
+              <span className="font-bold text-white text-base">Sign In</span>
             </button>
           </form>
 
           <p className="self-center">
-            Don’t have an account? <a href="/signup">Sign Up</a>
+            Don’t have an account? <Link className="text-red-600 font-bold" to="/signup">Sign Up</Link>
           </p>
 
           <div

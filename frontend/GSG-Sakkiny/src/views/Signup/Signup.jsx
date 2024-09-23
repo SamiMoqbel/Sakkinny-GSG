@@ -2,6 +2,7 @@ import { useState } from "react";
 import { SocialIcon } from "react-social-icons";
 import { CustomInput } from "../../components";
 import infoImage from "../../assets/info-image.png";
+import { Link } from "react-router-dom";
 
 export const Signup = () => {
   const [userInput, setUserInput] = useState({
@@ -27,7 +28,7 @@ export const Signup = () => {
         <div className="flex-1 flex justify-center items-center">
           <img className="w-full h-full" src={infoImage} alt="Signup" />
         </div>
-        <div className="flex-1 p-[40px]">
+        <div className="flex-1 flex flex-col p-[40px]">
           <h2>
             Create an account on
             <span className="font-bold text-red-600"> Sakkinny</span>{" "}
@@ -72,6 +73,10 @@ export const Signup = () => {
               <span className="font-bold text-white text-base">Sign Up</span>
             </button>
           </form>
+
+          <p className="self-center mt-4">
+            Already have an account? <Link className="text-red-600 font-bold" to="/login">Sign In</Link>
+          </p>
 
           <div
             id="social-login"
