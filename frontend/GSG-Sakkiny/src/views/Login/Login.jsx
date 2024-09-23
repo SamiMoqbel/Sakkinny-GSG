@@ -65,7 +65,7 @@ export const Login = () => {
             id="social-login"
             className=" flex flex-col justify-center items-center "
           >
-            <p>or continue with social media</p>
+            <p>or continue with </p>
             <div
               id="social-links"
               className="flex w-3/4 justify-around items-center mt-4"
