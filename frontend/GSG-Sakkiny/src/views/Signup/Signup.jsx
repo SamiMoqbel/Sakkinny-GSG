@@ -16,8 +16,25 @@ export const Signup = () => {
     setUserInput({ ...userInput, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    try {
+      const response = await axios.post(
+        "/Auth/register",
+        JSON.stringify(userInput),
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
+      console.log(response.data);
+      
+    } catch (error) {
+      console.log(error);
+    }
 
     console.log(userInput);
   };
@@ -75,7 +92,10 @@ export const Signup = () => {
           </form>
 
           <p className="self-center mt-4">
-            Already have an account? <Link className="text-red-600 font-bold" to="/login">Sign In</Link>
+            Already have an account?{" "}
+            <Link className="text-red-600 font-bold" to="/login">
+              Sign In
+            </Link>
           </p>
 
           <div
