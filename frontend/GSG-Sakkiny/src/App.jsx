@@ -1,5 +1,5 @@
 import React from "react";
-import { Login, Signup, Error404, Home } from "./views";
+import { Login, Signup, Error404, Home,ApartmentsDetails } from "./views";
 import {
   BrowserRouter as Router,
   Routes,
@@ -15,6 +15,7 @@ const App = () => {
         <Route path="/home" element={<Navigate to="/" replace />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/apartmentsDetails" element={<ApartmentsDetails/>} />
         <Route path="*" element={<Error404 />} />
       </Routes>
     </Router>
