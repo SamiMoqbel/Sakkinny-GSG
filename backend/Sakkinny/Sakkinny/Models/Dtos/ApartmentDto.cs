@@ -8,6 +8,6 @@
         public int? roomsNumber { get; set; }
         public int? roomsAvailable { get; set; }
         public decimal? price { get; set; }
-        public List<string>? pictureUrls { get; set; } = new List<string>();
+        //public List<string>? pictureUrls { get; set; } = new List<string>();
     }
 }
