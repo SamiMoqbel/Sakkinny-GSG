@@ -3,6 +3,8 @@ import { SocialIcon } from "react-social-icons";
 import { CustomInput } from "../../components";
 import infoImage from "../../assets/info-image.png";
 import { Link } from "react-router-dom";
+import axios from "../../api/axios";
+
 
 export const Login = () => {
   const [userInput, setUserInput] = useState({ email: "", password: "" });
@@ -11,10 +13,24 @@ export const Login = () => {
     setUserInput({ ...userInput, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(userInput);
+    try {
+      const response = await axios.post(
+        "/Auth/login",
+        JSON.stringify(userInput),
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

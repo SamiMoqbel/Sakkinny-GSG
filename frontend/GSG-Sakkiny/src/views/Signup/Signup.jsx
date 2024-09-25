@@ -3,13 +3,15 @@ import { SocialIcon } from "react-social-icons";
 import { CustomInput } from "../../components";
 import infoImage from "../../assets/info-image.png";
 import { Link } from "react-router-dom";
+import axios from "../../api/axios";
 
 export const Signup = () => {
   const [userInput, setUserInput] = useState({
+    fullName: "",
     email: "",
-    username: "",
+    role: "Client",
     password: "",
-    confirmPassword: "",
+    coPassword: "",
   });
 
   const handleChange = (e) => {
@@ -31,12 +33,10 @@ export const Signup = () => {
         }
       );
       console.log(response.data);
-      
     } catch (error) {
       console.log(error);
     }
 
-    console.log(userInput);
   };
 
   return (
@@ -62,8 +62,8 @@ export const Signup = () => {
             <CustomInput
               type="text"
               placeholder="Full Name"
-              value={userInput.username}
-              name="username"
+              value={userInput.fullName}
+              name="fullName"
               handleChange={handleChange}
             />
 
@@ -78,8 +78,8 @@ export const Signup = () => {
             <CustomInput
               type="password"
               placeholder="Confirm Password"
-              value={userInput.confirmPassword}
-              name="confirmPassword"
+              value={userInput.coPassword}
+              name="coPassword"
               handleChange={handleChange}
             />
 
