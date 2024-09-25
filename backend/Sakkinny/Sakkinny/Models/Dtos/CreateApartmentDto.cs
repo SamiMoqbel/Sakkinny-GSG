@@ -1,14 +1,26 @@
-﻿namespace Sakkinny.Models.Dtos
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Sakkinny.Models.Dtos
 {
     public class CreateApartmentDto
     {
-        public int Id { get; set; }
-        public string? title { get; set; }
+        [Required]
+        public string title { get; set; }
+
         public string? subTitle { get; set; }
-        public string? location { get; set; }
+
+        [Required]
+        public string location { get; set; }
+
+        [Range(1, 100)]
         public int? roomsNumber { get; set; }
+
+        [Range(0, 100)]
         public int? roomsAvailable { get; set; }
+
+        [Range(0, double.MaxValue)]
         public decimal? price { get; set; }
-        public List<string>? pictureUrls { get; set; } = new List<string>();
+
+        //public List<string>? pictureUrls { get; set; } = new List<string>();
     }
 }

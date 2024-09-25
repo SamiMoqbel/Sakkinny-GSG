@@ -14,7 +14,7 @@ namespace Sakkinny.Models
         public int? roomsNumber { get; set; }
         public int? roomsAvailable { get; set; }
         public decimal? price { get; set; }
-        public List<string>? pictureUrls { get; set; } = new List<string>();
+       // public List<string>? pictureUrls { get; set; } = new List<string>();
         public bool IsDeleted { get; set; }
         public DateTime? CreationTime { get; set; }
         public DateTime? DeletionTime { get; set; }

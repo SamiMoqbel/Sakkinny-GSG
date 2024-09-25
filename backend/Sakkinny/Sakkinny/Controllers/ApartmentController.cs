@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 namespace Sakkinny.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     public class ApartmentController : ControllerBase
     {
         private readonly ApartmentService _apartmentService;
@@ -40,26 +40,30 @@ namespace Sakkinny.Controllers
                 return BadRequest("Apartment data is required.");
             }
 
-            var updated = await _apartmentService.UpdateApartment(id, apartmentDto);
-            if (!updated)
+            var updatedApartment = await _apartmentService.UpdateApartment(id, apartmentDto);
+
+            if (updatedApartment == null)
             {
-                return NotFound();
+                return NotFound(); 
             }
 
-            return NoContent();
+            return Ok(updatedApartment);
         }
+
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteApartment(int id)
         {
-            var deleted = await _apartmentService.DeleteApartment(id);
-            if (!deleted)
+            var deletedApartment = await _apartmentService.DeleteApartment(id);
+
+            if (deletedApartment == null)
             {
-                return NotFound();
+                return NotFound(); 
             }
 
-            return NoContent();
+            return Ok(deletedApartment);
         }
+
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ApartmentDto>>> GetAllApartments()
