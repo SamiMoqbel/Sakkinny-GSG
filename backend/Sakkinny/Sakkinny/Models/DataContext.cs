@@ -43,11 +43,11 @@ namespace Sakkinny.Models
                       .HasColumnType("decimal(18,2)")
                       .IsRequired(false);
 
-                entity.Property(e => e.pictureUrls)
+                /*entity.Property(e => e.pictureUrls)
                       .HasConversion(
                           v => string.Join(',', v),
                           v => v.Split(',', StringSplitOptions.RemoveEmptyEntries).ToList()
-                      );
+                      );*/
 
                 entity.Property(e => e.IsDeleted)
                       .HasDefaultValue(false);

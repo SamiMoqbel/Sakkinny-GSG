@@ -41,24 +41,27 @@ namespace Sakkinny.Services
             }
         }
 
-        public async Task<bool> UpdateApartment(int id, UpdateApartmentDto apartmentDto)
+        public async Task<ApartmentDto> UpdateApartment(int id, UpdateApartmentDto apartmentDto)
         {
             _logger.LogInformation("Attempting to update apartment with ID: {ApartmentId}", id);
 
             try
             {
-                var apartment = await _context.Apartments.FirstOrDefaultAsync(a => a.Id == id);
+                var apartment = await _context.Apartments.FirstOrDefaultAsync(a => a.Id == id && !a.IsDeleted);
                 if (apartment == null)
                 {
                     _logger.LogWarning("Apartment with ID: {ApartmentId} not found", id);
-                    return false;
+                    return null;
                 }
 
+
                 _mapper.Map(apartmentDto, apartment);
+
                 await _context.SaveChangesAsync();
+
                 _logger.LogInformation("Apartment updated with ID: {ApartmentId}", id);
 
-                return true;
+                return _mapper.Map<ApartmentDto>(apartment);
             }
             catch (Exception ex)
             {
@@ -67,26 +70,26 @@ namespace Sakkinny.Services
             }
         }
 
-        public async Task<bool> DeleteApartment(int id)
+
+        public async Task<ApartmentDto> DeleteApartment(int id)
         {
             _logger.LogInformation("Attempting to delete apartment with ID: {ApartmentId}", id);
 
             try
             {
-                var apartment = await _context.Apartments.FirstOrDefaultAsync(a => a.Id == id);
+                var apartment = await _context.Apartments.FirstOrDefaultAsync(a => a.Id == id && !a.IsDeleted);
                 if (apartment == null)
                 {
                     _logger.LogWarning("Apartment with ID: {ApartmentId} not found", id);
-                    return false;
+                    return null;
                 }
 
-                apartment.IsDeleted = true; 
+                apartment.IsDeleted = true;
                 apartment.DeletionTime = DateTime.Now;
 
                 await _context.SaveChangesAsync();
                 _logger.LogInformation("Apartment marked as deleted with ID: {ApartmentId}", id);
-
-                return true;
+                return _mapper.Map<ApartmentDto>(apartment);
             }
             catch (Exception ex)
             {
