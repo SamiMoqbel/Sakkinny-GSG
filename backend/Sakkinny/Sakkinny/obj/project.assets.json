@@ -8708,26 +8708,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\anas1\\.nuget\\packages\\": {},
-    "C:\\Program Files\\DevExpress 23.1\\Components\\Offline Packages": {},
+    "C:\\Users\\muhnn\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\anas1\\Desktop\\GSG-BackEnd\\Sakkinny-GSG\\backend\\Sakkinny\\Sakkinny\\Sakkinny.csproj",
+      "projectUniqueName": "C:\\Users\\muhnn\\OneDrive\\Desktop\\main\\Sakkinny-GSG\\backend\\Sakkinny\\Sakkinny\\Sakkinny.csproj",
       "projectName": "Sakkinny",
-      "projectPath": "C:\\Users\\anas1\\Desktop\\GSG-BackEnd\\Sakkinny-GSG\\backend\\Sakkinny\\Sakkinny\\Sakkinny.csproj",
-      "packagesPath": "C:\\Users\\anas1\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\anas1\\Desktop\\GSG-BackEnd\\Sakkinny-GSG\\backend\\Sakkinny\\Sakkinny\\obj\\",
+      "projectPath": "C:\\Users\\muhnn\\OneDrive\\Desktop\\main\\Sakkinny-GSG\\backend\\Sakkinny\\Sakkinny\\Sakkinny.csproj",
+      "packagesPath": "C:\\Users\\muhnn\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\muhnn\\OneDrive\\Desktop\\main\\Sakkinny-GSG\\backend\\Sakkinny\\Sakkinny\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files\\DevExpress 23.1\\Components\\Offline Packages",
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\anas1\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 23.1.config",
+        "C:\\Users\\muhnn\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -8736,7 +8733,6 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\DevExpress 23.1\\Components\\System\\Components\\Packages": {},
         "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
@@ -8750,6 +8746,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -8832,7 +8833,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
