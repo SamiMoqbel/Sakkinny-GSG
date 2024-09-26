@@ -3,18 +3,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Sakkinny.Models
 {
-	public class DataContext : IdentityDbContext<ApplicationUser>
-	{
-		public DbSet<Apartment>? Apartments { get; set; } = null;
+    public class DataContext : IdentityDbContext<ApplicationUser>
+    {
+        public DbSet<Apartment> Apartments { get; set; } = null!; // Not nullable
+
         public DataContext(DbContextOptions<DataContext> options) : base(options)
-		{
+        {
+        }
 
-		}
-		protected override void OnModelCreating(ModelBuilder modelBuilder)
-		{
-			base.OnModelCreating(modelBuilder);
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
 
-			modelBuilder.Entity<ApplicationUser>().ToTable("Users");
+            modelBuilder.Entity<ApplicationUser>().ToTable("Users");
 
             modelBuilder.Entity<Apartment>(entity =>
             {
@@ -22,32 +23,35 @@ namespace Sakkinny.Models
                 entity.Property(e => e.Id)
                       .ValueGeneratedOnAdd();
 
-                entity.Property(e => e.title)
+                entity.Property(e => e.Title)
                       .IsRequired()
                       .HasMaxLength(100);
 
-                entity.Property(e => e.subTitle)
+                entity.Property(e => e.SubTitle)
                       .HasMaxLength(500);
 
-                entity.Property(e => e.location)
+                entity.Property(e => e.Location)
                       .IsRequired()
                       .HasMaxLength(150);
 
-                entity.Property(e => e.roomsNumber)
+                entity.Property(e => e.RoomsNumber)
                       .IsRequired(false);
 
-                entity.Property(e => e.roomsAvailable)
-                      .IsRequired(false);
+                entity.Property(e => e.RoomsAvailable)
+                      .IsRequired();
 
-                entity.Property(e => e.price)
+                entity.Property(e => e.Price)
                       .HasColumnType("decimal(18,2)")
                       .IsRequired(false);
 
-                /*entity.Property(e => e.pictureUrls)
-                      .HasConversion(
-                          v => string.Join(',', v),
-                          v => v.Split(',', StringSplitOptions.RemoveEmptyEntries).ToList()
-                      );*/
+                entity.Property(e => e.IsRented)
+                      .HasDefaultValue(false);
+
+                entity.Property(e => e.RentalStartDate)
+                      .IsRequired(false);
+
+                entity.Property(e => e.RentalEndDate)
+                      .IsRequired(false);
 
                 entity.Property(e => e.IsDeleted)
                       .HasDefaultValue(false);
@@ -58,9 +62,6 @@ namespace Sakkinny.Models
                 entity.Property(e => e.DeletionTime)
                       .IsRequired(false);
             });
-
         }
-
-
     }
 }
