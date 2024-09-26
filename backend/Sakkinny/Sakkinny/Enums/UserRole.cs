@@ -4,6 +4,6 @@
 	{
 		Client,
 		Owner,
-		Admin
+		
 	}
 }

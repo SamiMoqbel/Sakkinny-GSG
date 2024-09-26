@@ -93,6 +93,14 @@ namespace Sakkinny.Controllers
 			return Ok(response);
 		}
 
+		[HttpPost("logout")]
+		public async Task<IActionResult> Logout()
+		{
+			// Sign out the user
+			await _signInManager.SignOutAsync();
+
+			return Ok(new { Message = "User logged out successfully.", Status = 200 });
+		}
 
 	}
 }

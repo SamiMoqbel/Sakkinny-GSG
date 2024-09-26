@@ -819,3 +819,5 @@ C:\Users\sami\Desktop\Sakkinny-GSG\backend\Sakkinny\Sakkinny\obj\Debug\net8.0\re
 C:\Users\sami\Desktop\Sakkinny-GSG\backend\Sakkinny\Sakkinny\obj\Debug\net8.0\Sakkinny.pdb
 C:\Users\sami\Desktop\Sakkinny-GSG\backend\Sakkinny\Sakkinny\obj\Debug\net8.0\Sakkinny.genruntimeconfig.cache
 C:\Users\sami\Desktop\Sakkinny-GSG\backend\Sakkinny\Sakkinny\obj\Debug\net8.0\ref\Sakkinny.dll
+C:\Users\anas1\Desktop\GSG-BackEnd\Sakkinny-GSG\backend\Sakkinny\Sakkinny\bin\Debug\net8.0\AutoMapper.dll
+C:\Users\anas1\Desktop\GSG-BackEnd\Sakkinny-GSG\backend\Sakkinny\Sakkinny\bin\Debug\net8.0\Microsoft.Bcl.TimeProvider.dll
