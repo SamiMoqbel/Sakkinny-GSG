@@ -5,3 +5,4 @@ export * from "./Home";
 export * from './Footer';
 export * from './Navbar';
 export * from './ApartmentsDetails';
+export * from './Dashboard';

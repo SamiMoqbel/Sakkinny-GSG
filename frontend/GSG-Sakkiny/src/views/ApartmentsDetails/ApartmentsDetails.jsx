@@ -1,22 +1,32 @@
-import React from 'react';
+import { Link } from "react-router-dom";
 import { Footer } from "../Footer";
 import { Navbar } from "../Navbar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "../../api/axios";
+
 export const ApartmentsDetails= () =>{
-    const [authenticated, setAuthenticated] = useState(true);
-    const apartmentsData = [
-        { pics:'',title: 'Jason Martinez', subtitle: '', location: 'ByteWebster', totalRooms: '7', roomsAvailable:"Yes", price: '$3,500' },
-        { pics:'',title: 'Jason Martinez', subtitle: '', location: 'ByteWebster', totalRooms: '7', roomsAvailable:"Yes", price: '$3,500' },
-        { pics:'',title: 'Jason Martinez', subtitle: '', location: 'ByteWebster', totalRooms: '7', roomsAvailable:"Yes", price: '$3,500' },
-        { pics:'',title: 'Jason Martinez', subtitle: '', location: 'ByteWebster', totalRooms: '7', roomsAvailable:"Yes", price: '$3,500' },
-      ];
+    const [apartmentsData, setApartmentsData] = useState([]);
+
+    useEffect(() => {
+        const fetchApartments = async () => {
+          try {
+            const response = await axios.get("/Apartment/GetAllApartments");
+            setApartmentsData(response.data.apartments);
+            
+          } catch (error) {
+            console.error(error);
+          }
+        };
+
+        fetchApartments();
+    }, []);
      
     return (
     <div className="flex min-h-screen font-sans">
  
     <div className="flex-grow bg-gray-100 p-6">
-    <Navbar authenticated={authenticated} />
-      <div className="bg-white p-6 rounded-lg shadow-md mt-[15] mb-[30px]">
+    <Navbar />
+      <div className="bg-white h-screen p-6 rounded-lg shadow-md mt-[15] mb-[30px]">
         <h3 className="text-xl font-semibold mb-4">Apartments</h3>
         <table className="min-w-full border-collapse w-auto">
           <thead>
@@ -32,9 +42,9 @@ export const ApartmentsDetails= () =>{
           <tbody>
             {apartmentsData.map((apartments, index) => (
               <tr key={index} className="border-b">
-                <td className="py-2">{apartments.title}</td>
+                <td className="py-2"><Link className="text-blue-400 hover:underline" to={`/apartments/${apartments.id}`}>{apartments.title}</Link></td>
                 <td className="py-2">{apartments.location}</td>
-                <td className="py-2">{apartments.totalRooms}</td>
+                <td className="py-2">{apartments.roomsNumber}</td>
                 <td className="py-2">{apartments.roomsAvailable}</td>
                 <td className="py-2">{apartments.price}</td>
                 <td className="py-2">

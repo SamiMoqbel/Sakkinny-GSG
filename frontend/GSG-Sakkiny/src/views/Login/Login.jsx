@@ -1,12 +1,16 @@
-import { useState } from "react";
+import {useContext, useState } from "react";
 import { SocialIcon } from "react-social-icons";
 import { CustomInput } from "../../components";
 import infoImage from "../../assets/info-image.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "../../api/axios";
+import AuthContext from "../../context/AuthProvider";
+import toast from "react-hot-toast";
 
 
 export const Login = () => {
+  const navigate = useNavigate();
+  const { setAuthenticated } = useContext(AuthContext);
   const [userInput, setUserInput] = useState({ email: "", password: "" });
 
   const handleChange = (e) => {
@@ -27,9 +31,13 @@ export const Login = () => {
           withCredentials: true,
         }
       );
-      console.log(response.data);
+      setAuthenticated({ token: response.data.token, email: response.data.email });
+      toast.success("Welcome back!");
+      navigate("/");
+
     } catch (error) {
       console.log(error);
+      toast.error(error.response.data.message);
     }
   };
 

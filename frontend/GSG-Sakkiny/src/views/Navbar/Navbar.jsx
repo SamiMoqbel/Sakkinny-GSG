@@ -2,8 +2,13 @@ import { Link } from "react-router-dom";
 import { Dropdown } from "flowbite-react";
 import Avatar from "react-avatar";
 import { Logo } from "../../components";
+import { useContext } from "react";
+import  AuthContext  from "../../context/AuthProvider";
 
-export const Navbar = ({authenticated}) => {
+export const Navbar = () => {
+
+  const { authenticated } = useContext(AuthContext);
+
   return (
     <nav className="bg-gray-100 min-h-24 flex items-center justify-between px-10">
       <Logo />
@@ -24,10 +29,10 @@ export const Navbar = ({authenticated}) => {
           <Dropdown.Header>
             <span className="block text-sm">Bonnie Green</span>
             <span className="block truncate text-sm font-medium">
-              name@flowbite.com
+              {authenticated.email}
             </span>
           </Dropdown.Header>
-          <Dropdown.Item>Dashboard</Dropdown.Item>
+          <Dropdown.Item><Link to="/dashboard">Dashboard</Link></Dropdown.Item>
           <Dropdown.Item>Settings</Dropdown.Item>
           <Dropdown.Item>Earnings</Dropdown.Item>
           <Dropdown.Divider />
