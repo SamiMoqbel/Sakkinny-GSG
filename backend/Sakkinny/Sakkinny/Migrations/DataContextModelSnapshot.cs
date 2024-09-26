@@ -157,13 +157,13 @@ namespace Sakkinny.Migrations
 
             modelBuilder.Entity("Sakkinny.Models.Apartment", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"));
 
-                    b.Property<DateTime>("CreationTime")
+                    b.Property<DateTime?>("CreationTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETDATE()");
@@ -176,36 +176,25 @@ namespace Sakkinny.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
 
-                    b.Property<bool>("IsRented")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
-                    b.Property<string>("Location")
+                    b.Property<string>("location")
                         .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
-                    b.Property<decimal?>("Price")
+                    b.Property<decimal?>("price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<DateTime?>("RentalEndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("RentalStartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("RoomsAvailable")
+                    b.Property<int?>("roomsAvailable")
                         .HasColumnType("int");
 
-                    b.Property<int?>("RoomsNumber")
+                    b.Property<int?>("roomsNumber")
                         .HasColumnType("int");
 
-                    b.Property<string>("SubTitle")
+                    b.Property<string>("subTitle")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<string>("Title")
+                    b.Property<string>("title")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
@@ -238,9 +227,6 @@ namespace Sakkinny.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("LastLoginDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
@@ -262,13 +248,6 @@ namespace Sakkinny.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("PreferredLanguage")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("ReceiveNewsletter")
                         .HasColumnType("bit");
 
                     b.Property<string>("SecurityStamp")

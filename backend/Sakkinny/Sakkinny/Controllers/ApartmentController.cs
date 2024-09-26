@@ -71,34 +71,5 @@ namespace Sakkinny.Controllers
             var apartments = await _apartmentService.GetAllApartments();
             return Ok(apartments);
         }
-
-        [HttpPost]
-public async Task<IActionResult> RentApartment([FromBody] RentApartmentDto rentApartmentDto)
-{
-    if (rentApartmentDto == null)
-    {
-        return BadRequest("Rental data is required.");
-    }
-
-    // rent the apartment by Muhnnad
-    var result = await _apartmentService.RentApartment(rentApartmentDto);
-
-    if (!result.IsSuccess)
-    {
-        return BadRequest(result.Message);
-    }
-
-    // Check if the apartment is now full
-    var apartment = await _apartmentService.GetApartmentById(rentApartmentDto.ApartmentId);
-    if (apartment != null && apartment.RoomsAvailable == 0)
-    {
-        apartment.IsRented = true; // Mark the apartment as full
-        await _apartmentService.UpdateApartmentEntity(apartment); // Ensure to update the apartment
-    }
-
-    return Ok(result.Message);
-}
-
-
     }
 }

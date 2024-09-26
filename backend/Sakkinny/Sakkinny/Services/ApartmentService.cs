@@ -113,38 +113,5 @@ namespace Sakkinny.Services
             }
             return apartmentsDtos;
         }
-            // rent the apartment by Muhnnad
-        public async Task<ResultDto> RentApartment(RentApartmentDto rentApartmentDto)
-        {
-            var apartment = await _context.Apartments.FindAsync(rentApartmentDto.ApartmentId);
-    
-            if (apartment == null)
-            {
-                return new ResultDto { IsSuccess = false, Message = "Apartment not found." };
-            }
-
-            if (apartment.RoomsAvailable <= 0)
-            {
-                return new ResultDto { IsSuccess = false, Message = "No rooms available for rent." };
-            }
-
-            // if the costamer rent number of rooms be -1
-            apartment.RoomsAvailable--;
-
-            await _context.SaveChangesAsync();
-
-            return new ResultDto { IsSuccess = true, Message = "Apartment rented successfully." };
-        }
-        //get appartment how user want it
-        public async Task<Apartment> GetApartmentById(int apartmentId)
-        {
-            return await _context.Apartments.FindAsync(apartmentId);
-        }
-          //make apartment rented
-        public async Task UpdateApartmentEntity(Apartment apartment)
-        {
-            _context.Apartments.Update(apartment);
-            await _context.SaveChangesAsync();
-        }
     }
 }

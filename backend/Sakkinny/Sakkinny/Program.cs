@@ -1,47 +1,56 @@
+using System.Text;
 using Sakkinny.Enums;
 using Sakkinny.Models;
 using Sakkinny.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.IdentityModel.Tokens;
+using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
-// Configure Entity Framework with SQL Server
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString")));
 
-// Register services
 builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<ApartmentService>();
 
-// Add identity services
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
+
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<DataContext>()
     .AddDefaultTokenProviders();
 
-// Configure Cookie Authentication
+var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 builder.Services.AddAuthentication(options =>
 {
-    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 })
-.AddCookie(options =>
+.AddJwtBearer(options =>
 {
-    options.LoginPath = "/api/Auth/Login"; // Redirect to this path if not logged in
-    options.AccessDeniedPath = "/api/Auth/AccessDenied"; // Redirect if access is denied
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(60); // Cookie expiration time
-    options.SlidingExpiration = true; // Renew cookie if user is active
-    options.Cookie.HttpOnly = true; // Make sure cookie is not accessible via JavaScript
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = jwtSettings["Issuer"],
+        ValidAudience = jwtSettings["Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]))
+    };
 });
 
-// CORS policy for React app
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactApp",
@@ -52,13 +61,13 @@ builder.Services.AddCors(options =>
                    .AllowAnyMethod();
         });
 });
-
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+
     await SeedRoles(roleManager);
 }
 
@@ -74,7 +83,6 @@ async Task SeedRoles(RoleManager<IdentityRole> roleManager)
     }
 }
 
-// Configure middleware
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -82,8 +90,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseAuthentication(); 
-app.UseAuthorization(); 
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 
