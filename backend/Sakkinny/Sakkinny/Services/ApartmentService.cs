@@ -113,7 +113,7 @@ namespace Sakkinny.Services
             }
             return apartmentsDtos;
         }
-            // rent the apartment  by Muhnnad
+            // rent the apartment by Muhnnad
         public async Task<ResultDto> RentApartment(RentApartmentDto rentApartmentDto)
         {
             var apartment = await _context.Apartments.FindAsync(rentApartmentDto.ApartmentId);

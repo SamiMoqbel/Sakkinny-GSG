@@ -1,4 +1,5 @@
-﻿using Azure;
+﻿﻿using Azure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Sakkinny.Models;
@@ -92,7 +93,44 @@ namespace Sakkinny.Controllers
 
 			return Ok(response);
 		}
+ // Get user account details
+        [Authorize]
+        [HttpGet("account")]
+        public async Task<IActionResult> GetAccount()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null) return NotFound("User not found");
 
+            var response = new RegisterResponseModel
+            {
+                UserId = user.Id,
+                FullName = user.FullName,
+                Email = user.Email,
+                Message = "User account retrieved.",
+                Status = 200
+            };
+            return Ok(response);
+        }
 
-	}
+       // Update user account settings
+[Authorize]
+[HttpPut("account/settings")]
+public async Task<IActionResult> UpdateAccountSettings([FromBody] AccountSettingsRequestModel model)
+{
+    if (!ModelState.IsValid) return BadRequest(ModelState);
+
+    var user = await _userManager.GetUserAsync(User);
+    if (user == null) return NotFound("User not found");
+
+    // Update user settings (you might need to extend ApplicationUser to store these)
+    user.ReceiveNewsletter = model.ReceiveNewsletter;
+    user.PreferredLanguage = model.PreferredLanguage;
+
+    var updateResult = await _userManager.UpdateAsync(user);
+    if (!updateResult.Succeeded) return BadRequest(updateResult.Errors);
+
+    return Ok(new { Message = "Account settings updated successfully.", Status = 200 });
+}
+
+    }
 }

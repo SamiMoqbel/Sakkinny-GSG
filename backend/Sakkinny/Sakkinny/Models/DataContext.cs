@@ -15,11 +15,14 @@ namespace Sakkinny.Models
         {
             base.OnModelCreating(modelBuilder);
 
+            // Configure ApplicationUser
             modelBuilder.Entity<ApplicationUser>().ToTable("Users");
 
+            // Configure Apartment entity
             modelBuilder.Entity<Apartment>(entity =>
             {
                 entity.HasKey(e => e.Id);
+
                 entity.Property(e => e.Id)
                       .ValueGeneratedOnAdd();
 
@@ -61,6 +64,9 @@ namespace Sakkinny.Models
 
                 entity.Property(e => e.DeletionTime)
                       .IsRequired(false);
+
+                // Add soft delete query filter
+                entity.HasQueryFilter(a => !a.IsDeleted); 
             });
         }
     }
