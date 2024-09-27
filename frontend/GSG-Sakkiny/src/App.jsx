@@ -1,5 +1,5 @@
 import React from "react";
-import { Login, Signup, Error404, Home, ApartmentsDetails, Dashboard } from "./views";
+import { Login, Signup, Error404, Home, ApartmentDetails, Dashboard, AccountSettings } from "./views";
 import {
   BrowserRouter as Router,
   Routes,
@@ -20,6 +20,8 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/settings" element={<AccountSettings />} />
+          <Route path="/apartments/:id" element={<ApartmentDetails />} />
           <Route path="*" element={<Error404 />} />
         </Routes>
       </AuthProvider>

@@ -5,8 +5,8 @@ import { Logo } from "../../components";
 export const Footer = () => {
   return (
     <footer className="bg-gray-100 min-h-56 flex flex-col">
-      <div className=" flex-1">
-        <div className="flex justify-between px-16 items-center h-full">
+      <div className=" flex-1 border-b-2 border-b-gray-200">
+        <div className="flex justify-between py-4 px-16 items-center h-full">
           <Logo />
           <div className="flex justify-around items-center gap-10 pr-4">
             <Link to="/home" className="text-sm font-bold">
@@ -19,7 +19,7 @@ export const Footer = () => {
           </div>
         </div>
       </div>
-      <div className="h-1 bg-gray-200"></div>
+      
       <div className="h-1/4 flex justify-between px-16 py-10 items-center ">
         <div className="flex justify-center items-center ">
           <h2 className="text-sm font-bold">Sakkinny-GSG </h2>

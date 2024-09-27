@@ -1,6 +1,6 @@
 import {useContext, useState } from "react";
 import { SocialIcon } from "react-social-icons";
-import { CustomInput } from "../../components";
+import { FormInput } from "../../components";
 import infoImage from "../../assets/info-image.png";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "../../api/axios";
@@ -57,7 +57,7 @@ export const Login = () => {
             onSubmit={handleSubmit}
             className="flex flex-col h-1/2 justify-around"
           >
-            <CustomInput
+            <FormInput
               type="text"
               placeholder="Email"
               value={userInput.email}
@@ -65,7 +65,7 @@ export const Login = () => {
               handleChange={handleChange}
             />
 
-            <CustomInput
+            <FormInput
               type="password"
               placeholder="Password"
               value={userInput.password}

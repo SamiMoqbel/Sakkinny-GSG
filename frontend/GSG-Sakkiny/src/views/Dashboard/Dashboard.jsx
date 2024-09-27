@@ -1,9 +1,9 @@
 import React from 'react'
-import { ApartmentsDetails } from '../ApartmentsDetails'
+import { Apartments } from '../Apartments'
 
 export const Dashboard = () => {
   return (
-    <ApartmentsDetails />
+    <Apartments />
   )
 }
 

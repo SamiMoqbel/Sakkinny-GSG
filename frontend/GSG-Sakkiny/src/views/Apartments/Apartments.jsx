@@ -4,7 +4,7 @@ import { Navbar } from "../Navbar";
 import { useEffect, useState } from "react";
 import axios from "../../api/axios";
 
-export const ApartmentsDetails= () =>{
+export const Apartments= () =>{
     const [apartmentsData, setApartmentsData] = useState([]);
 
     useEffect(() => {

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { SocialIcon } from "react-social-icons";
-import { CustomInput } from "../../components";
+import { FormInput } from "../../components";
 import infoImage from "../../assets/info-image.png";
 import { Link } from "react-router-dom";
 import axios from "../../api/axios";
@@ -51,7 +51,7 @@ export const Signup = () => {
             <span className="font-bold text-red-600"> Sakkinny</span>{" "}
           </h2>
           <form onSubmit={handleSubmit}>
-            <CustomInput
+            <FormInput
               type="text"
               placeholder="Email"
               value={userInput.email}
@@ -59,7 +59,7 @@ export const Signup = () => {
               handleChange={handleChange}
             />
 
-            <CustomInput
+            <FormInput
               type="text"
               placeholder="Full Name"
               value={userInput.fullName}
@@ -67,7 +67,7 @@ export const Signup = () => {
               handleChange={handleChange}
             />
 
-            <CustomInput
+            <FormInput
               type="password"
               placeholder="Password"
               value={userInput.password}
@@ -75,7 +75,7 @@ export const Signup = () => {
               handleChange={handleChange}
             />
 
-            <CustomInput
+            <FormInput
               type="password"
               placeholder="Confirm Password"
               value={userInput.coPassword}
