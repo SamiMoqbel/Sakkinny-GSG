@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Sakkinny.Models;
 using Sakkinny.Models.AuthenticationModels;
 using Sakkinny.Services;
+using System.Data;
 using System.Threading.Tasks;
 
 namespace Sakkinny.Controllers
@@ -87,7 +88,8 @@ namespace Sakkinny.Controllers
 				RefreshToken = refreshToken,
 				Email = user.Email,
 				Message = "Login successful.",
-				Status = 200
+				Status = 200,
+				Roles = roles.ToList(),
 			};
 
 			return Ok(response);

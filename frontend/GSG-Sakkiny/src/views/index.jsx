@@ -4,4 +4,7 @@ export * from "./Error404";
 export * from "./Home";
 export * from './Footer';
 export * from './Navbar';
-export * from './ApartmentsDetails';
+export * from './Apartments';
+export * from './Dashboard';
+export * from './ApartmentDetails';
+export * from './AccountSettings';

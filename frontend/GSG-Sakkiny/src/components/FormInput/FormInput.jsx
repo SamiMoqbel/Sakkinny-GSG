@@ -1,6 +1,6 @@
 import React from "react";
 
-export const CustomInput = ({
+export const FormInput = ({
   type,
   value,
   placeholder,

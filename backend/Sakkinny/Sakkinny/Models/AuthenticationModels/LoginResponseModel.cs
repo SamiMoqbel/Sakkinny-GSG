@@ -1,4 +1,6 @@
-﻿namespace Sakkinny.Models.AuthenticationModels
+﻿using Sakkinny.Enums;
+
+namespace Sakkinny.Models.AuthenticationModels
 {
 	public class LoginResponseModel
 	{
@@ -7,5 +9,6 @@
 		public string Email { get; set; }
 		public string Message { get; set; }
 		public int Status { get; set; }
+		public ICollection<string> Roles { get; set; }
 	}
 }
