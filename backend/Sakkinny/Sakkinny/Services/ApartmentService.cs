@@ -21,7 +21,7 @@ namespace Sakkinny.Services
         public async Task<ApartmentDto> AddApartment(CreateApartmentDto apartmentDto)
         {
             var apartment = _mapper.Map<Apartment>(apartmentDto);
-            apartment.CreationTime = DateTime.Now; 
+            apartment.CreationTime = DateTime.Now;
             _logger.LogInformation("ADDING apartment: {ApartmentName}", apartmentDto.title);
 
             try
@@ -105,7 +105,7 @@ namespace Sakkinny.Services
 
             foreach (var apartment in retrievedApartments)
             {
-                if (!apartment.IsDeleted) 
+                if (!apartment.IsDeleted)
                 {
                     var apartmentDto = _mapper.Map<ApartmentDto>(apartment);
                     apartmentsDtos.Add(apartmentDto);
@@ -113,38 +113,35 @@ namespace Sakkinny.Services
             }
             return apartmentsDtos;
         }
-            // rent the apartment  by Muhnnad
+        // rent the apartment  by Muhnnad
         public async Task<ResultDto> RentApartment(RentApartmentDto rentApartmentDto)
-        {
-            var apartment = await _context.Apartments.FindAsync(rentApartmentDto.ApartmentId);
-    
-            if (apartment == null)
-            {
-                return new ResultDto { IsSuccess = false, Message = "Apartment not found." };
-            }
+{
+    var apartment = await _context.Apartments.FindAsync(rentApartmentDto.ApartmentId);
 
-            if (apartment.RoomsAvailable <= 0)
-            {
-                return new ResultDto { IsSuccess = false, Message = "No rooms available for rent." };
-            }
+    if (apartment == null)
+    {
+        return new ResultDto { IsSuccess = false, Message = "Apartment not found." };
+    }
 
-            // if the costamer rent number of rooms be -1
-            apartment.RoomsAvailable--;
+    if (apartment.RoomsAvailable <= 0)
+    {
+        return new ResultDto { IsSuccess = false, Message = "No rooms available for rent." };
+    }
 
-            await _context.SaveChangesAsync();
+    // Decrease available rooms
+    apartment.RoomsAvailable--;
 
-            return new ResultDto { IsSuccess = true, Message = "Apartment rented successfully." };
-        }
-        //get appartment how user want it
-        public async Task<Apartment> GetApartmentById(int apartmentId)
-        {
-            return await _context.Apartments.FindAsync(apartmentId);
-        }
-          //make apartment rented
-        public async Task UpdateApartmentEntity(Apartment apartment)
-        {
-            _context.Apartments.Update(apartment);
-            await _context.SaveChangesAsync();
-        }
+    // Add the user to the doubly linked list
+    RenterList renterList = new RenterList();
+    renterList.AddToApartment(rentApartmentDto.ApartmentId, rentApartmentDto.CustomerId, rentApartmentDto.RentalEndDate);
+
+
+
+    // Save the updated apartment info
+    await _context.SaveChangesAsync();
+
+    return new ResultDto { IsSuccess = true, Message = "Apartment rented successfully.", ApartmentId = apartment.Id };
+}
+
     }
 }

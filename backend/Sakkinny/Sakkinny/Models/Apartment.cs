@@ -23,8 +23,7 @@ namespace Sakkinny.Models
 
         public decimal? Price { get; set; } 
 
-        // if true apartment is currently full
-        public bool IsRented { get; set; } = false;
+      
 
         // Rental start and end dates
         public DateTime? RentalStartDate { get; set; }
@@ -35,5 +34,11 @@ namespace Sakkinny.Models
         public DateTime CreationTime { get; set; } = DateTime.Now; 
 
         public DateTime? DeletionTime { get; set; } 
+         // Doubly linked list for managing renters
+        [NotMapped]
+        public RenterList RenterList { get; set; } = new RenterList();
+
+        // Helper to check if apartment is full
+        public bool IsApartmentFull => RoomsAvailable <= 0;
     }
 }

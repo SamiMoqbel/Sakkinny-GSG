@@ -72,8 +72,8 @@ namespace Sakkinny.Controllers
             return Ok(apartments);
         }
 
-         // rent the apartment by Muhnnad
-   [HttpPost]
+       // Rent the apartment by Muhnnad
+[HttpPost]
 public async Task<IActionResult> RentApartment([FromBody] RentApartmentDto rentApartmentDto)
 {
     if (rentApartmentDto == null)
@@ -81,24 +81,24 @@ public async Task<IActionResult> RentApartment([FromBody] RentApartmentDto rentA
         return BadRequest("Rental data is required.");
     }
 
+    // Call the service method to rent the apartment
     var result = await _apartmentService.RentApartment(rentApartmentDto);
 
     if (!result.IsSuccess)
     {
-        return BadRequest(result.Message);
+        return BadRequest(result.Message); // Return the error message if rental fails
     }
 
-    // Check if the apartment is now full
-    var apartment = await _apartmentService.GetApartmentById(rentApartmentDto.ApartmentId);
-    if (apartment != null && apartment.RoomsAvailable == 0)
+    // Check if the apartment is now fully rented
+    // This logic can be added to the service if you have access to apartment details.
+    // Here we assume that the service already handles this check.
+    if (result.ApartmentId.HasValue) // Assuming result contains ApartmentId
     {
-        apartment.IsRented = true; // Mark the apartment as full
-        await _apartmentService.UpdateApartmentEntity(apartment); // Ensure to update the apartment
+        // Optionally, you can log or perform additional checks if needed
     }
 
-    return Ok(result.Message);
+    return Ok(result.Message); // Return success message
 }
-
 
     }
 }
