@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Sakkinny.Models;
 using Sakkinny.Models.AuthenticationModels;
+using Sakkinny.Models.settingModel;
 using Sakkinny.Services;
 using System.Data;
 using System.Threading.Tasks;
@@ -103,6 +104,77 @@ namespace Sakkinny.Controllers
 
 			return Ok(new { Message = "User logged out successfully.", Status = 200 });
 		}
+
+		[HttpPut("update-email")]
+public async Task<IActionResult> UpdateEmail([FromBody] UpdateEmailRequestModel model)
+{
+    if (!ModelState.IsValid)
+        return BadRequest(ModelState);
+
+    var user = await _userManager.FindByIdAsync(model.UserId);
+    if (user == null)
+        return NotFound(new { Message = "User not found." });
+
+    var existingUser = await _userManager.FindByEmailAsync(model.NewEmail);
+    if (existingUser != null)
+    {
+        ModelState.AddModelError("Email", "Email is already in use.");
+        return BadRequest(ModelState);
+    }
+
+    user.Email = model.NewEmail;
+    user.UserName = model.NewEmail;
+
+    var result = await _userManager.UpdateAsync(user);
+    if (!result.Succeeded)
+        return BadRequest(result.Errors);
+
+    return Ok(new { Message = "Email updated successfully." });
+}
+
+[HttpPut("update-password")]
+public async Task<IActionResult> UpdatePassword([FromBody] UpdatePasswordRequestModel model)
+{
+    if (!ModelState.IsValid)
+        return BadRequest(ModelState);
+
+    var user = await _userManager.FindByIdAsync(model.UserId);
+    if (user == null)
+        return NotFound(new { Message = "User not found." });
+
+    var result = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
+    if (!result.Succeeded)
+        return BadRequest(result.Errors);
+
+    return Ok(new { Message = "Password updated successfully." });
+}
+[HttpPut("update-photo")]
+public async Task<IActionResult> UpdatePhoto([FromForm] UpdatePhotoRequestModel model)
+{
+    var user = await _userManager.FindByIdAsync(model.UserId);
+    if (user == null)
+        return NotFound(new { Message = "User not found." });
+
+    if (model.Photo != null && model.Photo.Length > 0)
+    {
+        var filePath = Path.Combine("wwwroot/images", $"{user.Id}_{model.Photo.FileName}");
+        using (var stream = new FileStream(filePath, FileMode.Create))
+        {
+            await model.Photo.CopyToAsync(stream);
+        }
+
+        user.ProfilePictureUrl = $"/images/{user.Id}_{model.Photo.FileName}";
+        var result = await _userManager.UpdateAsync(user);
+        if (!result.Succeeded)
+            return BadRequest(result.Errors);
+
+        return Ok(new { Message = "Profile photo updated successfully.", ImageUrl = user.ProfilePictureUrl });
+    }
+
+    return BadRequest(new { Message = "Invalid photo." });
+}
+
+
 
 	}
 }
