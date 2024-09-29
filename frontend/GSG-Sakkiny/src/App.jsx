@@ -26,20 +26,19 @@ const App = () => {
       <AuthProvider>
         <Routes>
           {/* Open Routes */}
-          {/* <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home />} />
           <Route path="/home" element={<Navigate to="/" replace />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/apartments/:id" element={<ApartmentDetails />} /> */}
+          <Route path="/apartments/:id" element={<ApartmentDetails />} />
 
           {/* Protected Routes */}
           <Route element={<RequireAuth />}>
-            {/* <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/settings" element={<AccountSettings />} />
-            <Route path="*" element={<Error404 />} /> */}
             <Route path="/addApartment" element={<AddApartment />} />
-         
           </Route>
+          <Route path="*" element={<Error404 />} />
         </Routes>
       </AuthProvider>
     </Router>

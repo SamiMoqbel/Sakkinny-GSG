@@ -1,12 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SocialIcon } from "react-social-icons";
 import { FormInput } from "../../components";
 import infoImage from "../../assets/info-image.png";
 import { Link } from "react-router-dom";
 import axios from "../../api/axios";
 import background from "../../assets/register_background.jpg";
+import Select from "react-select";
 
 export const Signup = () => {
+  const userType = [
+    { value: "Client", label: "Client" },
+    { value: "Owner", label: "Owner" },
+  ];
+
   const [userInput, setUserInput] = useState({
     fullName: "",
     email: "",
@@ -17,6 +23,10 @@ export const Signup = () => {
 
   const handleChange = (e) => {
     setUserInput({ ...userInput, [e.target.name]: e.target.value });
+  };
+
+  const handleSelectChange = (selectedOption) => {
+    setUserInput({ ...userInput, role: selectedOption.value });
   };
 
   const handleSubmit = async (e) => {
@@ -82,6 +92,15 @@ export const Signup = () => {
               value={userInput.coPassword}
               name="coPassword"
               handleChange={handleChange}
+            />
+
+            <Select
+              defaultValue={userType[0]}
+              name="userType"
+              options={userType}
+              onChange={handleSelectChange}
+              className="w-full mt-4"
+              isSearchable={false}
             />
 
             <button

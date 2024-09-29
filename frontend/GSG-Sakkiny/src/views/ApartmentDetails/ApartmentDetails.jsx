@@ -1,122 +1,73 @@
-import React, { useState } from "react";
-import { Footer } from "../Footer";
+import { useState } from "react";
 import { Navbar } from "../Navbar";
+import { Footer } from "../Footer";
+import { UserCard } from "../../components";
+import { Carousel } from "flowbite-react";
 
-export const AddApartment= () =>{
-
-  
-  const [formData, setFormData] = useState({
-    title: "",
-    subtitle: "",
-    location: "",
-    totalRooms: "",
-    price: "",
-    image: null,
-  });
-  const [selectedOption, setSelectedOption] = useState("");
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-    setSelectedOption(e.target.value);
+export const ApartmentDetails = () => {
+  const apartmentDetails = {
+    location: "Lekki",
+    title: "Samis Apartment",
+    roomsNum: 3,
+    roomsAvailable: 2,
+    price: "1000000",
   };
 
-  const handleFileChange = (e) => {
-    setFormData({ ...formData, image: e.target.files[0] });
-  };
+  const [index, setIndex] = useState(0);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Form submitted", formData);
+  const handleSelect = (selectedIndex) => {
+    setIndex(selectedIndex);
   };
 
   return (
-     <div><Navbar />
-    <div className="flex justify-between items-center w-full max-w-4xl mx-auto p-8 bg-gray-100 rounded-lg shadow-md mt-5 mb-10">
-          
-      <div className="flex-1 mr-8">
-        <h1 class="w-full ml-[180px] text-4xl mb-10 text-center uppercase tracking-widest font-bold text-[#dad9d9] bg-gradient-to-r from-[#f36767] to-[#f71e1e] shadow-[2px_4px_6px_rgba(0,0,0,0.2)] animate-fadeInUp">
-          Add Apartment
-        </h1>
-        <form onSubmit={handleSubmit} className="flex flex-col">
-          <input
-            type="text"
-            name="title"
-            placeholder="Title"
-            value={formData.title}
-            onChange={handleChange}
-            className="p-3 mb-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
-          />
-          <input
-            type="text"
-            name="subtitle"
-            placeholder="Sub Title"
-            value={formData.subtitle}
-            onChange={handleChange}
-            className="p-3 mb-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
-          />
-          <input
-            type="text"
-            name="location"
-            placeholder="Location"
-            value={formData.location}
-            onChange={handleChange}
-            className="p-3 mb-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
-          />
-          <input
-            type="number"
-            name="totalRooms"
-            placeholder="Total Rooms Num"
-            value={formData.totalRooms}
-            onChange={handleChange}
-            className="p-3 mb-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
-          />
-          <select
-            value={selectedOption}
-            onChange={handleChange}
-            className="p-3 mb-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
-          >
-            <option value="" disabled>
-              Apartment Available!!
-            </option>
-            <option value="available">Available</option>
-            <option value="not available">Not Available</option>
-          </select>
-
-          <input
-            type="file"
-            name="image"
-            onChange={handleFileChange}
-            className="p-3 mb-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
-          />
-
-          <input
-            type="number"
-            name="price"
-            placeholder="Price"
-            value={formData.price}
-            onChange={handleChange}
-            className="p-3 mb-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
-          />
-          <button
-            type="submit"
-            className="bg-red-500 text-white p-3 rounded-md font-medium hover:bg-red-600 transition-colors"
-          >
-            Add Apartment 😊
-          </button>
-        </form>
-      </div>
-      <div className="flex-1 flex justify-center items-center">
-        <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxQJkYcrdP93CozvznZQexLNMnHJITlciV1yMUuVyimNbFOda1lkDwYqZpJxFIZHUCvOE&usqp=CAU"
-          alt="add"
-          className="p-3 max-w-full h-auto rounded-lg shadow-md"
-        />
-      </div>
-    </div>
-    <Footer />
-      </div>
+    <>
+      <Navbar />
+      <main>
+        <div className="p-24 h-full flex justify-between ">
+          <div className="flex flex-col flex-1 ">
+            <div className="h-[600px]">
+              <Carousel slideInterval={5000}>
+                <img src="https://picsum.photos/1000" alt="..." />
+                <img src="https://picsum.photos/1000" alt="..." />
+                <img src="https://picsum.photos/1000" alt="..." />
+                <img src="https://picsum.photos/1000" alt="..." />
+                <img src="https://picsum.photos/1000" alt="..." />
+              </Carousel>
+            </div>
+            <div className="mt-6">
+              <div className="border-2 rounded-t-md border-t-gray-300 ">
+                <div className="flex justify-between py-4 px-10">
+                  <h1 className="text-3xl font-bold">
+                    {apartmentDetails.title}
+                  </h1>
+                  <h1 className="text-3xl text-green-500 font-bold">
+                    ${apartmentDetails.price}
+                  </h1>
+                </div>
+              </div>
+              <div className="border-2 border-t-0 rounded-b-md border-gray-300 px-10 py-4">
+                <h2 className="font-bold text-2xl text-red-600">Details</h2>
+                <p className="mt-4">
+                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                  Repellendus cupiditate dignissimos amet nisi, cum non.
+                  Temporibus labore sapiente facere nobis maxime, molestias,
+                  perspiciatis quam esse eum exercitationem quidem? Quia, modi.
+                </p>
+                <ul className="mt-6 flex flex-col gap-8">
+                  <li className="border-b-2 pb-4">Item</li>
+                  <li className="border-b-2 pb-4">Item</li>
+                  <li className="border-b-2 pb-4">Item</li>
+                  <li className="border-b-2 pb-4">Item</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div className="ml-20">
+            <UserCard />
+          </div>
+        </div>
+      </main>
+      <Footer />
+    </>
   );
 };
-
-

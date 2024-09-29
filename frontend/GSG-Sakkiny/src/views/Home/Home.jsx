@@ -36,7 +36,6 @@ export const Home = () => {
     }
   }, [inView, fetchNextPage, hasNextPage]);
 
-
   const [authenticated, setAuthenticated] = useState(true);
 
   return (

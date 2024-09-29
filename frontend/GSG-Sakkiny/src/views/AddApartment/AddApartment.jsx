@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Footer } from "../Footer";
 import { Navbar } from "../Navbar";
 
-export const AddApartment= () =>{
+export const AddApartment = () => {
   const [formData, setFormData] = useState({
     title: "",
     subtitle: "",
@@ -29,9 +29,8 @@ export const AddApartment= () =>{
   };
 
   return (
-    
     <div className="flex justify-between items-center w-full max-w-4xl mx-auto p-8 bg-gray-100 rounded-lg shadow-md mt-16">
-          {/* <Navbar /> */}
+      {/* <Navbar /> */}
       <div className="flex-1 mr-8">
         <h1 className="text-center text-red-500 text-3xl mb-10 uppercase tracking-wide font-bold bg-gradient-to-r from-pink-500 to-red-500 text-transparent bg-clip-text shadow-lg">
           Add Apartment
@@ -111,9 +110,6 @@ export const AddApartment= () =>{
           className="p-3 max-w-full h-auto rounded-lg shadow-md"
         />
       </div>
-       {/* <Footer /> */}
     </div>
   );
 };
-
-

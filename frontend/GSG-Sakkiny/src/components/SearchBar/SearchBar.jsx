@@ -1,12 +1,10 @@
 import Select from "react-select";
 import LOCATIONS from "../../data/LOCATIONS";
+import axios from "../../api/axios";
+import { useEffect, useState } from "react";
 
 export const SearchBar = () => {
-  const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
-  ];
+  const [apartmentOptions, setApartmentOptions] = useState([]);
 
   const roomsOptions = [
     { value: "1", label: "1" },
@@ -22,12 +20,29 @@ export const SearchBar = () => {
     label: location,
   }));
 
+  useEffect(() => {
+    const fetchNames = async () => {
+      try {
+        const response = await axios.get(
+          "/Apartment/GetAllApartmentNames/names"
+        );
+        const names = [...new Set(response.data)];
+        setApartmentOptions(
+          names.map((name) => ({ value: name, label: name }))
+        );
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchNames();
+  }, []);
+
   return (
     <div className="mt-6 rounded-2xl border-2 w-2/3 p-8 bg-red-600 flex items-center justify-center gap-3">
       <Select
-        defaultValue={options[0]}
+        defaultValue={apartmentOptions[0]}
         name="apartments"
-        options={options}
+        options={apartmentOptions}
         isSearchable
         isClearable
         className="w-1/3 "
