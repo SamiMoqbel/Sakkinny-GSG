@@ -211,20 +211,59 @@ namespace Sakkinny.Services
             }
         }
 
-        public async Task<IEnumerable<ApartmentDto>> GetAllApartments()
+        public async Task<IEnumerable<ApartmentDto>> GetAllApartments(getAllApartmentsDto model)
         {
-            var apartmentsDtos = new List<ApartmentDto>();
-            var retrievedApartments = await _context.Apartments.ToListAsync();
-
-            foreach (var apartment in retrievedApartments)
+            var query = _context.Apartments.AsQueryable();
+            query = query.Where(a => !a.IsDeleted);
+            if (!string.IsNullOrWhiteSpace(model.SearchTerm))
             {
-                if (!apartment.IsDeleted)
+                query = query.Where(a => a.Title.Contains(model.SearchTerm) || a.SubTitle.Contains(model.SearchTerm) || a.Location.Contains(model.SearchTerm));
+            }
+            if (model.ColumnFilters != null && model.ColumnFilters.Any())
+            {
+                foreach (var filter in model.ColumnFilters)
                 {
-                    var apartmentDto = _mapper.Map<ApartmentDto>(apartment);
-                    apartmentsDtos.Add(apartmentDto);
+                    if (!string.IsNullOrWhiteSpace(filter.Key) && !string.IsNullOrWhiteSpace(filter.Value))
+                    {
+                        switch (filter.Key.ToLower())
+                        {
+                            case "title":
+                                query = query.Where(a => a.Title.Contains(filter.Value));
+                                break;
+                            case "location":
+                                query = query.Where(a => a.Location.Contains(filter.Value));
+                                break;
+                            case "roomsnumber":
+                                if (int.TryParse(filter.Value, out int roomsNumber))
+                                {
+                                    query = query.Where(a => a.RoomsNumber == roomsNumber);
+                                }
+                                break;
+                            case "roomsavailable":
+                                if (int.TryParse(filter.Value, out int roomsAvailable))
+                                {
+                                    query = query.Where(a => a.RoomsAvailable == roomsAvailable);
+                                }
+                                break;
+                        }
+                    }
                 }
             }
-            return apartmentsDtos;
+            var totalItems = await query.CountAsync();
+            var apartments = await query
+                .Skip((model.PageIndex - 1) * model.PageSize)
+                .Take(model.PageSize)
+                .ToListAsync();
+            return apartments.Select(apartment => new ApartmentDto
+            {
+                Id = (int)apartment.Id,
+                title = apartment.Title,
+                subTitle = apartment.SubTitle,
+                location = apartment.Location,
+                roomsNumber = apartment.RoomsNumber,
+                roomsAvailable = apartment.RoomsAvailable,
+                price = apartment.Price,
+            }).ToList();
         }
         // rent the apartment  by Muhnnad
         public async Task<ResultDto> RentApartment(RentApartmentDto rentApartmentDto)
