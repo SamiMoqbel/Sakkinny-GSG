@@ -8,3 +8,4 @@ export * from './Apartments';
 export * from './Dashboard';
 export * from './ApartmentDetails';
 export * from './AccountSettings';
+export * from './AddApartment';
