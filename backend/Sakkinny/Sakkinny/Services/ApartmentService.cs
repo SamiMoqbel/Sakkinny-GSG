@@ -20,58 +20,122 @@ namespace Sakkinny.Services
 
         public async Task<ApartmentDto> AddApartment(CreateApartmentDto apartmentDto)
         {
+
             var apartment = _mapper.Map<Apartment>(apartmentDto);
             apartment.CreationTime = DateTime.Now;
-            _logger.LogInformation("ADDING apartment: {ApartmentName}", apartmentDto.title);
 
-			try
-			{
-				await _context.Apartments.AddAsync(apartment);
-				await _context.SaveChangesAsync();
+            if (apartmentDto.Images == null || !apartmentDto.Images.Any())
+            {
+                _logger.LogWarning("Attempted to add an apartment without images: {ApartmentName}", apartmentDto.title);
+                throw new ArgumentException("At least one image is required.");
+            }
 
-				var mapping = _mapper.Map<ApartmentDto>(apartment);
-				_logger.LogInformation("Apartment added with ID: {ApartmentId}", mapping.Id);
+            _logger.LogInformation("Adding apartment: {ApartmentName}", apartmentDto.title);
 
-				return mapping;
-			}
-			catch (Exception ex)
-			{
-				_logger.LogError(ex, "Error adding apartment: {ApartmentName}", apartmentDto.title);
-				throw new ApplicationException("Error adding apartment", ex);
-			}
-		}
+            try
+            {
+                // Manually handle the image conversion from IFormFile to byte[]
+                apartment.Images = new List<ApartmentImage>();
 
-		public async Task<ApartmentDto> UpdateApartment(int id, UpdateApartmentDto apartmentDto)
-		{
-			_logger.LogInformation("Attempting to update apartment with ID: {ApartmentId}", id);
+                foreach (var imageFile in apartmentDto.Images)
+                {
+                    using var memoryStream = new MemoryStream();
+                    await imageFile.CopyToAsync(memoryStream);
 
-			try
-			{
-				var apartment = await _context.Apartments.FirstOrDefaultAsync(a => a.Id == id && !a.IsDeleted);
-				if (apartment == null)
-				{
-					_logger.LogWarning("Apartment with ID: {ApartmentId} not found", id);
-					return null;
-				}
+                    var apartmentImage = new ApartmentImage
+                    {
+                        ImageData = memoryStream.ToArray(),  // Convert image to byte array
+                        Apartment = apartment                 // Associate image with apartment
+                    };
+
+                    apartment.Images.Add(apartmentImage);
+                }
 
 
-				_mapper.Map(apartmentDto, apartment);
-
-				await _context.SaveChangesAsync();
-
-				_logger.LogInformation("Apartment updated with ID: {ApartmentId}", id);
-
-				return _mapper.Map<ApartmentDto>(apartment);
-			}
-			catch (Exception ex)
-			{
-				_logger.LogError(ex, "Error updating apartment with ID: {ApartmentId}", id);
-				throw new InvalidOperationException("Error updating apartment", ex);
-			}
-		}
+                await _context.Apartments.AddAsync(apartment);
+                await _context.SaveChangesAsync();
 
 
-		public async Task<ApartmentDto> DeleteApartment(int id)
+                var apartmentDtoResult = _mapper.Map<ApartmentDto>(apartment);
+
+                _logger.LogInformation("Apartment added with ID: {ApartmentId}", apartmentDtoResult.Id);
+                return apartmentDtoResult;
+            }
+            catch (ArgumentException argEx)
+            {
+
+                _logger.LogError(argEx, "Validation error adding apartment: {ApartmentName}", apartmentDto.title);
+                throw;  
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error adding apartment: {ApartmentName}", apartmentDto.title);
+                throw new ApplicationException("Error adding apartment", ex);
+            }
+        }
+
+        public async Task<ApartmentDto> UpdateApartment(int id, UpdateApartmentDto apartmentDto)
+        {
+            _logger.LogInformation("Attempting to update apartment with ID: {ApartmentId}", id);
+
+            try
+            {
+
+                var apartment = await _context.Apartments
+                    .Include(a => a.Images)
+                    .FirstOrDefaultAsync(a => a.Id == id && !a.IsDeleted);
+
+
+                if (apartment == null)
+                {
+                    _logger.LogWarning("Apartment with ID: {ApartmentId} not found", id);
+                    return null; 
+                }
+
+                if (apartmentDto == null)
+                {
+                    throw new ArgumentNullException(nameof(apartmentDto), "UpdateApartmentDto cannot be null");
+                }
+
+                _logger.LogInformation("Updating apartment with data: {@ApartmentDto}", apartmentDto);
+
+                if (apartmentDto.Images != null && apartmentDto.Images.Count > 0)
+                {
+                    apartment.Images.Clear();
+
+                    foreach (var file in apartmentDto.Images)
+                    {
+                        using (var memoryStream = new MemoryStream())
+                        {
+                            await file.CopyToAsync(memoryStream);
+
+                            var apartmentImage = new ApartmentImage
+                            {
+                                ImageData = memoryStream.ToArray(), 
+                                Apartment = apartment // Associate the image with the apartment
+                            };
+
+                            // Add the new image to the apartment's Images collection
+                            apartment.Images.Add(apartmentImage);
+                        }
+                    }
+                }
+
+                await _context.SaveChangesAsync();
+
+                var apartmentDtoResult = _mapper.Map<ApartmentDto>(apartment);
+
+                _logger.LogInformation("Apartment updated successfully with ID: {ApartmentId}", apartmentDtoResult.Id);
+                return apartmentDtoResult;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error updating apartment with ID: {ApartmentId}", id);
+                throw new ApplicationException("Error updating apartment", ex);
+            }
+        }
+
+        public async Task<ApartmentDto> DeleteApartment(int id)
 		{
 			_logger.LogInformation("Attempting to delete apartment with ID: {ApartmentId}", id);
 
@@ -98,6 +162,55 @@ namespace Sakkinny.Services
 			}
 		}
 
+        public async Task<IEnumerable<string>> GetAllApartmentNames()
+        {
+            _logger.LogInformation("Retrieving all apartment names.");
+
+            try
+            {
+                var apartmentNames = await _context.Apartments
+                    .Where(a => !a.IsDeleted)
+                    .Select(a => a.Title)  
+                    .ToListAsync();
+
+                _logger.LogInformation("Retrieved {Count} apartment names.", apartmentNames.Count);
+                return apartmentNames;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error retrieving apartment names.");
+                throw new ApplicationException("Error retrieving apartment names", ex);
+            }
+        }
+
+        public async Task<(string Name, List<byte[]> Images)> GetApartmentDetailsById(int id)
+        {
+            _logger.LogInformation("Attempting to retrieve apartment details for ID: {ApartmentId}", id);
+
+            try
+            {
+                var apartment = await _context.Apartments
+                    .Include(a => a.Images)
+                    .FirstOrDefaultAsync(a => a.Id == id && !a.IsDeleted);
+
+                if (apartment == null)
+                {
+                    _logger.LogWarning("Apartment with ID: {ApartmentId} not found", id);
+                    return (null, null);
+                }
+
+                var images = apartment.Images.Select(img => img.ImageData).ToList();
+
+                _logger.LogInformation("Retrieved apartment details for ID: {ApartmentId}", id);
+                return (apartment.Title, images);  
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error retrieving apartment details for ID: {ApartmentId}", id);
+                throw new ApplicationException("Error retrieving apartment details", ex);
+            }
+        }
+
         public async Task<IEnumerable<ApartmentDto>> GetAllApartments()
         {
             var apartmentsDtos = new List<ApartmentDto>();
@@ -115,7 +228,7 @@ namespace Sakkinny.Services
         }
         // rent the apartment  by Muhnnad
         public async Task<ResultDto> RentApartment(RentApartmentDto rentApartmentDto)
-{
+		{
     var apartment = await _context.Apartments.FindAsync(rentApartmentDto.ApartmentId);
 
     if (apartment == null)
@@ -141,9 +254,10 @@ namespace Sakkinny.Services
     await _context.SaveChangesAsync();
 
     return new ResultDto { IsSuccess = true, Message = "Apartment rented successfully.", ApartmentId = apartment.Id };
-}
+	}
 
     }
+
 }
 
 

@@ -21,9 +21,9 @@ namespace Sakkinny.Models
 
         public int RoomsAvailable { get; set; } 
 
-        public decimal? Price { get; set; } 
+        public decimal? Price { get; set; }
 
-      
+        public ICollection<ApartmentImage> Images { get; set; } = new List<ApartmentImage>();
 
         // Rental start and end dates
         public DateTime? RentalStartDate { get; set; }

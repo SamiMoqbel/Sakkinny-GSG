@@ -5,12 +5,12 @@ namespace Sakkinny.Models.Dtos
     public class CreateApartmentDto
     {
         [Required]
-        public string title { get; set; }
+        public string? title { get; set; }
 
         public string? subTitle { get; set; }
 
         [Required]
-        public string location { get; set; }
+        public string? location { get; set; }
 
         [Range(1, 100)]
         public int? roomsNumber { get; set; }
@@ -21,6 +21,6 @@ namespace Sakkinny.Models.Dtos
         [Range(0, double.MaxValue)]
         public decimal? price { get; set; }
 
-        //public List<string>? pictureUrls { get; set; } = new List<string>();
+        public List<IFormFile> Images { get; set; }
     }
 }
