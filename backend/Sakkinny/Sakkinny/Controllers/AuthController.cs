@@ -42,7 +42,6 @@ namespace Sakkinny.Controllers
 			{
 				FullName = model.FullName,
 				Email = model.Email,
-				UserName = model.FullName
 			};
 
 			var result = await _userManager.CreateAsync(user, model.Password);

@@ -219,37 +219,45 @@ namespace Sakkinny.Services
             {
                 query = query.Where(a => a.Title.Contains(model.SearchTerm) || a.SubTitle.Contains(model.SearchTerm) || a.Location.Contains(model.SearchTerm));
             }
-            if (model.ColumnFilters != null && model.ColumnFilters.Any())
-            {
-                foreach (var filter in model.ColumnFilters)
-                {
-                    if (!string.IsNullOrWhiteSpace(filter.Key) && !string.IsNullOrWhiteSpace(filter.Value))
-                    {
-                        switch (filter.Key.ToLower())
-                        {
-                            case "title":
-                                query = query.Where(a => a.Title.Contains(filter.Value));
-                                break;
-                            case "location":
-                                query = query.Where(a => a.Location.Contains(filter.Value));
-                                break;
-                            case "roomsnumber":
-                                if (int.TryParse(filter.Value, out int roomsNumber))
-                                {
-                                    query = query.Where(a => a.RoomsNumber == roomsNumber);
-                                }
-                                break;
-                            case "roomsavailable":
-                                if (int.TryParse(filter.Value, out int roomsAvailable))
-                                {
-                                    query = query.Where(a => a.RoomsAvailable == roomsAvailable);
-                                }
-                                break;
-                        }
-                    }
-                }
-            }
-            var totalItems = await query.CountAsync();
+			if (model.ColumnFilters != null && model.ColumnFilters.Any())
+			{
+				foreach (var filter in model.ColumnFilters)
+				{
+					if (!string.IsNullOrWhiteSpace(filter.Key) && filter.Value != null && filter.Value.Any())
+					{
+						switch (filter.Key.ToLower())
+						{
+							case "title":
+								query = query.Where(a => filter.Value.Any(val => a.Title.Contains(val)));
+								break;
+							case "location":
+								query = query.Where(a => filter.Value.Any(val => a.Location.Contains(val)));
+								break;
+							case "roomsnumber":
+								var roomsNumbers = filter.Value
+									.Select(val => int.TryParse(val, out var number) ? number : (int?)null)
+									.Where(val => val.HasValue)
+									.ToList();
+								if (roomsNumbers.Any())
+								{
+									query = query.Where(a => roomsNumbers.Contains(a.RoomsNumber));
+								}
+								break;
+							case "roomsavailable":
+								var roomsAvailables = filter.Value
+									.Select(val => int.TryParse(val, out var available) ? available : (int?)null)
+									.Where(val => val.HasValue)
+									.ToList();
+								if (roomsAvailables.Any())
+								{
+									query = query.Where(a => roomsAvailables.Contains(a.RoomsAvailable));
+								}
+								break;
+						}
+					}
+				}
+			}
+			var totalItems = await query.CountAsync();
             var apartments = await query
                 .Skip((model.PageIndex - 1) * model.PageSize)
                 .Take(model.PageSize)
