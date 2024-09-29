@@ -3,10 +3,9 @@ import { Dropdown } from "flowbite-react";
 import Avatar from "react-avatar";
 import { Logo } from "../../components";
 import { useContext } from "react";
-import  AuthContext  from "../../context/AuthProvider";
+import AuthContext from "../../context/AuthProvider";
 
 export const Navbar = () => {
-
   const { authenticated } = useContext(AuthContext);
 
   return (
@@ -32,16 +31,19 @@ export const Navbar = () => {
               {authenticated.email}
             </span>
           </Dropdown.Header>
-          <Dropdown.Item><Link to="/dashboard">Dashboard</Link></Dropdown.Item>
-          <Dropdown.Item>Settings</Dropdown.Item>
-          <Dropdown.Item>Earnings</Dropdown.Item>
+          <Dropdown.Item>
+            <Link to="/dashboard">Dashboard</Link>
+          </Dropdown.Item>
+          <Dropdown.Item>
+            <Link to="/settings">Account Settings</Link>
+          </Dropdown.Item>
           <Dropdown.Divider />
           <Dropdown.Item>
             <Link to="/login">Sign out</Link>
           </Dropdown.Item>
         </Dropdown>
       ) : (
-        <Link to="/login" className="text-lg font-medium text-gray-700">
+        <Link to="/login" className="text-lg font-medium text-gray-700 hover:underline">
           Sign in
         </Link>
       )}

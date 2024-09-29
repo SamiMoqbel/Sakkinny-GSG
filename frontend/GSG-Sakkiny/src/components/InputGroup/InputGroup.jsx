@@ -6,6 +6,7 @@ export const InputGroup = ({
   placeholder,
   type,
   hasHelper,
+  helperCB,
   ...rest
 }) => {
   return (
@@ -15,7 +16,10 @@ export const InputGroup = ({
       </div>
       <TextInput id={src} type={type} placeholder={placeholder} {...rest} />
       {hasHelper && (
-        <button className="mt-2 text-blue-500 hover:underline self-end">
+        <button
+          onClick={helperCB}
+          className="mt-2 text-blue-500 hover:underline self-end"
+        >
           Change
         </button>
       )}

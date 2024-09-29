@@ -4,6 +4,7 @@ import { FormInput } from "../../components";
 import infoImage from "../../assets/info-image.png";
 import { Link } from "react-router-dom";
 import axios from "../../api/axios";
+import background from "../../assets/register_background.jpg";
 
 export const Signup = () => {
   const [userInput, setUserInput] = useState({
@@ -36,12 +37,12 @@ export const Signup = () => {
     } catch (error) {
       console.log(error);
     }
-
   };
 
   return (
-    <div className="h-full w-full flex items-center justify-center bg-[#f8f9fa]">
-      <div className="flex bg-white rounded-lg overflow-hidden w-2/3 border-2">
+    <div className="h-full w-full flex items-center justify-center bg-[#f8f9fa] relative">
+      <img src={background} className="absolute w-full h-full blur-sm" />
+      <div className="z-30 flex bg-white rounded-lg overflow-hidden w-2/3">
         <div className="flex-1 flex justify-center items-center">
           <img className="w-full h-full" src={infoImage} alt="Signup" />
         </div>

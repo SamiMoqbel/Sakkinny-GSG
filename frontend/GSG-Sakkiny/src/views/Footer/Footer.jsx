@@ -9,17 +9,17 @@ export const Footer = () => {
         <div className="flex justify-between py-4 px-16 items-center h-full">
           <Logo />
           <div className="flex justify-around items-center gap-10 pr-4">
-            <Link to="/home" className="text-sm font-bold">
+            <Link to="/home" className="text-lg font-bold">
               Home
             </Link>
-            <span> . </span>
-            <Link to="/about" className="text-sm font-bold ml-4">
+            <span> • </span>
+            <Link to="/about" className="text-lg font-bold ml-4">
               About
             </Link>
           </div>
         </div>
       </div>
-      
+
       <div className="h-1/4 flex justify-between px-16 py-10 items-center ">
         <div className="flex justify-center items-center ">
           <h2 className="text-sm font-bold">Sakkinny-GSG </h2>

@@ -1,9 +1,15 @@
-import { FormInput, UserCard } from "../../components";
+import { useState } from "react";
 import { InputGroup } from "../../components/InputGroup";
 import { Footer } from "../Footer";
 import { Navbar } from "../Navbar";
 
 export const AccountSettings = () => {
+  const [currentlyChanging, setCurrentlyChanging] = useState("");
+
+  const handleCancel = () => {
+    setCurrentlyChanging("");
+  };
+
   return (
     <>
       <Navbar />
@@ -19,27 +25,44 @@ export const AccountSettings = () => {
                 label="Display Name"
                 placeholder="John Doe"
                 type="text"
-                hasHelper={false}
+                hasHelper={currentlyChanging !== "name"}
+                helperCB={() => setCurrentlyChanging("name")}
+                disabled={currentlyChanging !== "name"}
               />
               <InputGroup
                 src="email"
                 label="Email Address"
                 placeholder="johndoe@email.com"
                 type="email"
-                hasHelper={true}
+                hasHelper={currentlyChanging !== "email"}
+                helperCB={() => setCurrentlyChanging("email")}
+                disabled={currentlyChanging !== "email"}
               />
+
               <InputGroup
                 src="password"
                 label="Password"
                 placeholder="************"
                 type="password"
-                hasHelper={true}
+                hasHelper={currentlyChanging !== "password"}
+                helperCB={() => setCurrentlyChanging("password")}
+                disabled={currentlyChanging !== "password"}
               />
+              {currentlyChanging === "password" && (
+                <>
+                  <InputGroup
+                    src="coPassword"
+                    label="Confirm Password"
+                    placeholder="************"
+                    type="password"
+                  />
+                </>
+              )}
               <div className="mt-12 flex justify-center items-center gap-20">
                 <button className="hover:opacity-75 active:scale-90 bg-blue-500 border-2 text-white font-bold border-black px-12 py-2 rounded-md">
                   Save
                 </button>
-                <button className="hover:opacity-75 active:scale-90 bg-gray-200 border-2 border-black px-12 py-2 font-bold rounded-md">
+                <button onClick={handleCancel} className="hover:opacity-75 active:scale-90 bg-gray-200 border-2 border-black px-12 py-2 font-bold rounded-md">
                   Cancel
                 </button>
               </div>

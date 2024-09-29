@@ -1,16 +1,20 @@
-import {useContext, useState } from "react";
+import { useState } from "react";
 import { SocialIcon } from "react-social-icons";
+import { useLocation, Link, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import axios from "../../api/axios";
+import useAuth from "../../hooks/useAuth";
 import { FormInput } from "../../components";
 import infoImage from "../../assets/info-image.png";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "../../api/axios";
-import AuthContext from "../../context/AuthProvider";
-import toast from "react-hot-toast";
+import background from "../../assets/register_background.jpg";
 
 
 export const Login = () => {
   const navigate = useNavigate();
-  const { setAuthenticated } = useContext(AuthContext);
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+
+  const { setAuthenticated } = useAuth();
   const [userInput, setUserInput] = useState({ email: "", password: "" });
 
   const handleChange = (e) => {
@@ -31,26 +35,29 @@ export const Login = () => {
           withCredentials: true,
         }
       );
-      setAuthenticated({ token: response.data.token, email: response.data.email });
+      setAuthenticated({
+        token: response.data.token,
+        email: response.data.email,
+      });
       toast.success("Welcome back!");
-      navigate("/");
-
+      navigate(from, { replace: true });
     } catch (error) {
-      console.log(error);
       toast.error(error.response.data.message);
     }
   };
 
   return (
-    <div className="h-full w-full flex items-center justify-center bg-[#f8f9fa]">
-      <div className="flex bg-white rounded-lg overflow-hidden w-2/3 border-2">
+    <div className="h-full w-full flex items-center justify-center bg-[#f8f9fa] relative">
+      <img src={background} className="absolute w-full h-full blur-sm" />
+      <div className="z-20 flex bg-white rounded-lg overflow-hidden w-2/3">
         <div className="flex-1 p-[40px] flex flex-col justify-around">
           <h2 className="text-4xl text-gray-600 self-center font-bold">
             Welcome To
             <span className="text-red-600"> Sakkinny</span>{" "}
           </h2>
           <p className="self-center text-lg text-gray-400 font-bold">
-            Log in to get in the moment updates on the things that interest you.
+            <span className="text-black">Log in</span> to get in the moment
+            updates on the things that interest you.
           </p>
 
           <form
@@ -82,7 +89,10 @@ export const Login = () => {
           </form>
 
           <p className="self-center">
-            Don’t have an account? <Link className="text-red-600 font-bold" to="/signup">Sign Up</Link>
+            Don’t have an account?{" "}
+            <Link className="text-red-600 font-bold" to="/signup">
+              Sign Up
+            </Link>
           </p>
 
           <div

@@ -40,13 +40,13 @@ export const ApartmentDetails = () => {
                   <h1 className="text-3xl font-bold">
                     {apartmentDetails.title}
                   </h1>
-                  <h1 className="text-3xl font-bold">
+                  <h1 className="text-3xl text-green-500 font-bold">
                     ${apartmentDetails.price}
                   </h1>
                 </div>
               </div>
               <div className="border-2 border-t-0 rounded-b-md border-gray-300 px-10 py-4">
-                <h2 className="font-bold text-2xl">Details</h2>
+                <h2 className="font-bold text-2xl text-red-600">Details</h2>
                 <p className="mt-4">
                   Lorem ipsum, dolor sit amet consectetur adipisicing elit.
                   Repellendus cupiditate dignissimos amet nisi, cum non.
