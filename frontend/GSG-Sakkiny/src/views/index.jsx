@@ -9,3 +9,5 @@ export * from './Dashboard';
 export * from './ApartmentDetails';
 export * from './AccountSettings';
 export * from './AddApartment';
+export * from "./EditApartment";
+export * from "./Apartments";
