@@ -33,24 +33,17 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/apartments/:id" element={<ApartmentDetails />} />
-<<<<<<< Updated upstream
-
-=======
-    
           <Route path="/editApartment" element={<EditApartment />} />
->>>>>>> Stashed changes
+          <Route path="/addApartment" element={<AddApartment />} />
+
           {/* Protected Routes */}
           <Route element={<RequireAuth />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/settings" element={<AccountSettings />} />
-<<<<<<< Updated upstream
-            <Route path="/addApartment" element={<AddApartment />} />
-=======
             <Route path="*" element={<Error404 />} />
             <Route path="/addApartment" element={<AddApartment />} />
             {/* <Route path="/editApartment" element={<EditApartment />} /> */}
          
->>>>>>> Stashed changes
           </Route>
           <Route path="*" element={<Error404 />} />
         </Routes>

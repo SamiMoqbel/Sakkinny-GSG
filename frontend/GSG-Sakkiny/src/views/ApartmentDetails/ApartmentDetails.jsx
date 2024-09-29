@@ -70,8 +70,4 @@ export const ApartmentDetails = () => {
       <Footer />
     </>
   );
-<<<<<<< Updated upstream
 };
-=======
-};
->>>>>>> Stashed changes

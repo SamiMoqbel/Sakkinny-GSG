@@ -2,13 +2,11 @@ import React, { useState } from "react";
 import { Footer } from "../Footer";
 import { Navbar } from "../Navbar";
 
-<<<<<<< Updated upstream
-export const AddApartment = () => {
-=======
+
 export const AddApartment= () =>{
 
   
->>>>>>> Stashed changes
+
   const [formData, setFormData] = useState({
     title: "",
     subtitle: "",
@@ -35,17 +33,10 @@ export const AddApartment= () =>{
   };
 
   return (
-<<<<<<< Updated upstream
-    <div className="flex justify-between items-center w-full max-w-4xl mx-auto p-8 bg-gray-100 rounded-lg shadow-md mt-16">
-      {/* <Navbar /> */}
-      <div className="flex-1 mr-8">
-        <h1 className="text-center text-red-500 text-3xl mb-10 uppercase tracking-wide font-bold bg-gradient-to-r from-pink-500 to-red-500 text-transparent bg-clip-text shadow-lg">
-=======
      <div><Navbar />
     <div className="flex justify-between items-center w-full max-w-4xl mx-auto p-8 bg-gray-100 rounded-lg shadow-md mt-5 mb-10">
             <div className="flex-1 mr-8">
         <h1 class="w-full ml-[180px] text-4xl mb-10 text-center uppercase tracking-widest font-bold text-[#dad9d9] bg-gradient-to-r from-[#f36767] to-[#f71e1e] shadow-[2px_4px_6px_rgba(0,0,0,0.2)] animate-fadeInUp">
->>>>>>> Stashed changes
           Add Apartment
         </h1>
         <form onSubmit={handleSubmit} className="flex flex-col">
