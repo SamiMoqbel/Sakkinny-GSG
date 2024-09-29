@@ -104,8 +104,8 @@ namespace Sakkinny.Controllers
             }
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<ApartmentDto>>> GetAllApartments([FromQuery] getAllApartmentsDto model)
+        [HttpPost]
+        public async Task<ActionResult<IEnumerable<ApartmentDto>>> GetAllApartments([FromBody] getAllApartmentsDto model)
         {
             var apartments = await _apartmentService.GetAllApartments(model);
             return Ok(new { TotalCount = apartments.Count(), Apartments = apartments });
