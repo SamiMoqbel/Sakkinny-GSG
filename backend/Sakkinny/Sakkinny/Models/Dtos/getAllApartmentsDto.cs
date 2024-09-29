@@ -12,6 +12,6 @@
 		}
 		public string? SearchTerm { get; set; }
 
-		public ICollection<KeyValuePair<string, string>>? ColumnFilters { get; set; }
+		public ICollection<KeyValuePair<string, List<string>>>? ColumnFilters { get; set; }
 	}
 }
