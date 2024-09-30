@@ -31,6 +31,8 @@ namespace Sakkinny.Controllers
 			if (!ModelState.IsValid)
 				return BadRequest(ModelState);
 
+			model.Email = model.Email.Trim();
+
 			var existingUser = await _userManager.FindByEmailAsync(model.Email);
 			if (existingUser != null)
 			{
@@ -38,10 +40,14 @@ namespace Sakkinny.Controllers
 				return BadRequest(ModelState);
 			}
 
+			var emailParts = model.Email.Split('@');
+			string userName = emailParts[0];
+
 			var user = new ApplicationUser
 			{
 				FullName = model.FullName,
 				Email = model.Email,
+				UserName = userName
 			};
 
 			var result = await _userManager.CreateAsync(user, model.Password);
