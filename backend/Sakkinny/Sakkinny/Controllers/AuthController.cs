@@ -84,6 +84,7 @@ namespace Sakkinny.Controllers
 
 			var response = new LoginResponseModel
 			{
+				UserId = user.Id,
 				Token = token,
 				RefreshToken = refreshToken,
 				Email = user.Email,
