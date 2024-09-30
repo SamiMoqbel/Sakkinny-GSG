@@ -31,6 +31,8 @@ namespace Sakkinny.Controllers
 			if (!ModelState.IsValid)
 				return BadRequest(ModelState);
 
+			model.Email = model.Email.Trim();
+
 			var existingUser = await _userManager.FindByEmailAsync(model.Email);
 			if (existingUser != null)
 			{
@@ -38,10 +40,14 @@ namespace Sakkinny.Controllers
 				return BadRequest(ModelState);
 			}
 
+			var emailParts = model.Email.Split('@');
+			string userName = emailParts[0];
+
 			var user = new ApplicationUser
 			{
 				FullName = model.FullName,
 				Email = model.Email,
+				UserName = userName
 			};
 
 			var result = await _userManager.CreateAsync(user, model.Password);
@@ -84,6 +90,7 @@ namespace Sakkinny.Controllers
 
 			var response = new LoginResponseModel
 			{
+				UserId = user.Id,
 				Token = token,
 				RefreshToken = refreshToken,
 				Email = user.Email,
@@ -104,74 +111,98 @@ namespace Sakkinny.Controllers
 			return Ok(new { Message = "User logged out successfully.", Status = 200 });
 		}
 
+
+		[HttpGet("getUserById/{id}")]
+		public async Task<IActionResult> GetUserById(string id)
+		{
+			var user = await _userManager.FindByIdAsync(id);
+
+			if (user == null)
+				return NotFound(new { Message = "User not found." });
+
+			var roles = await _userManager.GetRolesAsync(user);
+			var response = new getUserByIdResponseModel
+			{
+				UserId = user.Id,
+				FullName = user.FullName,
+				Email = user.Email,
+				Roles = roles.ToList(),
+				ProfilePictureUrl = user.ProfilePictureUrl
+			};
+
+			return Ok(response);
+		}
+
+
+
 		[HttpPut("update-email")]
-public async Task<IActionResult> UpdateEmail([FromBody] UpdateEmailRequestModel model)
-{
-    if (!ModelState.IsValid)
-        return BadRequest(ModelState);
+		public async Task<IActionResult> UpdateEmail([FromBody] UpdateEmailRequestModel model)
+		{
+			if (!ModelState.IsValid)
+				return BadRequest(ModelState);
 
-    var user = await _userManager.FindByIdAsync(model.UserId);
-    if (user == null)
-        return NotFound(new { Message = "User not found." });
+			var user = await _userManager.FindByIdAsync(model.UserId);
+			if (user == null)
+				return NotFound(new { Message = "User not found." });
 
-    var existingUser = await _userManager.FindByEmailAsync(model.NewEmail);
-    if (existingUser != null)
-    {
-        ModelState.AddModelError("Email", "Email is already in use.");
-        return BadRequest(ModelState);
-    }
+			var existingUser = await _userManager.FindByEmailAsync(model.NewEmail);
+			if (existingUser != null)
+			{
+				ModelState.AddModelError("Email", "Email is already in use.");
+				return BadRequest(ModelState);
+			}
 
-    user.Email = model.NewEmail;
-    user.UserName = model.NewEmail;
+			user.Email = model.NewEmail;
+			user.UserName = model.NewEmail;
 
-    var result = await _userManager.UpdateAsync(user);
-    if (!result.Succeeded)
-        return BadRequest(result.Errors);
+			var result = await _userManager.UpdateAsync(user);
+			if (!result.Succeeded)
+				return BadRequest(result.Errors);
 
-    return Ok(new { Message = "Email updated successfully." });
-}
+			return Ok(new { Message = "Email updated successfully." });
+		}
 
-[HttpPut("update-password")]
-public async Task<IActionResult> UpdatePassword([FromBody] UpdatePasswordRequestModel model)
-{
-    if (!ModelState.IsValid)
-        return BadRequest(ModelState);
+		[HttpPut("update-password")]
+		public async Task<IActionResult> UpdatePassword([FromBody] UpdatePasswordRequestModel model)
+		{
+			if (!ModelState.IsValid)
+				return BadRequest(ModelState);
 
-    var user = await _userManager.FindByIdAsync(model.UserId);
-    if (user == null)
-        return NotFound(new { Message = "User not found." });
+			var user = await _userManager.FindByIdAsync(model.UserId);
+			if (user == null)
+				return NotFound(new { Message = "User not found." });
 
-    var result = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
-    if (!result.Succeeded)
-        return BadRequest(result.Errors);
+			var result = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
+			if (!result.Succeeded)
+				return BadRequest(result.Errors);
 
-    return Ok(new { Message = "Password updated successfully." });
-}
-[HttpPut("update-photo")]
-public async Task<IActionResult> UpdatePhoto([FromForm] UpdatePhotoRequestModel model)
-{
-    var user = await _userManager.FindByIdAsync(model.UserId);
-    if (user == null)
-        return NotFound(new { Message = "User not found." });
+			return Ok(new { Message = "Password updated successfully." });
+		}
+		[HttpPut("update-photo")]
+		public async Task<IActionResult> UpdatePhoto([FromForm] UpdatePhotoRequestModel model)
+		{
+			var user = await _userManager.FindByIdAsync(model.UserId);
+			if (user == null)
+				return NotFound(new { Message = "User not found." });
 
-    if (model.Photo != null && model.Photo.Length > 0)
-    {
-        var filePath = Path.Combine("wwwroot/images", $"{user.Id}_{model.Photo.FileName}");
-        using (var stream = new FileStream(filePath, FileMode.Create))
-        {
-            await model.Photo.CopyToAsync(stream);
-        }
+			if (model.Photo != null && model.Photo.Length > 0)
+			{
+				var filePath = Path.Combine("wwwroot/images", $"{user.Id}_{model.Photo.FileName}");
+				using (var stream = new FileStream(filePath, FileMode.Create))
+				{
+					await model.Photo.CopyToAsync(stream);
+				}
 
-        user.ProfilePictureUrl = $"/images/{user.Id}_{model.Photo.FileName}";
-        var result = await _userManager.UpdateAsync(user);
-        if (!result.Succeeded)
-            return BadRequest(result.Errors);
+				user.ProfilePictureUrl = $"/images/{user.Id}_{model.Photo.FileName}";
+				var result = await _userManager.UpdateAsync(user);
+				if (!result.Succeeded)
+					return BadRequest(result.Errors);
 
-        return Ok(new { Message = "Profile photo updated successfully.", ImageUrl = user.ProfilePictureUrl });
-    }
+				return Ok(new { Message = "Profile photo updated successfully.", ImageUrl = user.ProfilePictureUrl });
+			}
 
-    return BadRequest(new { Message = "Invalid photo." });
-}
+			return BadRequest(new { Message = "Invalid photo." });
+		}
 
 
 
