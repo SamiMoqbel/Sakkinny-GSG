@@ -274,38 +274,70 @@ namespace Sakkinny.Services
             }).ToList();
         }
         // rent the apartment  by Muhnnad
+       // Rent the apartment
         public async Task<ResultDto> RentApartment(RentApartmentDto rentApartmentDto)
-		{
-    var apartment = await _context.Apartments.FindAsync(rentApartmentDto.ApartmentId);
+        {
+            var apartment = await _context.Apartments.FindAsync(rentApartmentDto.ApartmentId);
 
-    if (apartment == null)
-    {
-        return new ResultDto { IsSuccess = false, Message = "Apartment not found." };
+            if (apartment == null)
+            {
+                return new ResultDto { IsSuccess = false, Message = "Apartment not found." };
+            }
+
+            if (apartment.RoomsAvailable <= 0)
+            {
+                return new ResultDto { IsSuccess = false, Message = "No rooms available for rent." };
+            }
+
+            // Decrease available rooms
+            apartment.RoomsAvailable--;
+
+            // Add the user to the doubly linked list
+            RenterList renterList = new RenterList();
+            renterList.AddToApartment(rentApartmentDto.ApartmentId, rentApartmentDto.CustomerId, rentApartmentDto.RentalEndDate);
+
+            await _context.SaveChangesAsync();
+
+            return new ResultDto { IsSuccess = true, Message = "Apartment rented successfully.", ApartmentId = apartment.Id };
+        }
+
+        // Get Apartments by OwnerId
+        public async Task<IEnumerable<ApartmentDto>> GetApartmentByOwnerId(string ownerId)
+        {
+            var apartments = await _context.Apartments
+                .Where(a => a.OwnerId == ownerId && !a.IsDeleted)
+                .ToListAsync();
+
+            return apartments.Select(a => new ApartmentDto
+            {
+                Id = a.Id,
+                title = a.Title,
+                subTitle = a.SubTitle,
+                location = a.Location,
+                roomsNumber = a.RoomsNumber,
+                roomsAvailable = a.RoomsAvailable,
+                price = a.Price,
+            });
+        }
+
+        // Get Customers by OwnerId and ApartmentId
+        public async Task<IEnumerable<CustomerDto>> GetCustomersByOwnerAndApartmentId(string ownerId, int apartmentId)
+        {
+            var apartment = await _context.Apartments
+                .FirstOrDefaultAsync(a => a.OwnerId == ownerId && a.Id == apartmentId && !a.IsDeleted);
+
+            if (apartment == null)
+            {
+                return Enumerable.Empty<CustomerDto>();
+            }
+
+            var renterList = new RenterList(); // Assuming the apartment keeps track of the renters
+            var customers = renterList.GetAllRenters(); // This should return a list of renters
+
+            return customers.Select(c => new CustomerDto
+            {
+                CustomerId = c.CustomerId,
+            });
+        }
     }
-
-    if (apartment.RoomsAvailable <= 0)
-    {
-        return new ResultDto { IsSuccess = false, Message = "No rooms available for rent." };
-    }
-
-    // Decrease available rooms
-    apartment.RoomsAvailable--;
-
-    // Add the user to the doubly linked list
-    RenterList renterList = new RenterList();
-    renterList.AddToApartment(rentApartmentDto.ApartmentId, rentApartmentDto.CustomerId, rentApartmentDto.RentalEndDate);
-
-
-
-    // Save the updated apartment info
-    await _context.SaveChangesAsync();
-
-    return new ResultDto { IsSuccess = true, Message = "Apartment rented successfully.", ApartmentId = apartment.Id };
-	}
-
-    }
-
 }
-
-
-

@@ -1,4 +1,5 @@
 namespace Sakkinny.Models.Dtos
+
 {
     public class RentApartmentDto
     {
@@ -7,6 +8,8 @@ namespace Sakkinny.Models.Dtos
         public DateTime RentalStartDate { get; set; }
         public DateTime RentalEndDate { get; set; }
     }
+}
+
 
     
-}
+

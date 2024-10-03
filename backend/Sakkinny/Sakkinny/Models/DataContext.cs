@@ -58,6 +58,9 @@ namespace Sakkinny.Models
 
                         entity.Property(e => e.DeletionTime)
                         .IsRequired(false);
+                        entity.Property(e => e.OwnerId)
+                        .IsRequired().HasMaxLength(450);
+
                   });
             }
       }

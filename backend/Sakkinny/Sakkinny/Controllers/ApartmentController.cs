@@ -111,8 +111,8 @@ namespace Sakkinny.Controllers
             return Ok(new { TotalCount = apartments.Count(), Apartments = apartments });
         }
 
-        // Rent the apartment by Muhnnad
-        [HttpPost]
+       // Rent the apartment by Muhnnad
+        [HttpPost("rent")]
         public async Task<IActionResult> RentApartment([FromBody] RentApartmentDto rentApartmentDto)
         {
             if (rentApartmentDto == null)
@@ -120,21 +120,41 @@ namespace Sakkinny.Controllers
                 return BadRequest("Rental data is required.");
             }
 
-            // Call the service method to rent the apartment
             var result = await _apartmentService.RentApartment(rentApartmentDto);
 
             if (!result.IsSuccess)
             {
-                return BadRequest(result.Message); // Return the error message if rental fails
+                return BadRequest(result.Message);
             }
 
-            // Optionally check if the apartment is fully rented
-            if (result.ApartmentId.HasValue)
+            return Ok(result.Message);
+        }
+ // Get Apartments by OwnerId
+        [HttpGet("owner/{ownerId}")]
+        public async Task<IActionResult> GetApartmentByOwnerId(string ownerId)
+        {
+            var apartments = await _apartmentService.GetApartmentByOwnerId(ownerId);
+
+            if (apartments == null || !apartments.Any())
             {
-                // Additional checks or logging can be added here if needed
+                return NotFound("No apartments found for this owner.");
             }
 
-            return Ok(result.Message); // Return success message
+            return Ok(apartments);
+        }
+
+        // Get Customers by OwnerId and ApartmentId
+        [HttpGet("owner/{ownerId}/apartments/{apartmentId}/customers")]
+        public async Task<IActionResult> GetCustomersByOwnerAndApartmentId(string ownerId, int apartmentId)
+        {
+            var customers = await _apartmentService.GetCustomersByOwnerAndApartmentId(ownerId, apartmentId);
+
+            if (customers == null || !customers.Any())
+            {
+                return NotFound("No customers found for this apartment or owner.");
+            }
+
+            return Ok(customers);
         }
     }
 }

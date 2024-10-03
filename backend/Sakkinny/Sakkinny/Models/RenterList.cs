@@ -61,5 +61,18 @@ namespace Sakkinny.Models
                 Tail = renter.Prev;
             }
         }
+
+        // Get all renters for an apartment
+        public List<Renter> GetAllRenters()
+        {
+            var renters = new List<Renter>();
+            var current = Head;
+            while (current != null)
+            {
+                renters.Add(current);
+                current = current.Next;
+            }
+            return renters;
+        }
     }
 }
