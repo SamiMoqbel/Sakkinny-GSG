@@ -8,7 +8,7 @@ import {
   Dashboard,
   AccountSettings,
   AddApartment,
-  EditApartment,
+  EditApartment,ApartmentRentalContract,
   Apartments
 } from "./views";
 import {
@@ -35,6 +35,7 @@ const App = () => {
           <Route path="/apartments/:id" element={<ApartmentDetails />} />
           <Route path="/editApartment" element={<EditApartment />} />
           <Route path="/addApartment" element={<AddApartment />} />
+          <Route path="/apartmentRentalContract" element={<ApartmentRentalContract />} />
 
           {/* Protected Routes */}
           <Route element={<RequireAuth />}>

@@ -11,3 +11,4 @@ export * from './AccountSettings';
 export * from './AddApartment';
 export * from "./EditApartment";
 export * from "./Apartments";
+export * from "./ApartmentRentalContract";
