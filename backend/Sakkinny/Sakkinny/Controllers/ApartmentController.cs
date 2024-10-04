@@ -18,7 +18,6 @@ namespace Sakkinny.Controllers
             _logger = logger;
         }
 
-
         [HttpPost]
         public async Task<IActionResult> AddApartment(CreateApartmentDto apartmentDto)
         {
@@ -30,7 +29,6 @@ namespace Sakkinny.Controllers
             var result = await _apartmentService.AddApartment(apartmentDto);
             return Ok(result);
         }
-
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateApartment(int id, [FromForm] UpdateApartmentDto apartmentDto)
@@ -50,7 +48,6 @@ namespace Sakkinny.Controllers
             return Ok(updatedApartment);
         }
 
-        // Delete Apartment
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteApartment(int id)
         {
@@ -62,6 +59,30 @@ namespace Sakkinny.Controllers
             }
 
             return Ok(deletedApartment);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetApartmentDetailsById(int id)
+        {
+            _logger.LogInformation("Retrieving apartment details for ID: {ApartmentId}", id);
+
+            try
+            {
+
+                var apartmentDetails = await _apartmentService.GetApartmentDetailsById(id);
+
+                if (apartmentDetails == null)
+                {
+                    return NotFound(new { message = $"Apartment with ID {id} not found." });
+                }
+
+                return Ok(apartmentDetails);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error retrieving apartment details for ID: {ApartmentId}", id);
+                return StatusCode(500, new { message = "An error occurred while retrieving apartment details." });
+            }
         }
         [HttpGet("names")]
         public async Task<ActionResult<IEnumerable<string>>> GetAllApartmentNames()
@@ -79,31 +100,6 @@ namespace Sakkinny.Controllers
                 return StatusCode(500, "Internal server error while retrieving apartment names.");
             }
         }
-
-        // Get apartment details by ID
-        [HttpGet("{id}")]
-        public async Task<ActionResult<(string Name, List<byte[]> Images)>> GetApartmentDetailsById(int id)
-        {
-            _logger.LogInformation("Retrieving apartment details for ID: {ApartmentId}", id);
-
-            try
-            {
-                var apartmentDetails = await _apartmentService.GetApartmentDetailsById(id);
-
-                if (apartmentDetails.Name == null)
-                {
-                    return NotFound($"Apartment with ID {id} not found.");
-                }
-
-                return Ok(apartmentDetails);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error retrieving apartment details for ID: {ApartmentId}", id);
-                return StatusCode(500, "Internal server error while retrieving apartment details.");
-            }
-        }
-
         [HttpPost]
         public async Task<ActionResult<IEnumerable<ApartmentDto>>> GetAllApartments([FromBody] getAllApartmentsDto model)
         {
@@ -111,7 +107,6 @@ namespace Sakkinny.Controllers
             return Ok(new { TotalCount = apartments.Count(), Apartments = apartments });
         }
 
-        // Rent the apartment by Muhnnad
         [HttpPost]
         public async Task<IActionResult> RentApartment([FromBody] RentApartmentDto rentApartmentDto)
         {
@@ -120,21 +115,14 @@ namespace Sakkinny.Controllers
                 return BadRequest("Rental data is required.");
             }
 
-            // Call the service method to rent the apartment
             var result = await _apartmentService.RentApartment(rentApartmentDto);
 
             if (!result.IsSuccess)
             {
-                return BadRequest(result.Message); // Return the error message if rental fails
+                return BadRequest(result.Message);
             }
 
-            // Optionally check if the apartment is fully rented
-            if (result.ApartmentId.HasValue)
-            {
-                // Additional checks or logging can be added here if needed
-            }
-
-            return Ok(result.Message); // Return success message
+            return Ok(result.Message);
         }
     }
 }
