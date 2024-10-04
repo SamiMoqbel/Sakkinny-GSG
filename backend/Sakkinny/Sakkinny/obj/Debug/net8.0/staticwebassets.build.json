@@ -1,6 +1,10 @@
 {
   "Version": 1,
+<<<<<<< HEAD
   "Hash": "8mF/Lp4MkZFwJ3kaOIPA1LTOKjhcUsqUOsbDF9AkZuU=",
+=======
+  "Hash": "EmxzzS4nIYmmKNCfS3Ko8A3iEHrZfSYMjq1l3uCVVmc=",
+>>>>>>> lamaBranch
   "Source": "Sakkinny",
   "BasePath": "_content/Sakkinny",
   "Mode": "Default",
@@ -9,10 +13,17 @@
   "DiscoveryPatterns": [],
   "Assets": [
     {
+<<<<<<< HEAD
       "Identity": "C:\\Users\\muhnn\\.nuget\\packages\\microsoft.aspnetcore.components.quickgrid\\8.0.8\\staticwebassets\\Microsoft.AspNetCore.Components.QuickGrid.bundle.scp.css",
       "SourceId": "Microsoft.AspNetCore.Components.QuickGrid",
       "SourceType": "Package",
       "ContentRoot": "C:\\Users\\muhnn\\.nuget\\packages\\microsoft.aspnetcore.components.quickgrid\\8.0.8\\staticwebassets\\",
+=======
+      "Identity": "C:\\Users\\lamaa\\.nuget\\packages\\microsoft.aspnetcore.components.quickgrid\\8.0.8\\staticwebassets\\Microsoft.AspNetCore.Components.QuickGrid.bundle.scp.css",
+      "SourceId": "Microsoft.AspNetCore.Components.QuickGrid",
+      "SourceType": "Package",
+      "ContentRoot": "C:\\Users\\lamaa\\.nuget\\packages\\microsoft.aspnetcore.components.quickgrid\\8.0.8\\staticwebassets\\",
+>>>>>>> lamaBranch
       "BasePath": "_content/Microsoft.AspNetCore.Components.QuickGrid",
       "RelativePath": "Microsoft.AspNetCore.Components.QuickGrid.bundle.scp.css",
       "AssetKind": "All",
@@ -25,6 +36,7 @@
       "AssetTraitValue": "ProjectBundle",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
+<<<<<<< HEAD
       "OriginalItemSpec": "C:\\Users\\muhnn\\.nuget\\packages\\microsoft.aspnetcore.components.quickgrid\\8.0.8\\staticwebassets\\Microsoft.AspNetCore.Components.QuickGrid.bundle.scp.css"
     },
     {
@@ -32,6 +44,15 @@
       "SourceId": "Microsoft.AspNetCore.Components.QuickGrid",
       "SourceType": "Package",
       "ContentRoot": "C:\\Users\\muhnn\\.nuget\\packages\\microsoft.aspnetcore.components.quickgrid\\8.0.8\\staticwebassets\\",
+=======
+      "OriginalItemSpec": "C:\\Users\\lamaa\\.nuget\\packages\\microsoft.aspnetcore.components.quickgrid\\8.0.8\\staticwebassets\\Microsoft.AspNetCore.Components.QuickGrid.bundle.scp.css"
+    },
+    {
+      "Identity": "C:\\Users\\lamaa\\.nuget\\packages\\microsoft.aspnetcore.components.quickgrid\\8.0.8\\staticwebassets\\QuickGrid.razor.js",
+      "SourceId": "Microsoft.AspNetCore.Components.QuickGrid",
+      "SourceType": "Package",
+      "ContentRoot": "C:\\Users\\lamaa\\.nuget\\packages\\microsoft.aspnetcore.components.quickgrid\\8.0.8\\staticwebassets\\",
+>>>>>>> lamaBranch
       "BasePath": "_content/Microsoft.AspNetCore.Components.QuickGrid",
       "RelativePath": "QuickGrid.razor.js",
       "AssetKind": "All",
@@ -44,6 +65,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
+<<<<<<< HEAD
       "OriginalItemSpec": "C:\\Users\\muhnn\\.nuget\\packages\\microsoft.aspnetcore.components.quickgrid\\8.0.8\\staticwebassets\\QuickGrid.razor.js"
     },
     {
@@ -51,6 +73,15 @@
       "SourceId": "Sakkinny",
       "SourceType": "Computed",
       "ContentRoot": "C:\\Users\\muhnn\\OneDrive\\Desktop\\Sakkinny-GSG\\backend\\Sakkinny\\sakkinny\\obj\\Debug\\net8.0\\scopedcss\\bundle\\",
+=======
+      "OriginalItemSpec": "C:\\Users\\lamaa\\.nuget\\packages\\microsoft.aspnetcore.components.quickgrid\\8.0.8\\staticwebassets\\QuickGrid.razor.js"
+    },
+    {
+      "Identity": "C:\\Users\\lamaa\\OneDrive\\Desktop\\GazaSkyGeeks\\Sakkinny-GSG\\backend\\Sakkinny\\Sakkinny\\obj\\Debug\\net8.0\\scopedcss\\bundle\\Sakkinny.styles.css",
+      "SourceId": "Sakkinny",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Users\\lamaa\\OneDrive\\Desktop\\GazaSkyGeeks\\Sakkinny-GSG\\backend\\Sakkinny\\Sakkinny\\obj\\Debug\\net8.0\\scopedcss\\bundle\\",
+>>>>>>> lamaBranch
       "BasePath": "_content/Sakkinny",
       "RelativePath": "Sakkinny.styles.css",
       "AssetKind": "All",
@@ -63,7 +94,11 @@
       "AssetTraitValue": "ApplicationBundle",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
+<<<<<<< HEAD
       "OriginalItemSpec": "C:\\Users\\muhnn\\OneDrive\\Desktop\\Sakkinny-GSG\\backend\\Sakkinny\\sakkinny\\obj\\Debug\\net8.0\\scopedcss\\bundle\\Sakkinny.styles.css"
+=======
+      "OriginalItemSpec": "C:\\Users\\lamaa\\OneDrive\\Desktop\\GazaSkyGeeks\\Sakkinny-GSG\\backend\\Sakkinny\\Sakkinny\\obj\\Debug\\net8.0\\scopedcss\\bundle\\Sakkinny.styles.css"
+>>>>>>> lamaBranch
     }
   ]
 }

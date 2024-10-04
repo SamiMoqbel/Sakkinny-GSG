@@ -18,7 +18,6 @@ namespace Sakkinny.Models.Dtos
         [Range(0, 100)]
         public int? roomsAvailable { get; set; }
 
-        [Range(0, double.MaxValue)]
         public decimal? price { get; set; }
 
         public List<IFormFile> Images { get; set; }

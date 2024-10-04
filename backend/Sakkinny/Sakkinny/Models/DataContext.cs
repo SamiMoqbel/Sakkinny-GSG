@@ -6,8 +6,9 @@ namespace Sakkinny.Models
       public class DataContext : IdentityDbContext<ApplicationUser>
       {
             public DbSet<Apartment> Apartments { get; set; } = null!; // Not nullable
+            public DbSet<ApartmentImage> ApartmentImage { get; set; }
 
-            public DataContext(DbContextOptions<DataContext> options) : base(options)
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
             {
             }
 
@@ -60,6 +61,10 @@ namespace Sakkinny.Models
                         .IsRequired(false);
                         entity.Property(e => e.OwnerId)
                         .IsRequired().HasMaxLength(450);
+
+                        entity.HasMany(a => a.Images)
+                        .WithOne(ai => ai.Apartment)
+                        .HasForeignKey(ai => ai.ApartmentId);
 
                   });
             }
