@@ -7,7 +7,6 @@ namespace Sakkinny.Models
       {
             public DbSet<Apartment> Apartments { get; set; } = null!; // Not nullable
             public DbSet<ApartmentImage> ApartmentImage { get; set; }
-
         public DataContext(DbContextOptions<DataContext> options) : base(options)
             {
             }
