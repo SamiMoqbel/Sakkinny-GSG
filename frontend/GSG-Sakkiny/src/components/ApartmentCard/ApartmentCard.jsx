@@ -1,22 +1,23 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export const ApartmentCard = ({id, title, subtitle}) => {
   return (
     <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow ">
-      <a href={`/apartments/${id}`}>
+      <Link to={`/apartments/${id}`}>
         <img className="rounded-t-lg" src="https://picsum.photos/500" alt="" />
-      </a>
+      </Link>
       <div className="p-5 flex flex-col">
-        <a href={`/apartments/${id}`}>
+        <Link to={`/apartments/${id}`}>
           <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">
             {title}
           </h5>
-        </a>
+        </Link>
         <p className="mb-3 font-normal text-gray-700 ">
           {subtitle}
         </p>
-        <a
-          href={`/apartments/${id}`}
+        <Link
+          to={`/apartments/${id}`}
           className="self-end inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-black rounded-lg hover:bg-red-600  focus:ring-4 focus:outline-none focus:ring-black "
         >
           Read more
@@ -35,7 +36,7 @@ export const ApartmentCard = ({id, title, subtitle}) => {
               d="M1 5h12m0 0L9 1m4 4L9 9"
             />
           </svg>
-        </a>
+        </Link>
       </div>
     </div>
   );

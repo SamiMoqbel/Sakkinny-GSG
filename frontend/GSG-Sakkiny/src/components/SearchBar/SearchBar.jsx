@@ -1,24 +1,19 @@
 import Select from "react-select";
-import LOCATIONS from "../../data/LOCATIONS";
+import { LOCATIONS, ROOMS_COUNT } from "../../data/DropdownInputs";
 import axios from "../../api/axios";
 import { useEffect, useState } from "react";
 
 export const SearchBar = () => {
-  const [apartmentOptions, setApartmentOptions] = useState([]);
+  const DEFAULT_LOCATION = LOCATIONS[0];
+  const DEFAULT_ROOMS_COUNT = ROOMS_COUNT[0];
 
-  const roomsOptions = [
-    { value: "1", label: "1" },
-    { value: "2", label: "2" },
-    { value: "3", label: "3" },
-    { value: "4", label: "4" },
-    { value: "5", label: "5" },
-    { value: "6", label: "6" },
-  ];
+  const [apartmentNames, setApartmentNames] = useState([]);
 
-  const locationsOptions = LOCATIONS.map((location) => ({
-    value: location,
-    label: location,
-  }));
+  const [filters, setFilters] = useState({
+    apartmentName: "",
+    locations: [],
+    rooms: [],
+  });
 
   useEffect(() => {
     const fetchNames = async () => {
@@ -27,9 +22,7 @@ export const SearchBar = () => {
           "/Apartment/GetAllApartmentNames/names"
         );
         const names = [...new Set(response.data)];
-        setApartmentOptions(
-          names.map((name) => ({ value: name, label: name }))
-        );
+        setApartmentNames(names.map((name) => ({ value: name, label: name })));
       } catch (error) {
         console.error(error);
       }
@@ -37,29 +30,47 @@ export const SearchBar = () => {
     fetchNames();
   }, []);
 
+  const handleChange = (selected, { name }) => {
+    if (name === "apartmentName") {
+      return setFilters((prevState) => ({
+        ...prevState,
+        [name]: selected.value,
+      }));
+    }
+    setFilters((prevState) => ({
+      ...prevState,
+      [name]: selected.map((item) => item.value),
+    }));
+  };
+
+  const handleSearch = () => {
+    
+  };
+
   return (
     <div className="mt-6 rounded-2xl border-2 w-2/3 p-8 bg-red-600 flex items-center justify-center gap-3">
       <Select
-        defaultValue={apartmentOptions[0]}
-        name="apartments"
-        options={apartmentOptions}
+        name="apartmentName"
+        options={apartmentNames}
         isSearchable
         isClearable
+        onChange={handleChange}
         className="w-1/3 "
       />
       <Select
         isMulti
-        defaultValue={[locationsOptions[0]]}
         name="locations"
-        options={locationsOptions}
+        options={LOCATIONS}
+        onChange={handleChange}
         className="w-1/5"
       />
+
       <Select
         isMulti
-        defaultValue={[roomsOptions[0]]}
         name="rooms"
-        options={roomsOptions}
+        options={ROOMS_COUNT}
         isSearchable={false}
+        onChange={handleChange}
         className="w-1/5"
       />
 

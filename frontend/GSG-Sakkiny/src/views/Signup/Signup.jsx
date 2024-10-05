@@ -32,6 +32,8 @@ export const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    console.log(JSON.stringify(userInput));
+
     try {
       const response = await axios.post(
         "/Auth/register",

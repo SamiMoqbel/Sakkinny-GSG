@@ -8,8 +8,13 @@ import {
   Dashboard,
   AccountSettings,
   AddApartment,
+<<<<<<< Updated upstream
   EditApartment,ApartmentRentalContract,
   Apartments
+=======
+  EditApartment,
+  Apartments,
+>>>>>>> Stashed changes
 } from "./views";
 import {
   BrowserRouter as Router,
@@ -33,9 +38,12 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/apartments/:id" element={<ApartmentDetails />} />
+<<<<<<< Updated upstream
           <Route path="/editApartment" element={<EditApartment />} />
           <Route path="/addApartment" element={<AddApartment />} />
           <Route path="/apartmentRentalContract" element={<ApartmentRentalContract />} />
+=======
+>>>>>>> Stashed changes
 
           {/* Protected Routes */}
           <Route element={<RequireAuth />}>
@@ -43,8 +51,7 @@ const App = () => {
             <Route path="/settings" element={<AccountSettings />} />
             <Route path="*" element={<Error404 />} />
             <Route path="/addApartment" element={<AddApartment />} />
-            {/* <Route path="/editApartment" element={<EditApartment />} /> */}
-         
+            <Route path="/editApartment" element={<EditApartment />} />
           </Route>
           <Route path="*" element={<Error404 />} />
         </Routes>

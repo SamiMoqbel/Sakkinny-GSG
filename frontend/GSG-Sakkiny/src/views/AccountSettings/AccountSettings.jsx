@@ -1,14 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { InputGroup } from "../../components/InputGroup";
 import { Footer } from "../Footer";
 import { Navbar } from "../Navbar";
+import axios from "../../api/axios";
+import useAuth from "../../hooks/useAuth";
 
 export const AccountSettings = () => {
+  const { authenticated } = useAuth();
   const [currentlyChanging, setCurrentlyChanging] = useState("");
+  const [user, setUser] = useState({});
 
   const handleCancel = () => {
     setCurrentlyChanging("");
   };
+
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const response = await axios.get(`/Auth/getUserById/${authenticated.userId}`);
+        setUser(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getUser();
+  }, []);
 
   return (
     <>
@@ -23,7 +39,7 @@ export const AccountSettings = () => {
               <InputGroup
                 src="name"
                 label="Display Name"
-                placeholder="John Doe"
+                defaultValue={user.fullName}
                 type="text"
                 hasHelper={currentlyChanging !== "name"}
                 helperCB={() => setCurrentlyChanging("name")}
@@ -32,7 +48,7 @@ export const AccountSettings = () => {
               <InputGroup
                 src="email"
                 label="Email Address"
-                placeholder="johndoe@email.com"
+                defaultValue={user.email}
                 type="email"
                 hasHelper={currentlyChanging !== "email"}
                 helperCB={() => setCurrentlyChanging("email")}
