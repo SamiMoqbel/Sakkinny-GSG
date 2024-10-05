@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\muhnn\\OneDrive\\Desktop\\Sakkinny-GSG\\backend\\Sakkinny\\sakkinny\\Sakkinny.csproj": {}
+    "C:\\Users\\sami\\Desktop\\Sakkinny-GSG\\backend\\Sakkinny\\Sakkinny\\Sakkinny.csproj": {}
   },
   "projects": {
-    "C:\\Users\\muhnn\\OneDrive\\Desktop\\Sakkinny-GSG\\backend\\Sakkinny\\sakkinny\\Sakkinny.csproj": {
+    "C:\\Users\\sami\\Desktop\\Sakkinny-GSG\\backend\\Sakkinny\\Sakkinny\\Sakkinny.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\muhnn\\OneDrive\\Desktop\\Sakkinny-GSG\\backend\\Sakkinny\\sakkinny\\Sakkinny.csproj",
+        "projectUniqueName": "C:\\Users\\sami\\Desktop\\Sakkinny-GSG\\backend\\Sakkinny\\Sakkinny\\Sakkinny.csproj",
         "projectName": "Sakkinny",
-        "projectPath": "C:\\Users\\muhnn\\OneDrive\\Desktop\\Sakkinny-GSG\\backend\\Sakkinny\\sakkinny\\Sakkinny.csproj",
-        "packagesPath": "C:\\Users\\muhnn\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\muhnn\\OneDrive\\Desktop\\Sakkinny-GSG\\backend\\Sakkinny\\sakkinny\\obj\\",
+        "projectPath": "C:\\Users\\sami\\Desktop\\Sakkinny-GSG\\backend\\Sakkinny\\Sakkinny\\Sakkinny.csproj",
+        "packagesPath": "C:\\Users\\sami\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\sami\\Desktop\\Sakkinny-GSG\\backend\\Sakkinny\\Sakkinny\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\muhnn\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\sami\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -130,7 +126,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

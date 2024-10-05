@@ -85,29 +85,14 @@
     "ContainingType": "Sakkinny.Controllers.ApartmentController",
     "Method": "GetAllApartments",
     "RelativePath": "api/Apartment/GetAllApartments",
-    "HttpMethod": "GET",
+    "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "PageIndex",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "PageSize",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "SearchTerm",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "ColumnFilters",
-        "Type": "System.Collections.Generic.ICollection\u00601[[System.Collections.Generic.KeyValuePair\u00602[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
+        "Name": "model",
+        "Type": "Sakkinny.Models.Dtos.getAllApartmentsDto",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": [
@@ -121,6 +106,22 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "Sakkinny.Controllers.ApartmentController",
+    "Method": "GetApartmentByOwnerId",
+    "RelativePath": "api/Apartment/GetApartmentByOwnerId/owner/{ownerId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ownerId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "Sakkinny.Controllers.ApartmentController",
@@ -150,8 +151,29 @@
   },
   {
     "ContainingType": "Sakkinny.Controllers.ApartmentController",
+    "Method": "GetCustomersByOwnerAndApartmentId",
+    "RelativePath": "api/Apartment/GetCustomersByOwnerAndApartmentId/owner/{ownerId}/apartments/{apartmentId}/customers",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ownerId",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "apartmentId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Sakkinny.Controllers.ApartmentController",
     "Method": "RentApartment",
-    "RelativePath": "api/Apartment/RentApartment",
+    "RelativePath": "api/Apartment/RentApartment/rent",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -211,6 +233,22 @@
         "Name": "Images",
         "Type": "System.Collections.Generic.List\u00601[[Microsoft.AspNetCore.Http.IFormFile, Microsoft.AspNetCore.Http.Features, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60]]",
         "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Sakkinny.Controllers.AuthController",
+    "Method": "GetUserById",
+    "RelativePath": "api/Auth/getUserById/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.String",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
