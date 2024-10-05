@@ -7,7 +7,7 @@ namespace Sakkinny.Migrations
     /// <inheritdoc />
     public partial class imgProcessing : Migration
     {
-        /// <inheritdoc />4`1q  
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
