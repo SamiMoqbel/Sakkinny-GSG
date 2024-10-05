@@ -82,17 +82,18 @@ namespace Sakkinny.Controllers
 
         // Get apartment details by ID
         [HttpGet("{id}")]
-        public async Task<ActionResult<(string Name, List<byte[]> Images)>> GetApartmentDetailsById(int id)
+        public async Task<IActionResult> GetApartmentDetailsById(int id)
         {
             _logger.LogInformation("Retrieving apartment details for ID: {ApartmentId}", id);
 
             try
             {
+
                 var apartmentDetails = await _apartmentService.GetApartmentDetailsById(id);
 
-                if (apartmentDetails.Name == null)
+                if (apartmentDetails == null)
                 {
-                    return NotFound($"Apartment with ID {id} not found.");
+                    return NotFound(new { message = $"Apartment with ID {id} not found." });
                 }
 
                 return Ok(apartmentDetails);
@@ -100,7 +101,7 @@ namespace Sakkinny.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error retrieving apartment details for ID: {ApartmentId}", id);
-                return StatusCode(500, "Internal server error while retrieving apartment details.");
+                return StatusCode(500, new { message = "An error occurred while retrieving apartment details." });
             }
         }
 

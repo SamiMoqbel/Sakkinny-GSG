@@ -5,59 +5,61 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Sakkinny.Services
 {
-	public class ApartmentService
-	{
-		private readonly IMapper _mapper;
-		private readonly DataContext _context;
-		private readonly ILogger<ApartmentService> _logger;
+    public class ApartmentService
+    {
+        private readonly IMapper _mapper;
+        private readonly DataContext _context;
+        private readonly ILogger<ApartmentService> _logger;
 
-		public ApartmentService(IMapper mapper, DataContext context, ILogger<ApartmentService> logger)
-		{
-			_mapper = mapper;
-			_context = context;
-			_logger = logger;
-		}
+        public ApartmentService(IMapper mapper, DataContext context, ILogger<ApartmentService> logger)
+        {
+            _mapper = mapper;
+            _context = context;
+            _logger = logger;
+        }
 
         public async Task<ApartmentDto> AddApartment(CreateApartmentDto apartmentDto)
         {
-
             var apartment = _mapper.Map<Apartment>(apartmentDto);
             apartment.CreationTime = DateTime.Now;
-
             if (apartmentDto.Images == null || !apartmentDto.Images.Any())
             {
                 _logger.LogWarning("Attempted to add an apartment without images: {ApartmentName}", apartmentDto.title);
                 throw new ArgumentException("At least one image is required.");
+            }
+            if (apartmentDto.roomsNumber <= apartmentDto.roomsAvailable)
+            {
+                _logger.LogWarning("Validation error for apartment: {ApartmentName}. RoomsNumber must be greater than RoomsAvailable.", apartmentDto.title);
+                throw new ArgumentException("RoomsNumber must be greater than RoomsAvailable.");
+            }
+
+            if (apartmentDto.price <= 0)
+            {
+                _logger.LogWarning("Validation error for apartment: {ApartmentName}. Price must be greater than zero.", apartmentDto.title);
+                throw new ArgumentException("Price must be greater than zero.");
             }
 
             _logger.LogInformation("Adding apartment: {ApartmentName}", apartmentDto.title);
 
             try
             {
-                // Manually handle the image conversion from IFormFile to byte[]
+
                 apartment.Images = new List<ApartmentImage>();
 
                 foreach (var imageFile in apartmentDto.Images)
                 {
                     using var memoryStream = new MemoryStream();
                     await imageFile.CopyToAsync(memoryStream);
-
                     var apartmentImage = new ApartmentImage
                     {
                         ImageData = memoryStream.ToArray(),  // Convert image to byte array
                         Apartment = apartment                 // Associate image with apartment
                     };
-
                     apartment.Images.Add(apartmentImage);
                 }
-
-
                 await _context.Apartments.AddAsync(apartment);
                 await _context.SaveChangesAsync();
-
-
                 var apartmentDtoResult = _mapper.Map<ApartmentDto>(apartment);
-
                 _logger.LogInformation("Apartment added with ID: {ApartmentId}", apartmentDtoResult.Id);
                 return apartmentDtoResult;
             }
@@ -65,7 +67,7 @@ namespace Sakkinny.Services
             {
 
                 _logger.LogError(argEx, "Validation error adding apartment: {ApartmentName}", apartmentDto.title);
-                throw;  
+                throw;
             }
             catch (Exception ex)
             {
@@ -73,7 +75,6 @@ namespace Sakkinny.Services
                 throw new ApplicationException("Error adding apartment", ex);
             }
         }
-
         public async Task<ApartmentDto> UpdateApartment(int id, UpdateApartmentDto apartmentDto)
         {
             _logger.LogInformation("Attempting to update apartment with ID: {ApartmentId}", id);
@@ -89,7 +90,7 @@ namespace Sakkinny.Services
                 if (apartment == null)
                 {
                     _logger.LogWarning("Apartment with ID: {ApartmentId} not found", id);
-                    return null; 
+                    return null;
                 }
 
                 if (apartmentDto == null)
@@ -111,7 +112,7 @@ namespace Sakkinny.Services
 
                             var apartmentImage = new ApartmentImage
                             {
-                                ImageData = memoryStream.ToArray(), 
+                                ImageData = memoryStream.ToArray(),
                                 Apartment = apartment // Associate the image with the apartment
                             };
 
@@ -136,31 +137,31 @@ namespace Sakkinny.Services
         }
 
         public async Task<ApartmentDto> DeleteApartment(int id)
-		{
-			_logger.LogInformation("Attempting to delete apartment with ID: {ApartmentId}", id);
+        {
+            _logger.LogInformation("Attempting to delete apartment with ID: {ApartmentId}", id);
 
-			try
-			{
-				var apartment = await _context.Apartments.FirstOrDefaultAsync(a => a.Id == id && !a.IsDeleted);
-				if (apartment == null)
-				{
-					_logger.LogWarning("Apartment with ID: {ApartmentId} not found", id);
-					return null;
-				}
+            try
+            {
+                var apartment = await _context.Apartments.FirstOrDefaultAsync(a => a.Id == id && !a.IsDeleted);
+                if (apartment == null)
+                {
+                    _logger.LogWarning("Apartment with ID: {ApartmentId} not found", id);
+                    return null;
+                }
 
-				apartment.IsDeleted = true;
-				apartment.DeletionTime = DateTime.Now;
+                apartment.IsDeleted = true;
+                apartment.DeletionTime = DateTime.Now;
 
-				await _context.SaveChangesAsync();
-				_logger.LogInformation("Apartment marked as deleted with ID: {ApartmentId}", id);
-				return _mapper.Map<ApartmentDto>(apartment);
-			}
-			catch (Exception ex)
-			{
-				_logger.LogError(ex, "Error marking apartment as deleted with ID: {ApartmentId}", id);
-				throw new InvalidOperationException("Error deleting apartment", ex);
-			}
-		}
+                await _context.SaveChangesAsync();
+                _logger.LogInformation("Apartment marked as deleted with ID: {ApartmentId}", id);
+                return _mapper.Map<ApartmentDto>(apartment);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error marking apartment as deleted with ID: {ApartmentId}", id);
+                throw new InvalidOperationException("Error deleting apartment", ex);
+            }
+        }
 
         public async Task<IEnumerable<string>> GetAllApartmentNames()
         {
@@ -170,7 +171,7 @@ namespace Sakkinny.Services
             {
                 var apartmentNames = await _context.Apartments
                     .Where(a => !a.IsDeleted)
-                    .Select(a => a.Title)  
+                    .Select(a => a.Title)
                     .ToListAsync();
 
                 _logger.LogInformation("Retrieved {Count} apartment names.", apartmentNames.Count);
@@ -183,9 +184,9 @@ namespace Sakkinny.Services
             }
         }
 
-        public async Task<(string Name, List<byte[]> Images)> GetApartmentDetailsById(int id)
+        public async Task<getApartmentDetailsDto> GetApartmentDetailsById(int id)
         {
-            _logger.LogInformation("Attempting to retrieve apartment details for ID: {ApartmentId}", id);
+            _logger.LogInformation("Attempting to retrieve apartment data with ID: {ApartmentId}", id);
 
             try
             {
@@ -195,22 +196,31 @@ namespace Sakkinny.Services
 
                 if (apartment == null)
                 {
-                    _logger.LogWarning("Apartment with ID: {ApartmentId} not found", id);
-                    return (null, null);
+                    return null;
                 }
 
-                var images = apartment.Images.Select(img => img.ImageData).ToList();
+                var base64Images = apartment.Images
+                    .Select(img => Convert.ToBase64String(img.ImageData))
+                    .ToList();
 
-                _logger.LogInformation("Retrieved apartment details for ID: {ApartmentId}", id);
-                return (apartment.Title, images);  
+                return new getApartmentDetailsDto
+                {
+                    Title = apartment.Title,
+                    Base64Images = base64Images,
+                    subTitle = apartment.SubTitle,
+                    location = apartment.Location,
+                    roomsNumber = apartment.RoomsNumber,
+                    roomsAvailable = apartment.RoomsAvailable,
+                    price = apartment.Price
+
+                };
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error retrieving apartment details for ID: {ApartmentId}", id);
-                throw new ApplicationException("Error retrieving apartment details", ex);
+                _logger.LogError(ex, "Error retrieving apartment with ID: {ApartmentId}", id);
+                throw new InvalidOperationException("Error retrieving apartment", ex);
             }
         }
-
         public async Task<IEnumerable<ApartmentDto>> GetAllApartments(getAllApartmentsDto model)
         {
             var query = _context.Apartments.AsQueryable();
@@ -219,45 +229,45 @@ namespace Sakkinny.Services
             {
                 query = query.Where(a => a.Title.Contains(model.SearchTerm) || a.SubTitle.Contains(model.SearchTerm) || a.Location.Contains(model.SearchTerm));
             }
-			if (model.ColumnFilters != null && model.ColumnFilters.Any())
-			{
-				foreach (var filter in model.ColumnFilters)
-				{
-					if (!string.IsNullOrWhiteSpace(filter.Key) && filter.Value != null && filter.Value.Any())
-					{
-						switch (filter.Key.ToLower())
-						{
-							case "title":
-								query = query.Where(a => filter.Value.Any(val => a.Title.Contains(val)));
-								break;
-							case "location":
-								query = query.Where(a => filter.Value.Any(val => a.Location.Contains(val)));
-								break;
-							case "roomsnumber":
-								var roomsNumbers = filter.Value
-									.Select(val => int.TryParse(val, out var number) ? number : (int?)null)
-									.Where(val => val.HasValue)
-									.ToList();
-								if (roomsNumbers.Any())
-								{
-									query = query.Where(a => roomsNumbers.Contains(a.RoomsNumber));
-								}
-								break;
-							case "roomsavailable":
-								var roomsAvailables = filter.Value
-									.Select(val => int.TryParse(val, out var available) ? available : (int?)null)
-									.Where(val => val.HasValue)
-									.ToList();
-								if (roomsAvailables.Any())
-								{
-									query = query.Where(a => roomsAvailables.Contains(a.RoomsAvailable));
-								}
-								break;
-						}
-					}
-				}
-			}
-			var totalItems = await query.CountAsync();
+            if (model.ColumnFilters != null && model.ColumnFilters.Any())
+            {
+                foreach (var filter in model.ColumnFilters)
+                {
+                    if (!string.IsNullOrWhiteSpace(filter.Key) && filter.Value != null && filter.Value.Any())
+                    {
+                        switch (filter.Key.ToLower())
+                        {
+                            case "title":
+                                query = query.Where(a => filter.Value.Any(val => a.Title.Contains(val)));
+                                break;
+                            case "location":
+                                query = query.Where(a => filter.Value.Any(val => a.Location.Contains(val)));
+                                break;
+                            case "roomsnumber":
+                                var roomsNumbers = filter.Value
+                                    .Select(val => int.TryParse(val, out var number) ? number : (int?)null)
+                                    .Where(val => val.HasValue)
+                                    .ToList();
+                                if (roomsNumbers.Any())
+                                {
+                                    query = query.Where(a => roomsNumbers.Contains(a.RoomsNumber));
+                                }
+                                break;
+                            case "roomsavailable":
+                                var roomsAvailables = filter.Value
+                                    .Select(val => int.TryParse(val, out var available) ? available : (int?)null)
+                                    .Where(val => val.HasValue)
+                                    .ToList();
+                                if (roomsAvailables.Any())
+                                {
+                                    query = query.Where(a => roomsAvailables.Contains(a.RoomsAvailable));
+                                }
+                                break;
+                        }
+                    }
+                }
+            }
+            var totalItems = await query.CountAsync();
             var apartments = await query
                 .Skip((model.PageIndex - 1) * model.PageSize)
                 .Take(model.PageSize)
@@ -274,7 +284,7 @@ namespace Sakkinny.Services
             }).ToList();
         }
         // rent the apartment  by Muhnnad
-       // Rent the apartment
+        // Rent the apartment
         public async Task<ResultDto> RentApartment(RentApartmentDto rentApartmentDto)
         {
             var apartment = await _context.Apartments.FindAsync(rentApartmentDto.ApartmentId);
