@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\muhnn\\OneDrive\\Desktop\\Sakkinny-GSG\\backend\\Sakkinny\\sakkinny\\Sakkinny.csproj": {}
+    "C:\\Users\\muhnn\\OneDrive\\Desktop\\Sakkinny-GSG\\backend\\Sakkinny\\Sakkinny\\Sakkinny.csproj": {}
   },
   "projects": {
-    "C:\\Users\\muhnn\\OneDrive\\Desktop\\Sakkinny-GSG\\backend\\Sakkinny\\sakkinny\\Sakkinny.csproj": {
+    "C:\\Users\\muhnn\\OneDrive\\Desktop\\Sakkinny-GSG\\backend\\Sakkinny\\Sakkinny\\Sakkinny.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\muhnn\\OneDrive\\Desktop\\Sakkinny-GSG\\backend\\Sakkinny\\sakkinny\\Sakkinny.csproj",
+        "projectUniqueName": "C:\\Users\\muhnn\\OneDrive\\Desktop\\Sakkinny-GSG\\backend\\Sakkinny\\Sakkinny\\Sakkinny.csproj",
         "projectName": "Sakkinny",
-        "projectPath": "C:\\Users\\muhnn\\OneDrive\\Desktop\\Sakkinny-GSG\\backend\\Sakkinny\\sakkinny\\Sakkinny.csproj",
+        "projectPath": "C:\\Users\\muhnn\\OneDrive\\Desktop\\Sakkinny-GSG\\backend\\Sakkinny\\Sakkinny\\Sakkinny.csproj",
         "packagesPath": "C:\\Users\\muhnn\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\muhnn\\OneDrive\\Desktop\\Sakkinny-GSG\\backend\\Sakkinny\\sakkinny\\obj\\",
+        "outputPath": "C:\\Users\\muhnn\\OneDrive\\Desktop\\Sakkinny-GSG\\backend\\Sakkinny\\Sakkinny\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

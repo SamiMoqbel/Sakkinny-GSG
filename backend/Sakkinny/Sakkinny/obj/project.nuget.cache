@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "XxqbSZz4xSA=",
+  "dgSpecHash": "f5pfMZNuHQM=",
   "success": true,
-  "projectFilePath": "C:\\Users\\muhnn\\OneDrive\\Desktop\\Sakkinny-GSG\\backend\\Sakkinny\\sakkinny\\Sakkinny.csproj",
+  "projectFilePath": "C:\\Users\\muhnn\\OneDrive\\Desktop\\Sakkinny-GSG\\backend\\Sakkinny\\Sakkinny\\Sakkinny.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\muhnn\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\muhnn\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "8mF/Lp4MkZFwJ3kaOIPA1LTOKjhcUsqUOsbDF9AkZuU=",
+  "Hash": "nwFlcbv9scLKUF3/Uyl8gmXkd3V6EB1D5oeNPc2el2M=",
   "Source": "Sakkinny",
   "BasePath": "_content/Sakkinny",
   "Mode": "Default",
@@ -47,10 +47,10 @@
       "OriginalItemSpec": "C:\\Users\\muhnn\\.nuget\\packages\\microsoft.aspnetcore.components.quickgrid\\8.0.8\\staticwebassets\\QuickGrid.razor.js"
     },
     {
-      "Identity": "C:\\Users\\muhnn\\OneDrive\\Desktop\\Sakkinny-GSG\\backend\\Sakkinny\\sakkinny\\obj\\Debug\\net8.0\\scopedcss\\bundle\\Sakkinny.styles.css",
+      "Identity": "C:\\Users\\muhnn\\OneDrive\\Desktop\\Sakkinny-GSG\\backend\\Sakkinny\\Sakkinny\\obj\\Debug\\net8.0\\scopedcss\\bundle\\Sakkinny.styles.css",
       "SourceId": "Sakkinny",
       "SourceType": "Computed",
-      "ContentRoot": "C:\\Users\\muhnn\\OneDrive\\Desktop\\Sakkinny-GSG\\backend\\Sakkinny\\sakkinny\\obj\\Debug\\net8.0\\scopedcss\\bundle\\",
+      "ContentRoot": "C:\\Users\\muhnn\\OneDrive\\Desktop\\Sakkinny-GSG\\backend\\Sakkinny\\Sakkinny\\obj\\Debug\\net8.0\\scopedcss\\bundle\\",
       "BasePath": "_content/Sakkinny",
       "RelativePath": "Sakkinny.styles.css",
       "AssetKind": "All",
@@ -63,7 +63,7 @@
       "AssetTraitValue": "ApplicationBundle",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\muhnn\\OneDrive\\Desktop\\Sakkinny-GSG\\backend\\Sakkinny\\sakkinny\\obj\\Debug\\net8.0\\scopedcss\\bundle\\Sakkinny.styles.css"
+      "OriginalItemSpec": "C:\\Users\\muhnn\\OneDrive\\Desktop\\Sakkinny-GSG\\backend\\Sakkinny\\Sakkinny\\obj\\Debug\\net8.0\\scopedcss\\bundle\\Sakkinny.styles.css"
     }
   ]
 }

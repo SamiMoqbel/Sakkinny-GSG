@@ -80,7 +80,7 @@ namespace Sakkinny.Controllers
             }
         }
 
-        // Get apartment details by ID
+        // Get apartment details by ID 
         [HttpGet("{id}")]
         public async Task<ActionResult<(string Name, List<byte[]> Images)>> GetApartmentDetailsById(int id)
         {
@@ -111,7 +111,7 @@ namespace Sakkinny.Controllers
             return Ok(new { TotalCount = apartments.Count(), Apartments = apartments });
         }
 
-       // Rent the apartment by Muhnnad
+        // Rent the apartment by Muhnnad
         [HttpPost("rent")]
         public async Task<IActionResult> RentApartment([FromBody] RentApartmentDto rentApartmentDto)
         {
@@ -129,7 +129,7 @@ namespace Sakkinny.Controllers
 
             return Ok(result.Message);
         }
- // Get Apartments by OwnerId
+        // Get Apartments by OwnerId by Muhnnad
         [HttpGet("owner/{ownerId}")]
         public async Task<IActionResult> GetApartmentByOwnerId(string ownerId)
         {
@@ -143,7 +143,7 @@ namespace Sakkinny.Controllers
             return Ok(apartments);
         }
 
-        // Get Customers by OwnerId and ApartmentId
+        // Get Customers by OwnerId and ApartmentId by Muhnnad
         [HttpGet("owner/{ownerId}/apartments/{apartmentId}/customers")]
         public async Task<IActionResult> GetCustomersByOwnerAndApartmentId(string ownerId, int apartmentId)
         {
@@ -156,5 +156,20 @@ namespace Sakkinny.Controllers
 
             return Ok(customers);
         }
+
+        // Get Apartment how Customers rent it by Muhnnad
+        [HttpGet("customer/{customerId}/rented")]
+        public async Task<IActionResult> GetApartmentsRentedByCustomer(int customerId)
+        {
+            var apartments = await _apartmentService.GetApartmentsRentedByCustomer(customerId);
+
+            if (apartments == null || !apartments.Any())
+            {
+                return NotFound("No apartments rented by this customer.");
+            }
+
+            return Ok(apartments);
+        }
+
     }
 }
