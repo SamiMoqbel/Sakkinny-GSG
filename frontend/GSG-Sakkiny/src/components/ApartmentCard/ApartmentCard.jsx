@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import axios from "../../api/axios";
 import { Link } from "react-router-dom";
 
-export const ApartmentCard = ({ id, title, subtitle }) => {
+export const ApartmentCard = ({ id, title, subtitle, location }) => {
   const [imageSrc, setImageSrc] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "/Apartment/GetApartmentDetailsById/2117"
+          "/Apartment/GetApartmentDetailsById/2094"
         );
         const data = response.data;
 
@@ -26,7 +26,7 @@ export const ApartmentCard = ({ id, title, subtitle }) => {
   }, []);
 
   return (
-    <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow ">
+    <div className="max-h-96 max-w-sm bg-white border border-gray-200 rounded-lg shadow ">
       <Link to={`/apartments/${id}`}>
         <img className="rounded-t-lg" src={imageSrc} alt="" />
       </Link>
@@ -37,6 +37,7 @@ export const ApartmentCard = ({ id, title, subtitle }) => {
           </h5>
         </Link>
         <p className="mb-3 font-normal text-gray-700 ">{subtitle}</p>
+        <p className="mb-3 font-bold text-gray-700 ">🌐 {location}</p>
         <Link
           to={`/apartments/${id}`}
           className="self-end inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-black rounded-lg hover:bg-red-600  focus:ring-4 focus:outline-none focus:ring-black "

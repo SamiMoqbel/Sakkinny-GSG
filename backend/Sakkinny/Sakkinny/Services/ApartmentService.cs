@@ -27,7 +27,7 @@ namespace Sakkinny.Services
                 _logger.LogWarning("Attempted to add an apartment without images: {ApartmentName}", apartmentDto.title);
                 throw new ArgumentException("At least one image is required.");
             }
-            if (apartmentDto.roomsNumber <= apartmentDto.roomsAvailable)
+            if (apartmentDto.roomsNumber < apartmentDto.roomsAvailable)
             {
                 _logger.LogWarning("Validation error for apartment: {ApartmentName}. RoomsNumber must be greater than RoomsAvailable.", apartmentDto.title);
                 throw new ArgumentException("RoomsNumber must be greater than RoomsAvailable.");
@@ -81,11 +81,9 @@ namespace Sakkinny.Services
 
             try
             {
-
                 var apartment = await _context.Apartments
                     .Include(a => a.Images)
                     .FirstOrDefaultAsync(a => a.Id == id && !a.IsDeleted);
-
 
                 if (apartment == null)
                 {
@@ -100,6 +98,29 @@ namespace Sakkinny.Services
 
                 _logger.LogInformation("Updating apartment with data: {@ApartmentDto}", apartmentDto);
 
+                if (!string.IsNullOrEmpty(apartmentDto.title))
+                {
+                    apartment.Title = apartmentDto.title;
+                }
+
+                if (!string.IsNullOrEmpty(apartmentDto.location))
+                {
+                    apartment.Location = apartmentDto.location;
+                }
+
+                if (apartmentDto.price.HasValue)
+                {
+                    apartment.Price = apartmentDto.price.Value;
+                }
+
+                if (apartmentDto.roomsNumber.HasValue)
+                {
+                    apartment.RoomsNumber = apartmentDto.roomsNumber.Value;
+                    apartment.RoomsAvailable = apartmentDto.roomsAvailable.Value;
+
+
+                }
+
                 if (apartmentDto.Images != null && apartmentDto.Images.Count > 0)
                 {
                     apartment.Images.Clear();
@@ -113,10 +134,9 @@ namespace Sakkinny.Services
                             var apartmentImage = new ApartmentImage
                             {
                                 ImageData = memoryStream.ToArray(),
-                                Apartment = apartment // Associate the image with the apartment
+                                Apartment = apartment
                             };
 
-                            // Add the new image to the apartment's Images collection
                             apartment.Images.Add(apartmentImage);
                         }
                     }

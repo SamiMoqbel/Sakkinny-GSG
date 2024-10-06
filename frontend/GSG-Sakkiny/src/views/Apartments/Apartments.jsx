@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Footer } from "../Footer";
 import { Navbar } from "../Navbar";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import toast from "react-hot-toast";
 import axios from "../../api/axios";
 
@@ -11,8 +11,9 @@ export const Apartments = () => {
   useEffect(() => {
     const fetchApartments = async () => {
       try {
-        const response = await axios.post(
-          "/Apartment/GetAllApartments",
+        const userID = JSON.parse(localStorage.getItem("userData")).userId;
+        const response = await axios.get(
+          `/Apartment/GetApartmentByOwnerId/owner/${userID}`,
           {},
           {
             headers: {
@@ -20,7 +21,7 @@ export const Apartments = () => {
             },
           }
         );
-        setApartmentsData(response.data.apartments);
+        setApartmentsData(response.data);
       } catch (error) {
         console.error(error);
       }
@@ -46,7 +47,7 @@ export const Apartments = () => {
     <div className="flex min-h-screen font-sans">
       <div className="flex-grow bg-gray-100 p-6">
         <Navbar />
-        <div className="bg-white h-screen p-6 rounded-lg shadow-md mt-[15] mb-[30px]">
+        <div className="bg-white h-full min-h-screen p-6 rounded-lg shadow-md mt-[15] mb-[30px]">
           <h3 className="text-xl font-semibold mb-4">Apartments</h3>
           <table className="min-w-full border-collapse w-auto">
             <thead>
@@ -61,46 +62,37 @@ export const Apartments = () => {
             </thead>
 
             <tbody>
-              {apartmentsData.map((apartments, index) => (
-                <tr key={index} className="border-b">
-                  <td className="py-2">
-                    <Link
-                      className="text-blue-400 hover:underline"
-                      to={`/apartments/${apartments.id}`}
-                    >
-                      {apartments.title}
-                    </Link>
-                  </td>
-                  <td className="py-2">{apartments.location}</td>
-                  <td className="py-2">{apartments.roomsNumber}</td>
-                  <td className="py-2">{apartments.roomsAvailable}</td>
-                  <td className="py-2">{apartments.price}</td>
-                  <td className="py-2">
-                    <Link
-                      className=" bg-blue-500 text-white px-4 py-2 rounded-md mr-2"
-                      to={`/EditApartment/`}
-                    >
-                      Edit
-                    </Link>
-                    <button
-                      onClick={() => (
-                        <Link
-                          className=" bg-blue-500 text-white px-4 py-2 rounded-md mr-2"
-                          to={"/EditApartment"}
-                        >
-                          Edit
-                        </Link>
-                      )}
-                    ></button>
-                    <button
-                      onClick={() => handleDelete(apartments.id)}
-                      className="bg-red-500 text-white px-4 py-2 rounded-md"
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
+              {apartmentsData &&
+                apartmentsData.map((apartments, index) => (
+                  <tr key={index} className="border-b">
+                    <td className="py-2">
+                      <Link
+                        className="text-blue-400 hover:underline"
+                        to={`/apartments/${apartments.id}`}
+                      >
+                        {apartments.title}
+                      </Link>
+                    </td>
+                    <td className="py-2">{apartments.location}</td>
+                    <td className="py-2">{apartments.roomsNumber}</td>
+                    <td className="py-2">{apartments.roomsAvailable}</td>
+                    <td className="py-2">{apartments.price}</td>
+                    <td className="py-2">
+                      <Link
+                        className=" bg-blue-500 text-white px-4 py-2 rounded-md mr-2"
+                        to={`/EditApartment/${apartments.id}`}
+                      >
+                        Edit
+                      </Link>
+                      <button
+                        onClick={() => handleDelete(apartments.id)}
+                        className="bg-red-500 text-white px-4 py-2 rounded-md"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
           <div className="mt-8  flex justify-center">
