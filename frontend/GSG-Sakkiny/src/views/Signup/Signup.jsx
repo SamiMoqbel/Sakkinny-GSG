@@ -1,12 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SocialIcon } from "react-social-icons";
 import { FormInput } from "../../components";
 import infoImage from "../../assets/info-image.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "../../api/axios";
 import background from "../../assets/register_background.jpg";
+import Select from "react-select";
+import { toast } from "react-hot-toast";
 
 export const Signup = () => {
+  const navigate = useNavigate();
+
+  const userType = [
+    { value: "Client", label: "Client" },
+    { value: "Owner", label: "Owner" },
+  ];
+
   const [userInput, setUserInput] = useState({
     fullName: "",
     email: "",
@@ -19,9 +28,12 @@ export const Signup = () => {
     setUserInput({ ...userInput, [e.target.name]: e.target.value });
   };
 
+  const handleSelectChange = (selectedOption) => {
+    setUserInput({ ...userInput, role: selectedOption.value });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       const response = await axios.post(
         "/Auth/register",
@@ -33,9 +45,9 @@ export const Signup = () => {
           withCredentials: true,
         }
       );
-      console.log(response.data);
+      navigate("/login");
     } catch (error) {
-      console.log(error);
+      toast.error(error.response.data.description);
     }
   };
 
@@ -84,6 +96,15 @@ export const Signup = () => {
               handleChange={handleChange}
             />
 
+            <Select
+              defaultValue={userType[0]}
+              name="userType"
+              options={userType}
+              onChange={handleSelectChange}
+              className="w-full mt-4"
+              isSearchable={false}
+            />
+
             <button
               type="submit"
               className=" p-4 text-sm w-full border-0 bg-red-600 mt-5 rounded-[20px]"
@@ -98,21 +119,6 @@ export const Signup = () => {
               Sign In
             </Link>
           </p>
-
-          <div
-            id="social-login"
-            className="mt-4 flex flex-col justify-center items-center "
-          >
-            <p>or continue with </p>
-            <div
-              id="social-links"
-              className="flex w-3/4 justify-around items-center mt-4"
-            >
-              <SocialIcon url="https://facebook.com/" />
-              <SocialIcon url="http://accounts.google.com" />
-              <SocialIcon url="https://github.com/" />
-            </div>
-          </div>
         </div>
       </div>
     </div>

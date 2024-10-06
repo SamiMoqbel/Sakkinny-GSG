@@ -80,19 +80,20 @@ namespace Sakkinny.Controllers
             }
         }
 
-        // Get apartment details by ID
+        // Get apartment details by ID 
         [HttpGet("{id}")]
-        public async Task<ActionResult<(string Name, List<byte[]> Images)>> GetApartmentDetailsById(int id)
+        public async Task<IActionResult> GetApartmentDetailsById(int id)
         {
             _logger.LogInformation("Retrieving apartment details for ID: {ApartmentId}", id);
 
             try
             {
+
                 var apartmentDetails = await _apartmentService.GetApartmentDetailsById(id);
 
-                if (apartmentDetails.Name == null)
+                if (apartmentDetails == null)
                 {
-                    return NotFound($"Apartment with ID {id} not found.");
+                    return NotFound(new { message = $"Apartment with ID {id} not found." });
                 }
 
                 return Ok(apartmentDetails);
@@ -100,7 +101,7 @@ namespace Sakkinny.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error retrieving apartment details for ID: {ApartmentId}", id);
-                return StatusCode(500, "Internal server error while retrieving apartment details.");
+                return StatusCode(500, new { message = "An error occurred while retrieving apartment details." });
             }
         }
 
@@ -112,7 +113,7 @@ namespace Sakkinny.Controllers
         }
 
         // Rent the apartment by Muhnnad
-        [HttpPost]
+        [HttpPost("rent")]
         public async Task<IActionResult> RentApartment([FromBody] RentApartmentDto rentApartmentDto)
         {
             if (rentApartmentDto == null)
@@ -120,21 +121,56 @@ namespace Sakkinny.Controllers
                 return BadRequest("Rental data is required.");
             }
 
-            // Call the service method to rent the apartment
             var result = await _apartmentService.RentApartment(rentApartmentDto);
 
             if (!result.IsSuccess)
             {
-                return BadRequest(result.Message); // Return the error message if rental fails
+                return BadRequest(result.Message);
             }
 
-            // Optionally check if the apartment is fully rented
-            if (result.ApartmentId.HasValue)
-            {
-                // Additional checks or logging can be added here if needed
-            }
-
-            return Ok(result.Message); // Return success message
+            return Ok(result.Message);
         }
+        // Get Apartments by OwnerId by Muhnnad
+        [HttpGet("owner/{ownerId}")]
+        public async Task<IActionResult> GetApartmentByOwnerId(string ownerId)
+        {
+            var apartments = await _apartmentService.GetApartmentByOwnerId(ownerId);
+
+            if (apartments == null || !apartments.Any())
+            {
+                return NotFound("No apartments found for this owner.");
+            }
+
+            return Ok(apartments);
+        }
+
+        // Get Customers by OwnerId and ApartmentId by Muhnnad
+        [HttpGet("owner/{ownerId}/apartments/{apartmentId}/customers")]
+        public async Task<IActionResult> GetCustomersByOwnerAndApartmentId(string ownerId, int apartmentId)
+        {
+            var customers = await _apartmentService.GetCustomersByOwnerAndApartmentId(ownerId, apartmentId);
+
+            if (customers == null || !customers.Any())
+            {
+                return NotFound("No customers found for this apartment or owner.");
+            }
+
+            return Ok(customers);
+        }
+
+        // Get Apartment how Customers rent it by Muhnnad
+        [HttpGet("customer/{customerId}/rented")]
+        public async Task<IActionResult> GetApartmentsRentedByCustomer(int customerId)
+        {
+            var apartments = await _apartmentService.GetApartmentsRentedByCustomer(customerId);
+
+            if (apartments == null || !apartments.Any())
+            {
+                return NotFound("No apartments rented by this customer.");
+            }
+
+            return Ok(apartments);
+        }
+
     }
 }

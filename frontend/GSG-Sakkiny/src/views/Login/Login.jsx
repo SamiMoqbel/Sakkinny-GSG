@@ -8,7 +8,6 @@ import { FormInput } from "../../components";
 import infoImage from "../../assets/info-image.png";
 import background from "../../assets/register_background.jpg";
 
-
 export const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -36,9 +35,10 @@ export const Login = () => {
         }
       );
       setAuthenticated({
-        token: response.data.token,
-        email: response.data.email,
+        userData: response.data,
       });
+
+      localStorage.setItem("userData", JSON.stringify(response.data));
       toast.success("Welcome back!");
       navigate(from, { replace: true });
     } catch (error) {
@@ -88,30 +88,14 @@ export const Login = () => {
             </button>
           </form>
 
-          <p className="self-center">
+          <p className="self-center mt-4">
             Don’t have an account?{" "}
             <Link className="text-red-600 font-bold" to="/signup">
               Sign Up
             </Link>
           </p>
-
-          <div
-            id="social-login"
-            className=" flex flex-col justify-center items-center "
-          >
-            <p>or continue with </p>
-            <div
-              id="social-links"
-              className="flex w-3/4 justify-around items-center mt-4"
-            >
-              <SocialIcon url="https://facebook.com/" />
-              <SocialIcon url="http://accounts.google.com" />
-              <SocialIcon url="https://github.com/" />
-            </div>
-          </div>
         </div>
 
-        {/* Right side (Informational Section) */}
         <div className="flex-1 flex justify-center items-center">
           <img className="w-full h-full" src={infoImage} alt="Signup" />
         </div>

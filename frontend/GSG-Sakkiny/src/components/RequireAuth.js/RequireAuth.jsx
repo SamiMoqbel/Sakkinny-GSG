@@ -4,7 +4,6 @@ import useAuth from "../../hooks/useAuth";
 const RequireAuth = () => {
   const { authenticated } = useAuth();
   const location = useLocation();
-
   return authenticated ? (
     <Outlet />
   ) : (

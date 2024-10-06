@@ -37,6 +37,8 @@ namespace Sakkinny.Models
          // Doubly linked list for managing renters
         [NotMapped]
         public RenterList RenterList { get; set; } = new RenterList();
+        public string? OwnerId { get; set; } // Ensure this is mapped from the model
+
 
         // Helper to check if apartment is full
         public bool IsApartmentFull => RoomsAvailable <= 0;

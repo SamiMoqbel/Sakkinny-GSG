@@ -181,6 +181,11 @@ namespace Sakkinny.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
+                    b.Property<string>("OwnerId")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<decimal?>("Price")
                         .HasColumnType("decimal(18,2)");
 

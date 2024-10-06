@@ -8,6 +8,8 @@
         public int? roomsNumber { get; set; }
         public int? roomsAvailable { get; set; }
         public decimal? price { get; set; }
+        public string OwnerId { get; set; } 
+
         public List<IFormFile>? Images { get; set; }
     }
 }
