@@ -2,12 +2,16 @@ import { useEffect, useState } from "react";
 import { SocialIcon } from "react-social-icons";
 import { FormInput } from "../../components";
 import infoImage from "../../assets/info-image.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "../../api/axios";
 import background from "../../assets/register_background.jpg";
 import Select from "react-select";
+import { toast } from "react-hot-toast";
 
 export const Signup = () => {
+
+  const navigate = useNavigate();
+
   const userType = [
     { value: "Client", label: "Client" },
     { value: "Owner", label: "Owner" },
@@ -31,9 +35,6 @@ export const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    console.log(JSON.stringify(userInput));
-
     try {
       const response = await axios.post(
         "/Auth/register",
@@ -45,9 +46,9 @@ export const Signup = () => {
           withCredentials: true,
         }
       );
-      console.log(response.data);
+      navigate("/login");
     } catch (error) {
-      console.log(error);
+      toast.error(error.response.data.description);
     }
   };
 
