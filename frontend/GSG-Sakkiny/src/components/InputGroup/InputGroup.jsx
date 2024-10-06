@@ -3,7 +3,7 @@ import { Label, TextInput } from "flowbite-react";
 export const InputGroup = ({
   src,
   label,
-  placeholder,
+  defaultValue,
   type,
   hasHelper,
   helperCB,
@@ -14,7 +14,7 @@ export const InputGroup = ({
       <div className="mb-2 block">
         <Label htmlFor={src} value={label} />
       </div>
-      <TextInput id={src} type={type} placeholder={placeholder} {...rest} />
+      <TextInput id={src} type={type} defaultValue={defaultValue} {...rest} />
       {hasHelper && (
         <button
           onClick={helperCB}

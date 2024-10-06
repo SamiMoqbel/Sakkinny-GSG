@@ -8,7 +8,6 @@ import { FormInput } from "../../components";
 import infoImage from "../../assets/info-image.png";
 import background from "../../assets/register_background.jpg";
 
-
 export const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -36,9 +35,10 @@ export const Login = () => {
         }
       );
       setAuthenticated({
-        token: response.data.token,
-        email: response.data.email,
+        userData: response.data,
       });
+      
+      localStorage.setItem("userData", JSON.stringify(response.data));
       toast.success("Welcome back!");
       navigate(from, { replace: true });
     } catch (error) {

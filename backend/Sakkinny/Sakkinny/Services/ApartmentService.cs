@@ -20,44 +20,46 @@ namespace Sakkinny.Services
 
         public async Task<ApartmentDto> AddApartment(CreateApartmentDto apartmentDto)
         {
-
             var apartment = _mapper.Map<Apartment>(apartmentDto);
             apartment.CreationTime = DateTime.Now;
-
             if (apartmentDto.Images == null || !apartmentDto.Images.Any())
             {
                 _logger.LogWarning("Attempted to add an apartment without images: {ApartmentName}", apartmentDto.title);
                 throw new ArgumentException("At least one image is required.");
+            }
+            if (apartmentDto.roomsNumber < apartmentDto.roomsAvailable)
+            {
+                _logger.LogWarning("Validation error for apartment: {ApartmentName}. RoomsNumber must be greater than RoomsAvailable.", apartmentDto.title);
+                throw new ArgumentException("RoomsNumber must be greater than RoomsAvailable.");
+            }
+
+            if (apartmentDto.price <= 0)
+            {
+                _logger.LogWarning("Validation error for apartment: {ApartmentName}. Price must be greater than zero.", apartmentDto.title);
+                throw new ArgumentException("Price must be greater than zero.");
             }
 
             _logger.LogInformation("Adding apartment: {ApartmentName}", apartmentDto.title);
 
             try
             {
-                // Manually handle the image conversion from IFormFile to byte[]
+
                 apartment.Images = new List<ApartmentImage>();
 
                 foreach (var imageFile in apartmentDto.Images)
                 {
                     using var memoryStream = new MemoryStream();
                     await imageFile.CopyToAsync(memoryStream);
-
                     var apartmentImage = new ApartmentImage
                     {
                         ImageData = memoryStream.ToArray(),  // Convert image to byte array
                         Apartment = apartment                 // Associate image with apartment
                     };
-
                     apartment.Images.Add(apartmentImage);
                 }
-
-
                 await _context.Apartments.AddAsync(apartment);
                 await _context.SaveChangesAsync();
-
-
                 var apartmentDtoResult = _mapper.Map<ApartmentDto>(apartment);
-
                 _logger.LogInformation("Apartment added with ID: {ApartmentId}", apartmentDtoResult.Id);
                 return apartmentDtoResult;
             }
@@ -73,18 +75,15 @@ namespace Sakkinny.Services
                 throw new ApplicationException("Error adding apartment", ex);
             }
         }
-
         public async Task<ApartmentDto> UpdateApartment(int id, UpdateApartmentDto apartmentDto)
         {
             _logger.LogInformation("Attempting to update apartment with ID: {ApartmentId}", id);
 
             try
             {
-
                 var apartment = await _context.Apartments
                     .Include(a => a.Images)
                     .FirstOrDefaultAsync(a => a.Id == id && !a.IsDeleted);
-
 
                 if (apartment == null)
                 {
@@ -99,6 +98,29 @@ namespace Sakkinny.Services
 
                 _logger.LogInformation("Updating apartment with data: {@ApartmentDto}", apartmentDto);
 
+                if (!string.IsNullOrEmpty(apartmentDto.title))
+                {
+                    apartment.Title = apartmentDto.title;
+                }
+
+                if (!string.IsNullOrEmpty(apartmentDto.location))
+                {
+                    apartment.Location = apartmentDto.location;
+                }
+
+                if (apartmentDto.price.HasValue)
+                {
+                    apartment.Price = apartmentDto.price.Value;
+                }
+
+                if (apartmentDto.roomsNumber.HasValue)
+                {
+                    apartment.RoomsNumber = apartmentDto.roomsNumber.Value;
+                    apartment.RoomsAvailable = apartmentDto.roomsAvailable.Value;
+
+
+                }
+
                 if (apartmentDto.Images != null && apartmentDto.Images.Count > 0)
                 {
                     apartment.Images.Clear();
@@ -112,10 +134,13 @@ namespace Sakkinny.Services
                             var apartmentImage = new ApartmentImage
                             {
                                 ImageData = memoryStream.ToArray(),
+<<<<<<< HEAD
                                 Apartment = apartment // Associate the image with the apartment
+=======
+                                Apartment = apartment
+>>>>>>> eb6893e822c95b25edcf0bdf26ad0b515e121398
                             };
 
-                            // Add the new image to the apartment's Images collection
                             apartment.Images.Add(apartmentImage);
                         }
                     }
@@ -183,9 +208,9 @@ namespace Sakkinny.Services
             }
         }
 
-        public async Task<(string Name, List<byte[]> Images)> GetApartmentDetailsById(int id)
+        public async Task<getApartmentDetailsDto> GetApartmentDetailsById(int id)
         {
-            _logger.LogInformation("Attempting to retrieve apartment details for ID: {ApartmentId}", id);
+            _logger.LogInformation("Attempting to retrieve apartment data with ID: {ApartmentId}", id);
 
             try
             {
@@ -195,22 +220,36 @@ namespace Sakkinny.Services
 
                 if (apartment == null)
                 {
-                    _logger.LogWarning("Apartment with ID: {ApartmentId} not found", id);
-                    return (null, null);
+                    return null;
                 }
 
-                var images = apartment.Images.Select(img => img.ImageData).ToList();
+                var base64Images = apartment.Images
+                    .Select(img => Convert.ToBase64String(img.ImageData))
+                    .ToList();
 
+<<<<<<< HEAD
                 _logger.LogInformation("Retrieved apartment details for ID: {ApartmentId}", id);
                 return (apartment.Title, images);
+=======
+                return new getApartmentDetailsDto
+                {
+                    Title = apartment.Title,
+                    Base64Images = base64Images,
+                    subTitle = apartment.SubTitle,
+                    location = apartment.Location,
+                    roomsNumber = apartment.RoomsNumber,
+                    roomsAvailable = apartment.RoomsAvailable,
+                    price = apartment.Price
+
+                };
+>>>>>>> eb6893e822c95b25edcf0bdf26ad0b515e121398
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error retrieving apartment details for ID: {ApartmentId}", id);
-                throw new ApplicationException("Error retrieving apartment details", ex);
+                _logger.LogError(ex, "Error retrieving apartment with ID: {ApartmentId}", id);
+                throw new InvalidOperationException("Error retrieving apartment", ex);
             }
         }
-
         public async Task<IEnumerable<ApartmentDto>> GetAllApartments(getAllApartmentsDto model)
         {
             var query = _context.Apartments.AsQueryable();
@@ -274,6 +313,10 @@ namespace Sakkinny.Services
             }).ToList();
         }
         // rent the apartment  by Muhnnad
+<<<<<<< HEAD
+=======
+        // Rent the apartment
+>>>>>>> eb6893e822c95b25edcf0bdf26ad0b515e121398
         public async Task<ResultDto> RentApartment(RentApartmentDto rentApartmentDto)
         {
             var apartment = await _context.Apartments.FindAsync(rentApartmentDto.ApartmentId);

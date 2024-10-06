@@ -1,17 +1,38 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Navbar } from "../Navbar";
 import { Footer } from "../Footer";
 import { UserCard } from "../../components";
 import { Carousel } from "flowbite-react";
+import { useParams } from "react-router-dom";
+import axios from "../../api/axios";
 
 export const ApartmentDetails = () => {
-  const apartmentDetails = {
-    location: "Lekki",
-    title: "Samis Apartment",
-    roomsNum: 3,
-    roomsAvailable: 2,
-    price: "1000000",
-  };
+  // const apartmentDetails = {
+  //   location: "Lekki",
+  //   title: "Samis Apartment",
+  //   roomsNum: 3,
+  //   roomsAvailable: 2,
+  //   price: "1000000",
+  // };
+
+  const [apartmentDetails, setApartmentDetails] = useState({});
+  const { apartmentId } = useParams();
+
+  useEffect(() => {
+    try {
+      const fetchApartment = async () => {
+        const response = await axios.get(
+          `/Apartment/GetApartmentDetailsById/${apartmentId}`
+        );
+        const apartment = response.data;
+        console.log("Apartment:", apartment);
+        setApartmentDetails(apartment);
+      };
+      fetchApartment();
+    } catch (error) {
+      console.error("Error fetching apartment:", error);
+    }
+  }, []);
 
   const [index, setIndex] = useState(0);
 
@@ -48,10 +69,7 @@ export const ApartmentDetails = () => {
               <div className="border-2 border-t-0 rounded-b-md border-gray-300 px-10 py-4">
                 <h2 className="font-bold text-2xl text-red-600">Details</h2>
                 <p className="mt-4">
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                  Repellendus cupiditate dignissimos amet nisi, cum non.
-                  Temporibus labore sapiente facere nobis maxime, molestias,
-                  perspiciatis quam esse eum exercitationem quidem? Quia, modi.
+                  {apartmentDetails.subTitle}
                 </p>
                 <ul className="mt-6 flex flex-col gap-8">
                   <li className="border-b-2 pb-4">Item</li>
