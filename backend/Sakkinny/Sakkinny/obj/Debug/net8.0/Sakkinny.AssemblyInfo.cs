@@ -14,11 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Sakkinny")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-<<<<<<< HEAD
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5cef72204ee75eb96b47460b487c9d77eaea8782")]
-=======
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2e71e69d2ef3ca3661789134117a6cd13c0a1fab")]
->>>>>>> eb6893e822c95b25edcf0bdf26ad0b515e121398
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ae594e4c6c837ec316f26d36a549e8197a347242")]
 [assembly: System.Reflection.AssemblyProductAttribute("Sakkinny")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Sakkinny")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
