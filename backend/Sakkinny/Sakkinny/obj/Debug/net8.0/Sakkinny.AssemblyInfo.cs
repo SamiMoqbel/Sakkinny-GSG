@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Sakkinny")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+76298451f9660b7c6953fd809e55f415d2df2176")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5cef72204ee75eb96b47460b487c9d77eaea8782")]
 [assembly: System.Reflection.AssemblyProductAttribute("Sakkinny")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Sakkinny")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
