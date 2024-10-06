@@ -1,40 +1,33 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import axios from "../../api/axios";
+import useAuth from "../../hooks/useAuth";
+
 export const ApartmentRentalContract = () => {
-  const [ownerDetails, setOwnerDetails] = useState({
-    owner: "ABC Apartments",
-    address: "123 Main Street, Blue City CA 55555",
-    phoneNumber: "(555) 278-4476",
-    email: "abcapartments@info.com",
-  });
+  const location = useLocation();
+  const { owner: ownerDetails, apartment: apartmentDetails } =
+    location.state || {};
+  const { authenticated } = useAuth();
+  const [user, setUser] = useState({});
 
-  const [renterDetails, setRenterDetails] = useState({
-    renter: "Charlotte Thompson",
-    address: "3191 Florence Street, Athens, TX 75751",
-    phoneNumber: "(555) 887-6543",
-    email: "charlottethompson@info.com",
-  });
+  const [renterDetails, setRenterDetails] = useState({});
 
-  const [apartmentDetails, setApartmentDetails] = useState({
-    apartment: "Luxury Apartment",
-    roomNum: "3",
-    price: "$1,500/month",
-  });
-
-  // Handle input change
-  const handleOwnerChange = (e) => {
-    const { name, value } = e.target;
-    setOwnerDetails((prevState) => ({ ...prevState, [name]: value }));
-  };
-
-  const handleRenterChange = (e) => {
-    const { name, value } = e.target;
-    setRenterDetails((prevState) => ({ ...prevState, [name]: value }));
-  };
-
-  const handleApartmentChange = (e) => {
-    const { name, value } = e.target;
-    setApartmentDetails((prevState) => ({ ...prevState, [name]: value }));
-  };
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const response = await axios.get(
+          `/Auth/getUserById/${authenticated.userId}`
+        );
+        setRenterDetails({
+          renter: response.data.fullName,
+          email: response.data.email,
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getUser();
+  }, []);
 
   return (
     <div className="w-4/5 mx-auto my-5 bg-white rounded-lg shadow-lg p-6">
@@ -57,11 +50,11 @@ export const ApartmentRentalContract = () => {
                 </th>
                 <td className="p-2">
                   <input
+                    disabled
                     type="text"
                     name="owner"
-                    value={ownerDetails.owner}
-                    onChange={handleOwnerChange}
-                    className="w-full border border-gray-300 rounded px-3 py-2"
+                    value={ownerDetails.fullName}
+                    className="w-full border bg-gray-400 text-white border-gray-300 rounded px-3 py-2"
                   />
                 </td>
               </tr>
@@ -71,11 +64,11 @@ export const ApartmentRentalContract = () => {
                 </th>
                 <td className="p-2">
                   <input
+                    disabled
                     type="email"
                     name="email"
                     value={ownerDetails.email}
-                    onChange={handleOwnerChange}
-                    className="w-full border border-gray-300 rounded px-3 py-2"
+                    className="w-full border bg-gray-400 text-white border-gray-300 rounded px-3 py-2"
                   />
                 </td>
               </tr>
@@ -91,11 +84,11 @@ export const ApartmentRentalContract = () => {
                 </th>
                 <td className="p-2">
                   <input
+                    disabled
                     type="text"
                     name="renter"
                     value={renterDetails.renter}
-                    onChange={handleRenterChange}
-                    className="w-full border border-gray-300 rounded px-3 py-2"
+                    className="w-full border bg-gray-400 text-white border-gray-300 rounded px-3 py-2"
                   />
                 </td>
               </tr>
@@ -105,11 +98,11 @@ export const ApartmentRentalContract = () => {
                 </th>
                 <td className="p-2">
                   <input
+                    disabled
                     type="email"
                     name="email"
                     value={renterDetails.email}
-                    onChange={handleRenterChange}
-                    className="w-full border border-gray-300 rounded px-3 py-2"
+                    className="w-full border bg-gray-400 text-white border-gray-300 rounded px-3 py-2"
                   />
                 </td>
               </tr>
@@ -125,11 +118,11 @@ export const ApartmentRentalContract = () => {
                 </th>
                 <td className="p-2">
                   <input
+                    disabled
                     type="text"
                     name="apartment"
-                    value={apartmentDetails.apartment}
-                    onChange={handleApartmentChange}
-                    className="w-full border border-gray-300 rounded px-3 py-2"
+                    value={apartmentDetails.title}
+                    className="w-full border bg-gray-400 text-white border-gray-300 rounded px-3 py-2"
                   />
                 </td>
               </tr>
@@ -139,11 +132,11 @@ export const ApartmentRentalContract = () => {
                 </th>
                 <td className="p-2">
                   <input
+                    disabled
                     type="text"
                     name="model"
-                    value={apartmentDetails.roomNum}
-                    onChange={handleApartmentChange}
-                    className="w-full border border-gray-300 rounded px-3 py-2"
+                    value={apartmentDetails.location}
+                    className="w-full border bg-gray-400 text-white border-gray-300 rounded px-3 py-2"
                   />
                 </td>
               </tr>
@@ -153,11 +146,11 @@ export const ApartmentRentalContract = () => {
                 </th>
                 <td className="p-2">
                   <input
+                    disabled
                     type="text"
                     name="price"
                     value={apartmentDetails.price}
-                    onChange={handleApartmentChange}
-                    className="w-full border border-gray-300 rounded px-3 py-2"
+                    className="bg-gray-400 text-white w-full border border-gray-300 rounded px-3 py-2"
                   />
                 </td>
               </tr>

@@ -19,7 +19,7 @@ export const ApartmentDetails = () => {
           `/Apartment/GetApartmentDetailsById/${apartmentId}`
         );
         const apartment = response.data;
-        console.log("Apartment:", apartment);
+        console.log(apartment);
         setApartmentDetails(apartment);
       };
 
@@ -35,7 +35,7 @@ export const ApartmentDetails = () => {
         `/Auth/getUserById/${apartmentDetails.ownerId}`
       );
       const owner = response.data;
-      console.log("Owner:", owner);
+      setOwnerDetails(owner);
     };
     fetchOwner();
   }, [apartmentDetails]);
@@ -76,16 +76,31 @@ export const ApartmentDetails = () => {
                 <h2 className="font-bold text-2xl text-red-600">Details</h2>
                 <p className="mt-4">{apartmentDetails.subTitle}</p>
                 <ul className="mt-6 flex flex-col gap-8">
-                  <li className="border-b-2 pb-4">Item</li>
-                  <li className="border-b-2 pb-4">Item</li>
-                  <li className="border-b-2 pb-4">Item</li>
-                  <li className="border-b-2 pb-4">Item</li>
+                  <li className="border-b-2 pb-4">
+                    <ul className="flex justify-between px-6">
+                      <li className="font-bold text-xl">Location</li>
+                      <li>{apartmentDetails.location}</li>
+                    </ul>
+                  </li>
+                  <li className="border-b-2 pb-4">
+                    <ul className="flex justify-between px-6">
+                      <li className="font-bold text-xl">Rooms Number</li>
+                      <li>{apartmentDetails.roomsNumber}</li>
+                    </ul>
+                  </li>
+
+                  <li className="border-b-2 pb-4">
+                    <ul className="flex justify-between px-6">
+                      <li className="font-bold text-xl">Available Rooms</li>
+                      <li>{apartmentDetails.roomsAvailable}</li>
+                    </ul>
+                  </li>
                 </ul>
               </div>
             </div>
           </div>
           <div className="ml-20">
-            <UserCard />
+            <UserCard ownerDetails={ownerDetails} apartmentDetails={apartmentDetails} />
           </div>
         </div>
       </main>
