@@ -134,15 +134,8 @@ namespace Sakkinny.Services
                             var apartmentImage = new ApartmentImage
                             {
                                 ImageData = memoryStream.ToArray(),
-<<<<<<< HEAD
-<<<<<<< HEAD
                                 Apartment = apartment // Associate the image with the apartment
-=======
-                                Apartment = apartment
->>>>>>> eb6893e822c95b25edcf0bdf26ad0b515e121398
-=======
-                                Apartment = apartment
->>>>>>> eb6893e822c95b25edcf0bdf26ad0b515e121398
+                         
                             };
 
                             apartment.Images.Add(apartmentImage);
@@ -231,13 +224,7 @@ namespace Sakkinny.Services
                     .Select(img => Convert.ToBase64String(img.ImageData))
                     .ToList();
 
-<<<<<<< HEAD
-<<<<<<< HEAD
                 _logger.LogInformation("Retrieved apartment details for ID: {ApartmentId}", id);
-                return (apartment.Title, images);
-=======
-=======
->>>>>>> eb6893e822c95b25edcf0bdf26ad0b515e121398
                 return new getApartmentDetailsDto
                 {
                     Title = apartment.Title,
@@ -250,10 +237,6 @@ namespace Sakkinny.Services
                     OwnerId = apartment.OwnerId
 
                 };
-<<<<<<< HEAD
->>>>>>> eb6893e822c95b25edcf0bdf26ad0b515e121398
-=======
->>>>>>> eb6893e822c95b25edcf0bdf26ad0b515e121398
             }
             catch (Exception ex)
             {
@@ -324,14 +307,6 @@ namespace Sakkinny.Services
             }).ToList();
         }
         // rent the apartment  by Muhnnad
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-        // Rent the apartment
->>>>>>> eb6893e822c95b25edcf0bdf26ad0b515e121398
-=======
-        // Rent the apartment
->>>>>>> eb6893e822c95b25edcf0bdf26ad0b515e121398
         public async Task<ResultDto> RentApartment(RentApartmentDto rentApartmentDto)
         {
             var apartment = await _context.Apartments.FindAsync(rentApartmentDto.ApartmentId);

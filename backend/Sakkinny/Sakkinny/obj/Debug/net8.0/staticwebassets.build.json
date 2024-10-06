@@ -1,14 +1,6 @@
 {
   "Version": 1,
-<<<<<<< HEAD
-<<<<<<< HEAD
-  "Hash": "nwFlcbv9scLKUF3/Uyl8gmXkd3V6EB1D5oeNPc2el2M=",
-=======
   "Hash": "lPQBduIEJQyRlDKNPYUbty3nNu1Jf3w4QyEShsvrM7I=",
->>>>>>> eb6893e822c95b25edcf0bdf26ad0b515e121398
-=======
-  "Hash": "lPQBduIEJQyRlDKNPYUbty3nNu1Jf3w4QyEShsvrM7I=",
->>>>>>> eb6893e822c95b25edcf0bdf26ad0b515e121398
   "Source": "Sakkinny",
   "BasePath": "_content/Sakkinny",
   "Mode": "Default",
@@ -55,24 +47,10 @@
       "OriginalItemSpec": "C:\\Users\\sami\\.nuget\\packages\\microsoft.aspnetcore.components.quickgrid\\8.0.8\\staticwebassets\\QuickGrid.razor.js"
     },
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "Identity": "C:\\Users\\muhnn\\OneDrive\\Desktop\\Sakkinny-GSG\\backend\\Sakkinny\\Sakkinny\\obj\\Debug\\net8.0\\scopedcss\\bundle\\Sakkinny.styles.css",
-      "SourceId": "Sakkinny",
-      "SourceType": "Computed",
-      "ContentRoot": "C:\\Users\\muhnn\\OneDrive\\Desktop\\Sakkinny-GSG\\backend\\Sakkinny\\Sakkinny\\obj\\Debug\\net8.0\\scopedcss\\bundle\\",
-=======
       "Identity": "C:\\Users\\sami\\Desktop\\Sakkinny-GSG\\backend\\Sakkinny\\Sakkinny\\obj\\Debug\\net8.0\\scopedcss\\bundle\\Sakkinny.styles.css",
       "SourceId": "Sakkinny",
       "SourceType": "Computed",
       "ContentRoot": "C:\\Users\\sami\\Desktop\\Sakkinny-GSG\\backend\\Sakkinny\\Sakkinny\\obj\\Debug\\net8.0\\scopedcss\\bundle\\",
->>>>>>> eb6893e822c95b25edcf0bdf26ad0b515e121398
-=======
-      "Identity": "C:\\Users\\sami\\Desktop\\Sakkinny-GSG\\backend\\Sakkinny\\Sakkinny\\obj\\Debug\\net8.0\\scopedcss\\bundle\\Sakkinny.styles.css",
-      "SourceId": "Sakkinny",
-      "SourceType": "Computed",
-      "ContentRoot": "C:\\Users\\sami\\Desktop\\Sakkinny-GSG\\backend\\Sakkinny\\Sakkinny\\obj\\Debug\\net8.0\\scopedcss\\bundle\\",
->>>>>>> eb6893e822c95b25edcf0bdf26ad0b515e121398
       "BasePath": "_content/Sakkinny",
       "RelativePath": "Sakkinny.styles.css",
       "AssetKind": "All",
@@ -85,15 +63,7 @@
       "AssetTraitValue": "ApplicationBundle",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "OriginalItemSpec": "C:\\Users\\muhnn\\OneDrive\\Desktop\\Sakkinny-GSG\\backend\\Sakkinny\\Sakkinny\\obj\\Debug\\net8.0\\scopedcss\\bundle\\Sakkinny.styles.css"
-=======
       "OriginalItemSpec": "C:\\Users\\sami\\Desktop\\Sakkinny-GSG\\backend\\Sakkinny\\Sakkinny\\obj\\Debug\\net8.0\\scopedcss\\bundle\\Sakkinny.styles.css"
->>>>>>> eb6893e822c95b25edcf0bdf26ad0b515e121398
-=======
-      "OriginalItemSpec": "C:\\Users\\sami\\Desktop\\Sakkinny-GSG\\backend\\Sakkinny\\Sakkinny\\obj\\Debug\\net8.0\\scopedcss\\bundle\\Sakkinny.styles.css"
->>>>>>> eb6893e822c95b25edcf0bdf26ad0b515e121398
     }
   ]
 }

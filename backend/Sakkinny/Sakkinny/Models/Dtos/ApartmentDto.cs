@@ -8,15 +8,7 @@
         public int? roomsNumber { get; set; }
         public int? roomsAvailable { get; set; }
         public decimal? price { get; set; }
-<<<<<<< HEAD
-<<<<<<< HEAD
         public string OwnerId { get; set; } 
-=======
-        public string? OwnerId { get; set; } // Ensure this is mapped from the model
->>>>>>> eb6893e822c95b25edcf0bdf26ad0b515e121398
-=======
-        public string? OwnerId { get; set; } // Ensure this is mapped from the model
->>>>>>> eb6893e822c95b25edcf0bdf26ad0b515e121398
 
         public List<IFormFile>? Images { get; set; }
     }

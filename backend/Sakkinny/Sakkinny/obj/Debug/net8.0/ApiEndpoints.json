@@ -146,6 +146,22 @@
   },
   {
     "ContainingType": "Sakkinny.Controllers.ApartmentController",
+    "Method": "GetApartmentsRentedByCustomer",
+    "RelativePath": "api/Apartment/GetApartmentsRentedByCustomer/customer/{customerId}/rented",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "customerId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Sakkinny.Controllers.ApartmentController",
     "Method": "GetCustomersByOwnerAndApartmentId",
     "RelativePath": "api/Apartment/GetCustomersByOwnerAndApartmentId/owner/{ownerId}/apartments/{apartmentId}/customers",
     "HttpMethod": "GET",
