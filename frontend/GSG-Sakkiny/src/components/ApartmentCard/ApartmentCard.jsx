@@ -1,34 +1,17 @@
 import { useEffect, useState } from "react";
-import axios from "../../api/axios";
 import { Link } from "react-router-dom";
 
-export const ApartmentCard = ({ id, title, subtitle, location }) => {
-  const [imageSrc, setImageSrc] = useState("");
+export const ApartmentCard = ({ id, title, subtitle, location, image }) => {
+  const [imageSrc, setImageSrc] = useState(image);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          "/Apartment/GetApartmentDetailsById/2094"
-        );
-        const data = response.data;
-
-        // Assuming base64Images is an array and you want the first image
-        if (data.base64Images && data.base64Images.length > 0) {
-          setImageSrc(`data:image/png;base64,${data.base64Images[0]}`);
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
+    setImageSrc(`data:image/png;base64,${image}`);
+  }, [image]);
 
   return (
     <div className="max-h-96 max-w-sm bg-white border border-gray-200 rounded-lg shadow ">
       <Link to={`/apartments/${id}`}>
-        <img className="rounded-t-lg" src={imageSrc} alt="" />
+        <img className="w-full h-1/2 rounded-t-lg" src={imageSrc} alt="" />
       </Link>
       <div className="p-5 flex flex-col">
         <Link to={`/apartments/${id}`}>

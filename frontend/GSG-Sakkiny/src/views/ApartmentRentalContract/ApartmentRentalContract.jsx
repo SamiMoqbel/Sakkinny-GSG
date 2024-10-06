@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "../../api/axios";
 import useAuth from "../../hooks/useAuth";
+import { Navbar } from "../Navbar";
+import { Footer } from "../Footer";
 
 export const ApartmentRentalContract = () => {
   const location = useLocation();
@@ -30,7 +32,9 @@ export const ApartmentRentalContract = () => {
   }, []);
 
   return (
-    <div className="w-4/5 mx-auto my-5 bg-white rounded-lg shadow-lg p-6">
+    <>
+    <Navbar />
+    <div className="min-h-screen w-4/5 mx-auto my-5 bg-white rounded-lg shadow-lg p-6">
       <header className="flex justify-between items-center bg-red-600 py-4 px-6 border-b-2 border-gray-200">
         <h1 className="text-2xl font-bold text-gray-100">
           Apartment Rental Contract
@@ -164,5 +168,8 @@ export const ApartmentRentalContract = () => {
         </section>
       </div>
     </div>
+    <Footer />
+    </>
+
   );
 };

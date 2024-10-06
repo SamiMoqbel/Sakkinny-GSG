@@ -57,6 +57,7 @@ export const Home = () => {
                     title={apartment.title}
                     subtitle={apartment.subTitle}
                     location={apartment.location}
+                    image={apartment.image}
                   />
                 ))
               )}

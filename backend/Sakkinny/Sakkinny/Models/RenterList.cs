@@ -5,7 +5,7 @@ namespace Sakkinny.Models
 {
     public class Renter
     {
-        public int CustomerId { get; set; }
+        public string CustomerId { get; set; }
         public DateTime RentalEndDate { get; set; }
         public Renter Prev { get; set; }
         public Renter Next { get; set; }
@@ -17,7 +17,7 @@ namespace Sakkinny.Models
         public Renter Tail { get; private set; }
 
         // Add renter to the list in O(1) time
-        public void AddToApartment(int apartmentId, int customerId, DateTime rentalEndDate)
+        public void AddToApartment(int apartmentId, string customerId, DateTime rentalEndDate)
         {
             var newRenter = new Renter
             {

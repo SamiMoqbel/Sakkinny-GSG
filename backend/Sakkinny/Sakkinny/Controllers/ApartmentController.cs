@@ -160,7 +160,7 @@ namespace Sakkinny.Controllers
 
         // Get Apartment how Customers rent it by Muhnnad
         [HttpGet("customer/{customerId}/rented")]
-        public async Task<IActionResult> GetApartmentsRentedByCustomer(int customerId)
+        public async Task<IActionResult> GetApartmentsRentedByCustomer(string customerId)
         {
             var apartments = await _apartmentService.GetApartmentsRentedByCustomer(customerId);
 

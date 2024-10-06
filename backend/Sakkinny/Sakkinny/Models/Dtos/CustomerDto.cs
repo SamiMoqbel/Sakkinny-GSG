@@ -7,7 +7,7 @@ namespace Sakkinny.Models.Dtos
 {
     public class CustomerDto
     {
-    public int CustomerId { get; set; }
+    public string CustomerId { get; set; }
 
     }
 }

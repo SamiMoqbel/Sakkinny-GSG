@@ -27,8 +27,8 @@ export const Footer = () => {
         </div>
         <div className="flex gap-10 justify-between items-center">
           <SocialIcon url="https://facebook.com/" />
-          <SocialIcon url="http://accounts.google.com" />
-          <SocialIcon url="https://github.com/" />
+          <SocialIcon url="http://google.com" />
+          <SocialIcon url="https://github.com/SamiMoqbel/Sakkinny-GSG" />
         </div>
       </div>
     </footer>

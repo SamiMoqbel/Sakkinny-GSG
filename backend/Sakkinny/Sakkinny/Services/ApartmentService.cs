@@ -395,10 +395,10 @@ namespace Sakkinny.Services
         }
         // Get Apartment how Customers rent it 
 
-        public async Task<IEnumerable<ApartmentDto>> GetApartmentsRentedByCustomer(int customerId)
+        public async Task<IEnumerable<ApartmentDto>> GetApartmentsRentedByCustomer(string customerId)
         {
             var apartments = await _context.Apartments
-                .Where(a => a.RenterList.GetAllRenters().Any(r => r.CustomerId == customerId))
+                .Where(a => a.RenterList.GetAllRenters().Any(r => r.CustomerId.Equals(customerId)))
                 .Include(a => a.Images)
                 .ToListAsync();
 
