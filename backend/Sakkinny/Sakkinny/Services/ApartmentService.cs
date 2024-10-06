@@ -135,7 +135,11 @@ namespace Sakkinny.Services
                             {
                                 ImageData = memoryStream.ToArray(),
 <<<<<<< HEAD
+<<<<<<< HEAD
                                 Apartment = apartment // Associate the image with the apartment
+=======
+                                Apartment = apartment
+>>>>>>> eb6893e822c95b25edcf0bdf26ad0b515e121398
 =======
                                 Apartment = apartment
 >>>>>>> eb6893e822c95b25edcf0bdf26ad0b515e121398
@@ -228,9 +232,12 @@ namespace Sakkinny.Services
                     .ToList();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
                 _logger.LogInformation("Retrieved apartment details for ID: {ApartmentId}", id);
                 return (apartment.Title, images);
 =======
+=======
+>>>>>>> eb6893e822c95b25edcf0bdf26ad0b515e121398
                 return new getApartmentDetailsDto
                 {
                     Title = apartment.Title,
@@ -242,6 +249,9 @@ namespace Sakkinny.Services
                     price = apartment.Price
 
                 };
+<<<<<<< HEAD
+>>>>>>> eb6893e822c95b25edcf0bdf26ad0b515e121398
+=======
 >>>>>>> eb6893e822c95b25edcf0bdf26ad0b515e121398
             }
             catch (Exception ex)
@@ -314,6 +324,10 @@ namespace Sakkinny.Services
         }
         // rent the apartment  by Muhnnad
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+        // Rent the apartment
+>>>>>>> eb6893e822c95b25edcf0bdf26ad0b515e121398
 =======
         // Rent the apartment
 >>>>>>> eb6893e822c95b25edcf0bdf26ad0b515e121398

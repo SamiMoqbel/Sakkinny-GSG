@@ -2,6 +2,7 @@
   "format": 1,
   "restore": {
 <<<<<<< HEAD
+<<<<<<< HEAD
     "C:\\Users\\muhnn\\OneDrive\\Desktop\\Sakkinny-GSG\\backend\\Sakkinny\\Sakkinny\\Sakkinny.csproj": {}
   },
   "projects": {
@@ -13,6 +14,19 @@
         "projectPath": "C:\\Users\\muhnn\\OneDrive\\Desktop\\Sakkinny-GSG\\backend\\Sakkinny\\Sakkinny\\Sakkinny.csproj",
         "packagesPath": "C:\\Users\\muhnn\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\muhnn\\OneDrive\\Desktop\\Sakkinny-GSG\\backend\\Sakkinny\\Sakkinny\\obj\\",
+=======
+    "C:\\Users\\sami\\Desktop\\Sakkinny-GSG\\backend\\Sakkinny\\Sakkinny\\Sakkinny.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\sami\\Desktop\\Sakkinny-GSG\\backend\\Sakkinny\\Sakkinny\\Sakkinny.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\sami\\Desktop\\Sakkinny-GSG\\backend\\Sakkinny\\Sakkinny\\Sakkinny.csproj",
+        "projectName": "Sakkinny",
+        "projectPath": "C:\\Users\\sami\\Desktop\\Sakkinny-GSG\\backend\\Sakkinny\\Sakkinny\\Sakkinny.csproj",
+        "packagesPath": "C:\\Users\\sami\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\sami\\Desktop\\Sakkinny-GSG\\backend\\Sakkinny\\Sakkinny\\obj\\",
+>>>>>>> eb6893e822c95b25edcf0bdf26ad0b515e121398
 =======
     "C:\\Users\\sami\\Desktop\\Sakkinny-GSG\\backend\\Sakkinny\\Sakkinny\\Sakkinny.csproj": {}
   },

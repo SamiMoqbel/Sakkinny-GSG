@@ -1,9 +1,15 @@
 {
   "version": 2,
 <<<<<<< HEAD
+<<<<<<< HEAD
   "dgSpecHash": "f5pfMZNuHQM=",
   "success": true,
   "projectFilePath": "C:\\Users\\muhnn\\OneDrive\\Desktop\\Sakkinny-GSG\\backend\\Sakkinny\\Sakkinny\\Sakkinny.csproj",
+=======
+  "dgSpecHash": "a+USzop2DfE=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\sami\\Desktop\\Sakkinny-GSG\\backend\\Sakkinny\\Sakkinny\\Sakkinny.csproj",
+>>>>>>> eb6893e822c95b25edcf0bdf26ad0b515e121398
 =======
   "dgSpecHash": "a+USzop2DfE=",
   "success": true,
