@@ -231,7 +231,8 @@ namespace Sakkinny.Services
                     location = apartment.Location,
                     roomsNumber = apartment.RoomsNumber,
                     roomsAvailable = apartment.RoomsAvailable,
-                    price = apartment.Price
+                    price = apartment.Price,
+                    OwnerId = apartment.OwnerId
 
                 };
             }

@@ -7,15 +7,9 @@ import { useParams } from "react-router-dom";
 import axios from "../../api/axios";
 
 export const ApartmentDetails = () => {
-  // const apartmentDetails = {
-  //   location: "Lekki",
-  //   title: "Samis Apartment",
-  //   roomsNum: 3,
-  //   roomsAvailable: 2,
-  //   price: "1000000",
-  // };
-
   const [apartmentDetails, setApartmentDetails] = useState({});
+  const [ownerDetails, setOwnerDetails] = useState({});
+
   const { apartmentId } = useParams();
 
   useEffect(() => {
@@ -28,11 +22,23 @@ export const ApartmentDetails = () => {
         console.log("Apartment:", apartment);
         setApartmentDetails(apartment);
       };
+
       fetchApartment();
     } catch (error) {
       console.error("Error fetching apartment:", error);
     }
   }, []);
+
+  useEffect(() => {
+    const fetchOwner = async () => {
+      const response = await axios.get(
+        `/Auth/getUserById/${apartmentDetails.ownerId}`
+      );
+      const owner = response.data;
+      console.log("Owner:", owner);
+    };
+    fetchOwner();
+  }, [apartmentDetails]);
 
   const [index, setIndex] = useState(0);
 
@@ -68,9 +74,7 @@ export const ApartmentDetails = () => {
               </div>
               <div className="border-2 border-t-0 rounded-b-md border-gray-300 px-10 py-4">
                 <h2 className="font-bold text-2xl text-red-600">Details</h2>
-                <p className="mt-4">
-                  {apartmentDetails.subTitle}
-                </p>
+                <p className="mt-4">{apartmentDetails.subTitle}</p>
                 <ul className="mt-6 flex flex-col gap-8">
                   <li className="border-b-2 pb-4">Item</li>
                   <li className="border-b-2 pb-4">Item</li>

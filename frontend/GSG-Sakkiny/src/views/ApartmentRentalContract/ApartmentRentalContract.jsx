@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
 export const ApartmentRentalContract = () => {
-
   const [ownerDetails, setOwnerDetails] = useState({
     owner: "ABC Apartments",
     address: "123 Main Street, Blue City CA 55555",
@@ -19,7 +18,6 @@ export const ApartmentRentalContract = () => {
     apartment: "Luxury Apartment",
     roomNum: "3",
     price: "$1,500/month",
-   
   });
 
   // Handle input change
@@ -41,8 +39,9 @@ export const ApartmentRentalContract = () => {
   return (
     <div className="w-4/5 mx-auto my-5 bg-white rounded-lg shadow-lg p-6">
       <header className="flex justify-between items-center bg-red-600 py-4 px-6 border-b-2 border-gray-200">
-        <h1 className="text-2xl font-bold text-gray-100">Apartment Rental Contract</h1>
-       
+        <h1 className="text-2xl font-bold text-gray-100">
+          Apartment Rental Contract
+        </h1>
       </header>
 
       <div className="p-6">
@@ -53,7 +52,9 @@ export const ApartmentRentalContract = () => {
           <table className="w-full table-auto mb-6">
             <tbody>
               <tr>
-                <th className="p-2 text-left bg-red-600 w-[450px] text-gray-100">Owner</th>
+                <th className="p-2 text-left bg-red-600 w-[450px] text-gray-100">
+                  Owner
+                </th>
                 <td className="p-2">
                   <input
                     type="text"
@@ -65,31 +66,9 @@ export const ApartmentRentalContract = () => {
                 </td>
               </tr>
               <tr className="bg-gray-50">
-                <th className="p-2 text-left bg-gray-100 w-[450px] text-red-600 " >Address</th>
-                <td className="p-2">
-                  <input
-                    type="text"
-                    name="address"
-                    value={ownerDetails.address}
-                    onChange={handleOwnerChange}
-                    className="w-full border border-gray-300 rounded px-3 py-2"
-                  />
-                </td>
-              </tr>
-              <tr>
-                <th className="p-2 text-left bg-red-600 w-[450px] text-gray-100">Phone Number</th>
-                <td className="p-2">
-                  <input
-                    type="text"
-                    name="phoneNumber"
-                    value={ownerDetails.phoneNumber}
-                    onChange={handleOwnerChange}
-                    className="w-full border border-gray-300 rounded px-3 py-2"
-                  />
-                </td>
-              </tr>
-              <tr className="bg-gray-50">
-                <th className="p-2 text-left bg-gray-100 w-[450px] text-red-600">Email</th>
+                <th className="p-2 text-left bg-gray-100 w-[450px] text-red-600">
+                  Email
+                </th>
                 <td className="p-2">
                   <input
                     type="email"
@@ -107,7 +86,9 @@ export const ApartmentRentalContract = () => {
           <table className="w-full table-auto mb-6">
             <tbody>
               <tr>
-                <th className="p-1 text-left bg-red-600 w-[450px] text-gray-100 w-[450px]">Renter</th>
+                <th className="p-1 text-left bg-red-600 w-[450px] text-gray-100">
+                  Renter
+                </th>
                 <td className="p-2">
                   <input
                     type="text"
@@ -119,31 +100,9 @@ export const ApartmentRentalContract = () => {
                 </td>
               </tr>
               <tr className="bg-gray-50">
-                <th className="p-2 text-left bg-gray-100 w-[450px] text-red-600">Renter's Address</th>
-                <td className="p-2">
-                  <input
-                    type="text"
-                    name="address"
-                    value={renterDetails.address}
-                    onChange={handleRenterChange}
-                    className="w-full border border-gray-300 rounded px-3 py-2"
-                  />
-                </td>
-              </tr>
-              <tr>
-                <th className="p-2 text-left bg-red-600 w-[450px] text-gray-100">Phone Number</th>
-                <td className="p-2">
-                  <input
-                    type="text"
-                    name="phoneNumber"
-                    value={renterDetails.phoneNumber}
-                    onChange={handleRenterChange}
-                    className="w-full border border-gray-300 rounded px-3 py-2"
-                  />
-                </td>
-              </tr>
-              <tr className="bg-gray-50">
-                <th className="p-2 text-left bg-gray-100 w-[450px] text-red-600">Email</th>
+                <th className="p-2 text-left bg-gray-100 w-[450px] text-red-600">
+                  Email
+                </th>
                 <td className="p-2">
                   <input
                     type="email"
@@ -161,7 +120,9 @@ export const ApartmentRentalContract = () => {
           <table className="w-full table-auto mb-6">
             <tbody>
               <tr>
-                <th className="p-2 text-left bg-red-600 w-[450px] text-gray-100 w-[450px]">Apartment</th>
+                <th className="p-2 text-left bg-red-600 text-gray-100 w-[450px]">
+                  Apartment
+                </th>
                 <td className="p-2">
                   <input
                     type="text"
@@ -173,7 +134,9 @@ export const ApartmentRentalContract = () => {
                 </td>
               </tr>
               <tr className="bg-gray-50">
-                <th className="p-2 text-left bg-gray-100 w-[450px] text-red-600">Model</th>
+                <th className="p-2 text-left bg-gray-100 w-[450px] text-red-600">
+                  Location
+                </th>
                 <td className="p-2">
                   <input
                     type="text"
@@ -185,7 +148,9 @@ export const ApartmentRentalContract = () => {
                 </td>
               </tr>
               <tr>
-                <th className="p-2 text-left bg-red-600 w-[450px] text-gray-100">Price</th>
+                <th className="p-2 text-left bg-red-600 w-[450px] text-gray-100">
+                  Price
+                </th>
                 <td className="p-2">
                   <input
                     type="text"
@@ -196,16 +161,15 @@ export const ApartmentRentalContract = () => {
                   />
                 </td>
               </tr>
-       
             </tbody>
           </table>
           <div className="flex justify-center items-center ">
-           <button className="bg-red-600 text-white rounded-lg px-4 py-2 hover:bg-gray-600 ">Save</button>
+            <button className="bg-red-600 text-white rounded-lg px-4 py-2 hover:bg-gray-600 ">
+              Save
+            </button>
           </div>
         </section>
       </div>
     </div>
   );
 };
-
-

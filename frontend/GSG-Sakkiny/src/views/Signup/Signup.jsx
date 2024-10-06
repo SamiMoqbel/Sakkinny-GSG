@@ -9,7 +9,6 @@ import Select from "react-select";
 import { toast } from "react-hot-toast";
 
 export const Signup = () => {
-
   const navigate = useNavigate();
 
   const userType = [
@@ -120,21 +119,6 @@ export const Signup = () => {
               Sign In
             </Link>
           </p>
-
-          <div
-            id="social-login"
-            className="mt-4 flex flex-col justify-center items-center "
-          >
-            <p>or continue with </p>
-            <div
-              id="social-links"
-              className="flex w-3/4 justify-around items-center mt-4"
-            >
-              <SocialIcon url="https://facebook.com/" />
-              <SocialIcon url="http://accounts.google.com" />
-              <SocialIcon url="https://github.com/" />
-            </div>
-          </div>
         </div>
       </div>
     </div>
