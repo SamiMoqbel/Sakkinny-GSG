@@ -134,7 +134,15 @@ namespace Sakkinny.Services
                             var apartmentImage = new ApartmentImage
                             {
                                 ImageData = memoryStream.ToArray(),
+<<<<<<< HEAD
+<<<<<<< HEAD
+                                Apartment = apartment // Associate the image with the apartment
+=======
                                 Apartment = apartment
+>>>>>>> eb6893e822c95b25edcf0bdf26ad0b515e121398
+=======
+                                Apartment = apartment
+>>>>>>> eb6893e822c95b25edcf0bdf26ad0b515e121398
                             };
 
                             apartment.Images.Add(apartmentImage);
@@ -223,6 +231,13 @@ namespace Sakkinny.Services
                     .Select(img => Convert.ToBase64String(img.ImageData))
                     .ToList();
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+                _logger.LogInformation("Retrieved apartment details for ID: {ApartmentId}", id);
+                return (apartment.Title, images);
+=======
+=======
+>>>>>>> eb6893e822c95b25edcf0bdf26ad0b515e121398
                 return new getApartmentDetailsDto
                 {
                     Title = apartment.Title,
@@ -235,6 +250,10 @@ namespace Sakkinny.Services
                     OwnerId = apartment.OwnerId
 
                 };
+<<<<<<< HEAD
+>>>>>>> eb6893e822c95b25edcf0bdf26ad0b515e121398
+=======
+>>>>>>> eb6893e822c95b25edcf0bdf26ad0b515e121398
             }
             catch (Exception ex)
             {
@@ -305,7 +324,14 @@ namespace Sakkinny.Services
             }).ToList();
         }
         // rent the apartment  by Muhnnad
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
         // Rent the apartment
+>>>>>>> eb6893e822c95b25edcf0bdf26ad0b515e121398
+=======
+        // Rent the apartment
+>>>>>>> eb6893e822c95b25edcf0bdf26ad0b515e121398
         public async Task<ResultDto> RentApartment(RentApartmentDto rentApartmentDto)
         {
             var apartment = await _context.Apartments.FindAsync(rentApartmentDto.ApartmentId);
@@ -362,13 +388,34 @@ namespace Sakkinny.Services
                 return Enumerable.Empty<CustomerDto>();
             }
 
-            var renterList = new RenterList(); // Assuming the apartment keeps track of the renters
-            var customers = renterList.GetAllRenters(); // This should return a list of renters
+            var renterList = new RenterList(); 
+            var customers = renterList.GetAllRenters();
 
             return customers.Select(c => new CustomerDto
             {
                 CustomerId = c.CustomerId,
             });
         }
+        // Get Apartment how Customers rent it 
+
+        public async Task<IEnumerable<ApartmentDto>> GetApartmentsRentedByCustomer(int customerId)
+        {
+            var apartments = await _context.Apartments
+                .Where(a => a.RenterList.GetAllRenters().Any(r => r.CustomerId == customerId))
+                .Include(a => a.Images)
+                .ToListAsync();
+
+            return apartments.Select(a => new ApartmentDto
+            {
+                Id = a.Id,
+                title = a.Title,
+                subTitle = a.SubTitle,
+                location = a.Location,
+                roomsNumber = a.RoomsNumber,
+                roomsAvailable = a.RoomsAvailable,
+                price = a.Price,
+            });
+        }
+
     }
 }

@@ -12,13 +12,9 @@ using System;
 using System.Reflection;
 
 [assembly: System.Reflection.AssemblyCompanyAttribute("Sakkinny")]
-[assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
+[assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-<<<<<<< HEAD
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5cef72204ee75eb96b47460b487c9d77eaea8782")]
-=======
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2e71e69d2ef3ca3661789134117a6cd13c0a1fab")]
->>>>>>> eb6893e822c95b25edcf0bdf26ad0b515e121398
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+33625ca57bb3f1a87f4f5c93be91148b3b13ed0d")]
 [assembly: System.Reflection.AssemblyProductAttribute("Sakkinny")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Sakkinny")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
