@@ -2,6 +2,7 @@
 using Sakkinny.Models;
 using Sakkinny.Models.Dtos;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace Sakkinny.Services
 {
@@ -244,70 +245,91 @@ namespace Sakkinny.Services
                 throw new InvalidOperationException("Error retrieving apartment", ex);
             }
         }
-        public async Task<IEnumerable<ApartmentDto>> GetAllApartments(getAllApartmentsDto model)
-        {
-            var query = _context.Apartments.AsQueryable();
-            query = query.Where(a => !a.IsDeleted);
-            if (!string.IsNullOrWhiteSpace(model.SearchTerm))
-            {
-                query = query.Where(a => a.Title.Contains(model.SearchTerm) || a.SubTitle.Contains(model.SearchTerm) || a.Location.Contains(model.SearchTerm));
-            }
-            if (model.ColumnFilters != null && model.ColumnFilters.Any())
-            {
-                foreach (var filter in model.ColumnFilters)
-                {
-                    if (!string.IsNullOrWhiteSpace(filter.Key) && filter.Value != null && filter.Value.Any())
-                    {
-                        switch (filter.Key.ToLower())
-                        {
-                            case "title":
-                                query = query.Where(a => filter.Value.Any(val => a.Title.Contains(val)));
-                                break;
-                            case "location":
-                                query = query.Where(a => filter.Value.Any(val => a.Location.Contains(val)));
-                                break;
-                            case "roomsnumber":
-                                var roomsNumbers = filter.Value
-                                    .Select(val => int.TryParse(val, out var number) ? number : (int?)null)
-                                    .Where(val => val.HasValue)
-                                    .ToList();
-                                if (roomsNumbers.Any())
-                                {
-                                    query = query.Where(a => roomsNumbers.Contains(a.RoomsNumber));
-                                }
-                                break;
-                            case "roomsavailable":
-                                var roomsAvailables = filter.Value
-                                    .Select(val => int.TryParse(val, out var available) ? available : (int?)null)
-                                    .Where(val => val.HasValue)
-                                    .ToList();
-                                if (roomsAvailables.Any())
-                                {
-                                    query = query.Where(a => roomsAvailables.Contains(a.RoomsAvailable));
-                                }
-                                break;
-                        }
-                    }
-                }
-            }
-            var totalItems = await query.CountAsync();
-            var apartments = await query
-                .Skip((model.PageIndex - 1) * model.PageSize)
-                .Take(model.PageSize)
-                .ToListAsync();
-            return apartments.Select(apartment => new ApartmentDto
-            {
-                Id = (int)apartment.Id,
-                title = apartment.Title,
-                subTitle = apartment.SubTitle,
-                location = apartment.Location,
-                roomsNumber = apartment.RoomsNumber,
-                roomsAvailable = apartment.RoomsAvailable,
-                price = apartment.Price,
-            }).ToList();
-        }
-        // rent the apartment  by Muhnnad
-        public async Task<ResultDto> RentApartment(RentApartmentDto rentApartmentDto)
+		public async Task<IEnumerable<object>> GetAllApartments(getAllApartmentsDto model)
+		{
+			try
+			{
+				var query = _context.Apartments.AsQueryable();
+				query = query.Where(a => !a.IsDeleted);
+
+				if (!string.IsNullOrWhiteSpace(model.SearchTerm))
+				{
+					query = query.Where(a => a.Title.Contains(model.SearchTerm) || a.SubTitle.Contains(model.SearchTerm) || a.Location.Contains(model.SearchTerm));
+				}
+
+				if (model.ColumnFilters != null && model.ColumnFilters.Any())
+				{
+					foreach (var filter in model.ColumnFilters)
+					{
+						if (!string.IsNullOrWhiteSpace(filter.Key) && filter.Value != null && filter.Value.Any())
+						{
+							switch (filter.Key.ToLower())
+							{
+								case "title":
+									query = query.Where(a => filter.Value.Any(val => a.Title.Contains(val)));
+									break;
+								case "location":
+									query = query.Where(a => filter.Value.Any(val => a.Location.Contains(val)));
+									break;
+								case "roomsnumber":
+									var roomsNumbers = filter.Value
+										.Select(val => int.TryParse(val, out var number) ? number : (int?)null)
+										.Where(val => val.HasValue)
+										.ToList();
+									if (roomsNumbers.Any())
+									{
+										query = query.Where(a => roomsNumbers.Contains(a.RoomsNumber));
+									}
+									break;
+								case "roomsavailable":
+									var roomsAvailables = filter.Value
+										.Select(val => int.TryParse(val, out var available) ? available : (int?)null)
+										.Where(val => val.HasValue)
+										.ToList();
+									if (roomsAvailables.Any())
+									{
+										query = query.Where(a => roomsAvailables.Contains(a.RoomsAvailable));
+									}
+									break;
+							}
+						}
+					}
+				}
+
+				var totalItems = await query.CountAsync();
+				var apartments = await query
+					.Skip((model.PageIndex - 1) * model.PageSize)
+					.Take(model.PageSize)
+					.Include(m => m.Images)
+					.ToListAsync();
+
+
+
+				return apartments.Select(apartment => new
+				{
+					Id = (int)apartment.Id,
+					title = apartment.Title,
+					subTitle = apartment.SubTitle,
+					location = apartment.Location,
+					roomsNumber = apartment.RoomsNumber,
+					roomsAvailable = apartment.RoomsAvailable,
+					price = apartment.Price,
+
+					Image = apartment.Images != null && apartment.Images.Any()
+					? Convert.ToBase64String(apartment.Images.First().ImageData)
+					: null
+
+
+				}).ToList();
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine(ex, "ex");
+				return new List<object>();
+			}
+		}
+		// rent the apartment  by Muhnnad
+		public async Task<ResultDto> RentApartment(RentApartmentDto rentApartmentDto)
         {
             var apartment = await _context.Apartments.FindAsync(rentApartmentDto.ApartmentId);
 
