@@ -14,16 +14,25 @@ export const Apartments = () => {
     const fetchApartments = async () => {
       try {
         const userID = JSON.parse(localStorage.getItem("userData")).userId;
-        const response = await axios.get(
-          `/Apartment/GetApartmentByOwnerId/owner/${userID}`,
-          {},
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        setApartmentsData(response.data);
+        if (userRole === "Client") {
+          const response = await axios.get(
+            `Apartment/GetApartmentsRentedByCustomer/customer/${userID}/rented`
+          );
+          console.log(response.data);
+          setApartmentsData(response.data);
+        } else {
+          const response = await axios.get(
+            `/Apartment/GetApartmentByOwnerId/owner/${userID}`,
+            {},
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          console.log(response.data);
+          setApartmentsData(response.data);
+        }
       } catch (error) {
         console.error(error);
       }

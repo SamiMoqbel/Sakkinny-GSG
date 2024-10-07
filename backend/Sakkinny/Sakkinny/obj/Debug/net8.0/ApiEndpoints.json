@@ -154,7 +154,7 @@
     "Parameters": [
       {
         "Name": "customerId",
-        "Type": "System.Int32",
+        "Type": "System.String",
         "IsRequired": true
       }
     ],
@@ -162,17 +162,12 @@
   },
   {
     "ContainingType": "Sakkinny.Controllers.ApartmentController",
-    "Method": "GetCustomersByOwnerAndApartmentId",
-    "RelativePath": "api/Apartment/GetCustomersByOwnerAndApartmentId/owner/{ownerId}/apartments/{apartmentId}/customers",
+    "Method": "GetCustomersByApartment",
+    "RelativePath": "api/Apartment/GetCustomersByApartment/apartments/{apartmentId}/customers",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
-      {
-        "Name": "ownerId",
-        "Type": "System.String",
-        "IsRequired": true
-      },
       {
         "Name": "apartmentId",
         "Type": "System.Int32",
@@ -184,14 +179,19 @@
   {
     "ContainingType": "Sakkinny.Controllers.ApartmentController",
     "Method": "RentApartment",
-    "RelativePath": "api/Apartment/RentApartment/rent",
+    "RelativePath": "api/Apartment/RentApartment/apartments/{apartmentId}/rent",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "rentApartmentDto",
-        "Type": "Sakkinny.Models.Dtos.RentApartmentDto",
+        "Name": "userid",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "apartmentId",
+        "Type": "System.Int32",
         "IsRequired": true
       }
     ],

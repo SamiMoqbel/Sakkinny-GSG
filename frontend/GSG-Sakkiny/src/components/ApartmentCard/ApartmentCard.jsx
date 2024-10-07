@@ -9,21 +9,25 @@ export const ApartmentCard = ({ id, title, subtitle, location, image }) => {
   }, [image]);
 
   return (
-    <div className="max-h-96 max-w-sm bg-white border border-gray-200 rounded-lg shadow ">
+    <div className="max-w-sm w-80 h-[30rem] bg-white border border-gray-200 rounded-lg shadow">
       <Link to={`/apartments/${id}`}>
-        <img className="w-full h-1/2 rounded-t-lg" src={imageSrc} alt="" />
+        <img
+          className="w-full h-48 object-cover rounded-t-lg"
+          src={imageSrc}
+          alt=""
+        />
       </Link>
-      <div className="p-5 flex flex-col">
+      <div className="h-1/2 justify-between p-5 flex flex-col ">
         <Link to={`/apartments/${id}`}>
-          <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">
+          <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
             {title}
           </h5>
         </Link>
-        <p className="mb-3 font-normal text-gray-700 ">{subtitle}</p>
-        <p className="mb-3 font-bold text-gray-700 ">🌐 {location}</p>
+        <p className="mb-3 font-normal text-gray-700">{subtitle}</p>
+        <p className="mb-3 font-bold text-gray-700">🌐 {location}</p>
         <Link
           to={`/apartments/${id}`}
-          className="self-end inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-black rounded-lg hover:bg-red-600  focus:ring-4 focus:outline-none focus:ring-black "
+          className="self-end inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-black rounded-lg hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-black"
         >
           Read more
           <svg

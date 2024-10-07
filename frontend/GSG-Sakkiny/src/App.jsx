@@ -8,7 +8,8 @@ import {
   Dashboard,
   AccountSettings,
   AddApartment,
-  EditApartment,ApartmentRentalContract,
+  EditApartment,
+  ApartmentRentalContract,
 } from "./views";
 import {
   BrowserRouter as Router,
@@ -31,16 +32,22 @@ const App = () => {
           <Route path="/home" element={<Navigate to="/" replace />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/apartments/:apartmentId" element={<ApartmentDetails />} />
-          <Route path="/rent" element={<ApartmentRentalContract />} />
+          <Route
+            path="/apartments/:apartmentId"
+            element={<ApartmentDetails />}
+          />
 
           {/* Protected Routes */}
           <Route element={<RequireAuth />}>
+            <Route path="/rent" element={<ApartmentRentalContract />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/settings" element={<AccountSettings />} />
             <Route path="*" element={<Error404 />} />
             <Route path="/addApartment" element={<AddApartment />} />
-            <Route path="/editApartment/:apartmentId" element={<EditApartment />} />
+            <Route
+              path="/editApartment/:apartmentId"
+              element={<EditApartment />}
+            />
           </Route>
           <Route path="*" element={<Error404 />} />
         </Routes>

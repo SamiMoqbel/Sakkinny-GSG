@@ -2,9 +2,10 @@ import { Card } from "flowbite-react";
 import { useState, useEffect } from "react";
 import {  useNavigate } from "react-router-dom";
 
-export const UserCard = ({ ownerDetails, apartmentDetails }) => {
+export const UserCard = ({ ownerDetails, apartmentDetails, apartmentId }) => {
   const [owner, setOwner] = useState(ownerDetails);
   const [apartment, setApartment] = useState(apartmentDetails);
+  const [id, setId] = useState(apartmentId);
   const navigate = useNavigate();  
 
   useEffect(() => {
@@ -15,8 +16,13 @@ export const UserCard = ({ ownerDetails, apartmentDetails }) => {
     setApartment(apartmentDetails);
   }, [apartmentDetails]);
 
+  useEffect(() => {
+    setId(apartmentId);
+    console.log(apartmentId);
+  }, [apartmentId]);
+
   const handleRentClick = () => {
-    navigate('/rent', { state: { owner, apartment } }); 
+    navigate('/rent', { state: { owner, apartment, id } }); 
   };
 
   return (

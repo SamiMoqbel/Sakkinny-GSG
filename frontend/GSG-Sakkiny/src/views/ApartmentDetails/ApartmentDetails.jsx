@@ -40,12 +40,6 @@ export const ApartmentDetails = () => {
     fetchOwner();
   }, [apartmentDetails]);
 
-  const [index, setIndex] = useState(0);
-
-  const handleSelect = (selectedIndex) => {
-    setIndex(selectedIndex);
-  };
-
   return (
     <>
       <Navbar />
@@ -57,6 +51,7 @@ export const ApartmentDetails = () => {
                 {apartmentDetails.base64Images &&
                   apartmentDetails.base64Images.map((image, index) => (
                     <img
+                      key={index}
                       className="w-full h-full object-cover"
                       src={`data:image/png;base64,${image}`}
                       alt="..."
@@ -106,6 +101,7 @@ export const ApartmentDetails = () => {
             <UserCard
               ownerDetails={ownerDetails}
               apartmentDetails={apartmentDetails}
+              apartmentId={apartmentId}
             />
           </div>
         </div>
