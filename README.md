@@ -23,8 +23,8 @@ This project is built using the following technologies:
 
 - **Frontend:**
   - **React.js:** A JavaScript library for building user interfaces.
-    - **React Router:** For routing and navigation in single-page applications.
-    - **Axios:** For making HTTP requests to the backend API.
+  - **React Router:** For routing and navigation in single-page applications.
+  - **Axios:** For making HTTP requests to the backend API.
   
 - **Backend:**
    - **ASP.NET Core:** A cross-platform framework for building web applications and APIs.
