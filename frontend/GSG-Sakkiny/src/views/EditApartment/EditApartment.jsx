@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { Footer } from "../Footer";
 import { Navbar } from "../Navbar";
 import Select from "react-select";
@@ -9,6 +9,7 @@ import axios from "../../api/axios";
 export const EditApartment = () => {
   const { apartmentId } = useParams();
   const [formData, setFormData] = useState({});
+  const imageFileRef = useRef(null); // store image in a ref to avoid triggering a re-render
 
   useEffect(() => {
     try {
@@ -32,15 +33,66 @@ export const EditApartment = () => {
 
   const handleFileChange = (e) => {
     setFormData({ ...formData, image: e.target.files[0] });
+    console.log(e.target.files[0]);
   };
 
   const handleSelectChange = (selected) => {
     setFormData({ ...formData, location: selected.value });
   };
 
+  useEffect(() => {
+    if (
+      formData.base64Images &&
+      formData.base64Images.length > 0 &&
+      !imageFileRef.current
+    ) {
+      try {
+        const dataUrl = `data:image/png;base64,${formData.base64Images[0]}`;
+        const fetchImage = async () => {
+          const response = await fetch(dataUrl);
+          const blobImage = await response.blob();
+          const file = new File([blobImage], "image.png", {
+            type: "image/png",
+          });
+          imageFileRef.current = file; // store the file in the ref
+          setFormData({ ...formData, image: file });
+          console.log(file);
+        };
+        fetchImage();
+      } catch (error) {
+        console.error("Error loading Image:", error);
+      }
+    }
+  }, [formData.base64Images]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form submitted", formData);
+    console.log(formData);
+
+    try {
+      const imageData = new FormData();
+      if (formData.image) {
+        imageData.append("Images", formData.image);
+      }
+      const images = [imageData];
+      const putObject = {
+        title: formData.title,
+        subTitle: formData.subTitle,
+        location: formData.location,
+        roomsNumber: formData.roomsNumber,
+        roomsAvailable: formData.roomsAvailable,
+        price: formData.price,
+        Images: images,
+      };
+
+      const response = axios.put(
+        `Apartment/UpdateApartment/${apartmentId}`,
+        JSON.stringify(putObject)
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
   };
 
   return (

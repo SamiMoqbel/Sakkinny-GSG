@@ -7,6 +7,8 @@ import axios from "../../api/axios";
 
 export const Apartments = () => {
   const [apartmentsData, setApartmentsData] = useState([]);
+  const userData = JSON.parse(localStorage.getItem("userData"));
+  const userRole = userData.roles[0];
 
   useEffect(() => {
     const fetchApartments = async () => {
@@ -78,12 +80,14 @@ export const Apartments = () => {
                     <td className="py-2">{apartments.roomsAvailable}</td>
                     <td className="py-2">{apartments.price}</td>
                     <td className="py-2">
-                      <Link
-                        className=" bg-blue-500 text-white px-4 py-2 rounded-md mr-2"
-                        to={`/EditApartment/${apartments.id}`}
-                      >
-                        Edit
-                      </Link>
+                      {userRole !== "Client" && (
+                        <Link
+                          className=" bg-blue-500 text-white px-4 py-2 rounded-md mr-2"
+                          to={`/EditApartment/${apartments.id}`}
+                        >
+                          Edit
+                        </Link>
+                      )}
                       <button
                         onClick={() => handleDelete(apartments.id)}
                         className="bg-red-500 text-white px-4 py-2 rounded-md"
@@ -95,14 +99,16 @@ export const Apartments = () => {
                 ))}
             </tbody>
           </table>
-          <div className="mt-8  flex justify-center">
-            <Link
-              to="/addApartment"
-              className="bg-purple-600 text-white py-4 px-10 rounded-lg text-lg"
-            >
-              Add Apartment
-            </Link>
-          </div>
+          {userRole !== "Client" && (
+            <div className="mt-8  flex justify-center">
+              <Link
+                to="/addApartment"
+                className="bg-purple-600 text-white py-4 px-10 rounded-lg text-lg"
+              >
+                Add Apartment
+              </Link>
+            </div>
+          )}
         </div>
 
         <Footer />

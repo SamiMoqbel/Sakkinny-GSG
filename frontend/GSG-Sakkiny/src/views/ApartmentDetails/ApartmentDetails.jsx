@@ -54,11 +54,14 @@ export const ApartmentDetails = () => {
           <div className="flex flex-col flex-1 ">
             <div className="h-[600px]">
               <Carousel slideInterval={5000}>
-                <img src="https://picsum.photos/1000" alt="..." />
-                <img src="https://picsum.photos/1000" alt="..." />
-                <img src="https://picsum.photos/1000" alt="..." />
-                <img src="https://picsum.photos/1000" alt="..." />
-                <img src="https://picsum.photos/1000" alt="..." />
+                {apartmentDetails.base64Images &&
+                  apartmentDetails.base64Images.map((image, index) => (
+                    <img
+                      className="w-full h-full object-cover"
+                      src={`data:image/png;base64,${image}`}
+                      alt="..."
+                    />
+                  ))}
               </Carousel>
             </div>
             <div className="mt-6">
@@ -100,7 +103,10 @@ export const ApartmentDetails = () => {
             </div>
           </div>
           <div className="ml-20">
-            <UserCard ownerDetails={ownerDetails} apartmentDetails={apartmentDetails} />
+            <UserCard
+              ownerDetails={ownerDetails}
+              apartmentDetails={apartmentDetails}
+            />
           </div>
         </div>
       </main>

@@ -8,11 +8,13 @@ import { useNavigate } from "react-router-dom";
 
 export const AddApartment = () => {
   const navigate = useNavigate();
+  const userData = JSON.parse(localStorage.getItem("userData"));
+  const userId = userData.userId;
   const DEFAULT_LOCATION = LOCATIONS[0];
   const [formData, setFormData] = useState({
     title: "",
     subtitle: "",
-    location: "",
+    location: DEFAULT_LOCATION.value,
     totalRooms: "",
     availableRooms: "",
     price: "",
@@ -46,7 +48,7 @@ export const AddApartment = () => {
       }
 
       const response = axios.post(
-        `/Apartment/AddApartment?title=${formData.title}&subtitle=${formData.subtitle}&location=${formData.location}&roomsNumber=${formData.totalRooms}&roomsAvailable=${formData.availableRooms}&price=${formData.price}&OwnerId=78f6b68b-cb8a-4a1a-8d13-01aced0e2d75`,
+        `/Apartment/AddApartment?title=${formData.title}&subtitle=${formData.subtitle}&location=${formData.location}&roomsNumber=${formData.totalRooms}&roomsAvailable=${formData.availableRooms}&price=${formData.price}&OwnerId=${userId}`,
         imageData,
         {
           headers: {
@@ -115,7 +117,6 @@ export const AddApartment = () => {
               name="image"
               onChange={handleFileChange}
               className="p-3 mb-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
-              multiple
             />
 
             <input
