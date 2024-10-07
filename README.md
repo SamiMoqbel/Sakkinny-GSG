@@ -41,6 +41,10 @@ This project is built using the following technologies:
 
 - **APIs:**
   - **REST API:** For communication between the frontend (React.js) and backend (ASP.NET Core).
+ 
+- **Links:**
+  - **Testing Plan:** [Google Sheets link for testing plan](https://docs.google.com/spreadsheets/d/1R0RWRW4T6NBgeE5oa8czLW2QHCk9a2dGqOD5ppeupsE/edit?usp=sharing)
+  - **Presentation:** [Canva Link ]([https://docs.google.com/spreadsheets/d/1R0RWRW4T6NBgeE5oa8czLW2QHCk9a2dGqOD5ppeupsE/edit?usp=sharing](https://www.canva.com/design/DAGSZoVzEac/vGEGG0QhbPwDdgbKQhJbJQ/edit?fbclid=IwZXh0bgNhZW0CMTEAAR2ZbAw_Mi7De6WXK1YkBFELTI8vvx9Ckzr1yoNXFPta-zUSQ4RtA2uT6Zs_aem_e1V4MWmogrAMerwXpxEc4Q))
 
 
 ### Installation
