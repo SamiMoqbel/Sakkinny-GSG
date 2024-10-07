@@ -45,6 +45,7 @@ This project is built using the following technologies:
 - **Links:**
   - **Testing Plan:** [Google Sheets link for testing plan](https://docs.google.com/spreadsheets/d/1R0RWRW4T6NBgeE5oa8czLW2QHCk9a2dGqOD5ppeupsE/edit?usp=sharing)
   - **Presentation:** [Canva Link ](https://www.canva.com/design/DAGSZoVzEac/vGEGG0QhbPwDdgbKQhJbJQ/edit?fbclid=IwZXh0bgNhZW0CMTEAAR2ZbAw_Mi7De6WXK1YkBFELTI8vvx9Ckzr1yoNXFPta-zUSQ4RtA2uT6Zs_aem_e1V4MWmogrAMerwXpxEc4Q)
+  - **Trello:** [Trello Link ](https://trello.com/invite/b/66e6ff01e79ce121a1456654/ATTI45b2fe4b3d64cd9bbb3c47a58f6b43f1A6BC3D59/sakkinny-gsg)
 
 
 ### Installation
