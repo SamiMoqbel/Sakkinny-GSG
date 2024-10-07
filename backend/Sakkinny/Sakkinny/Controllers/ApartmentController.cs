@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc;
 using Sakkinny.Models;
 using Sakkinny.Models.Dtos;
 using Sakkinny.Services;
@@ -113,23 +114,22 @@ namespace Sakkinny.Controllers
         }
 
         // Rent the apartment by Muhnnad
-        [HttpPost("rent")]
-        public async Task<IActionResult> RentApartment([FromBody] RentApartmentDto rentApartmentDto)
+        [HttpPost("apartments/{apartmentId}/rent")]
+        public async Task<IActionResult> RentApartment(string userid,int apartmentId)
         {
-            if (rentApartmentDto == null)
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Get the current user's ID
+
+            // Attempt to rent the apartment
+            var result = await _apartmentService.RentApartment(userid, apartmentId);
+
+            if (!result)
             {
-                return BadRequest("Rental data is required.");
+                return BadRequest("Could not rent the apartment. It may be full or not found.");
             }
 
-            var result = await _apartmentService.RentApartment(rentApartmentDto);
-
-            if (!result.IsSuccess)
-            {
-                return BadRequest(result.Message);
-            }
-
-            return Ok(result.Message);
+            return Ok("Apartment rented successfully.");
         }
+
         // Get Apartments by OwnerId by Muhnnad
         [HttpGet("owner/{ownerId}")]
         public async Task<IActionResult> GetApartmentByOwnerId(string ownerId)
@@ -145,14 +145,14 @@ namespace Sakkinny.Controllers
         }
 
         // Get Customers by OwnerId and ApartmentId by Muhnnad
-        [HttpGet("owner/{ownerId}/apartments/{apartmentId}/customers")]
-        public async Task<IActionResult> GetCustomersByOwnerAndApartmentId(string ownerId, int apartmentId)
+        [HttpGet("apartments/{apartmentId}/customers")]
+        public async Task<IActionResult> GetCustomersByApartment(int apartmentId)
         {
-            var customers = await _apartmentService.GetCustomersByOwnerAndApartmentId(ownerId, apartmentId);
+            var customers = await _apartmentService.GetCustomersByApartment(apartmentId);
 
             if (customers == null || !customers.Any())
             {
-                return NotFound("No customers found for this apartment or owner.");
+                return NotFound("No customers found for this apartment.");
             }
 
             return Ok(customers);

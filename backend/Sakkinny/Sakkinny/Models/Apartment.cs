@@ -7,19 +7,19 @@ namespace Sakkinny.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; } 
+        public int Id { get; set; }
 
         [Required]
-        public string Title { get; set; } 
+        public string Title { get; set; }
 
-        public string? SubTitle { get; set; } 
+        public string? SubTitle { get; set; }
 
         [Required]
-        public string Location { get; set; } 
+        public string Location { get; set; }
 
-        public int? RoomsNumber { get; set; } 
+        public int? RoomsNumber { get; set; }
 
-        public int RoomsAvailable { get; set; } 
+        public int RoomsAvailable { get; set; }
 
         public decimal? Price { get; set; }
 
@@ -29,14 +29,14 @@ namespace Sakkinny.Models
         public DateTime? RentalStartDate { get; set; }
         public DateTime? RentalEndDate { get; set; }
 
-        public bool IsDeleted { get; set; } = false; 
+        public bool IsDeleted { get; set; } = false;
 
-        public DateTime CreationTime { get; set; } = DateTime.Now; 
+        public DateTime CreationTime { get; set; } = DateTime.Now;
 
-        public DateTime? DeletionTime { get; set; } 
-         // Doubly linked list for managing renters
+        public DateTime? DeletionTime { get; set; }
+        // Doubly linked list for managing renters
         [NotMapped]
-        public RenterList RenterList { get; set; } = new RenterList();
+    public ICollection<Renter> Renters { get; set; } = new List<Renter>(); 
         public string? OwnerId { get; set; } // Ensure this is mapped from the model
 
 

@@ -6,6 +6,7 @@ namespace Sakkinny.Models
       public class DataContext : IdentityDbContext<ApplicationUser>
       {
             public DbSet<Apartment> Apartments { get; set; } = null!; // Not nullable
+            public DbSet<Renter> Renters { get; set; }
             public DbSet<ApartmentImage> ApartmentImage { get; set; }
             public DataContext(DbContextOptions<DataContext> options) : base(options)
             {
@@ -65,7 +66,30 @@ namespace Sakkinny.Models
                             .WithOne(ai => ai.Apartment)
                             .HasForeignKey(ai => ai.ApartmentId);
 
+                        entity.HasMany(a => a.Renters)
+                              .WithOne(r => r.Apartment)
+                              .HasForeignKey(r => r.ApartmentId);
+
                   });
+                  modelBuilder.Entity<Renter>(entity =>
+            {
+                  entity.HasKey(e => e.Id);
+                  entity.Property(e => e.UserId).IsRequired();
+                  entity.Property(e => e.ApartmentId).IsRequired();
+
+                  entity.HasOne(r => r.User)
+                        .WithMany() // User can have many Renters, but no back reference in this case
+                        .HasForeignKey(r => r.UserId)
+                        .OnDelete(DeleteBehavior.Cascade); // Optional: Define delete behavior
+
+                  entity.HasOne(r => r.Apartment)
+                        .WithMany(a => a.Renters) // Apartment can have many Renters
+                        .HasForeignKey(r => r.ApartmentId)
+                        .OnDelete(DeleteBehavior.Cascade); // Optional: Define delete behavior
+            });
+
+
+
             }
       }
 }
